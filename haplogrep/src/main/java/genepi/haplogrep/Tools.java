@@ -12,7 +12,7 @@ public class Tools extends Toolbox {
 
 	public static void main(String[] args) {
 
-		Tools tools = new Tools("java -jar tools.jar", args);
+		Tools tools = new Tools("java -jar toolbox-1.0.jar", args);
 		
 		tools.addTool("haplogrep", HaplogrepCMD.class);
 
