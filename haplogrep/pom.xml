@@ -91,7 +91,6 @@
 									<include>commons-cli:commons-cli:*:*</include>
 									<include>org.jdom:jdom:*:*</include>
 									<include>net.sf.json-lib:json-lib*:*</include>
-									<include>genepi:haplogrep:*:*</include>
 									<include>genepi:genepi-io:*:*</include>
 									<include>org.json:json:*:*</include>
 									<include>commons-logging:commons-logging:*:*</include>
@@ -113,12 +112,6 @@
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>genepi</groupId>
-			<artifactId>haplogrep</artifactId>
-			<version>2.0</version>
 		</dependency>
 
 		<dependency>
