@@ -48,13 +48,11 @@ public class HaplogrepCMD extends Tool {
 
 	@Override
 	public void init() {
-		System.out.println("Haplogrep 2.0 \n\n");
+		System.out.println("Welcome to Haplogrep 2.0 \n\n");
 	}
 
 	@Override
 	public int run() {
-
-		final Log log = LogFactory.getLog(Tools.class);
 
 		String phylotree = "phylotree$VERSION.xml";
 
@@ -65,7 +63,12 @@ public class HaplogrepCMD extends Tool {
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
 
-		File file = new File(in);
+		File f = new File(in);
+
+		if (!f.exists()) {
+			System.out.println("Error. Please check if input file exists");
+			return -1;
+		}
 
 		phylotree = phylotree.replace("$VERSION", tree);
 
@@ -73,7 +76,7 @@ public class HaplogrepCMD extends Tool {
 
 		try {
 
-			if (file.isFile()) {
+			if (f.isFile()) {
 
 				String uniqueID = UUID.randomUUID().toString();
 
@@ -83,7 +86,7 @@ public class HaplogrepCMD extends Tool {
 
 				if (format.equals("hsd")) {
 
-					lines = importData(file);
+					lines = importData(f);
 
 				}
 
@@ -100,20 +103,17 @@ public class HaplogrepCMD extends Tool {
 				}
 
 			} else {
-				log.error("Please Check the input file");
-				System.exit(-1);
+				return -1;
 			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.exit(1);
+			return -1;
 		}
 
-		log.info("done.");
-
-		System.exit(0);
-
+		System.out.println("");
+		System.out.println("Haplogrep file written to " + out);
 		return 0;
 	}
 
@@ -203,8 +203,8 @@ public class HaplogrepCMD extends Tool {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "/home/seb/Desktop/wir2.hsd", "--out",
-				"/home/seb/Desktop/franz3", "--format", "hsd", "--phylotree", "17" });
+		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.hsd", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "hsd", "--phylotree", "17" });
 		test.start();
 
 	}
