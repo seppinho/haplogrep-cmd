@@ -3,6 +3,8 @@ package genepi.haplogrep;
 import genepi.base.Tool;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
+import search.ranking.HammingRanking;
+import search.ranking.JaccardRanking;
 import search.ranking.KulczynskiRanking;
 import search.ranking.RankingMethod;
 import search.ranking.results.RankedResult;
@@ -42,6 +44,7 @@ public class HaplogrepCMD extends Tool {
 		addParameter("in", "hsd file");
 		addParameter("out", "write haplogrep final file");
 		addParameter("phylotree", "specifiy phylotree version");
+		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard");
 		addParameter("format", "hsd");
 
 	}
@@ -62,6 +65,7 @@ public class HaplogrepCMD extends Tool {
 		String out = (String) getValue("out");
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
+		String metric = (String) getValue("metric");
 
 		File f = new File(in);
 
@@ -96,7 +100,7 @@ public class HaplogrepCMD extends Tool {
 
 					session.setCurrentSampleFile(newSampleFile);
 
-					determineHaplogroup(session, phylotree, fluctrates);
+					determineHaplogroup(session, phylotree, fluctrates, metric);
 
 					exportResults(session, out);
 
@@ -144,12 +148,29 @@ public class HaplogrepCMD extends Tool {
 
 	}
 
-	private static void determineHaplogroup(Session session, String phyloTree, String fluctrates)
+	private static void determineHaplogroup(Session session, String phyloTree, String fluctrates, String metric)
 			throws JDOMException, IOException, InvalidRangeException {
 
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
 
-		RankingMethod newRanker = new KulczynskiRanking(1);
+		RankingMethod newRanker = null;
+
+		switch (metric) {
+		case "1":
+			newRanker = new KulczynskiRanking(1);
+			break;
+
+		case "2":
+			newRanker = new HammingRanking(1);
+			break;
+
+		case "3":
+			newRanker = new JaccardRanking(1);
+			break;
+
+		default:
+			newRanker = new KulczynskiRanking(1);
+		}
 
 		session.getCurrentSampleFile().updateClassificationResults(phylotree, newRanker);
 
@@ -204,7 +225,7 @@ public class HaplogrepCMD extends Tool {
 	public static void main(String[] args) throws IOException {
 
 		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.hsd", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "hsd", "--phylotree", "17" });
+				"test-data/h100-haplogrep.txt", "--format", "hsd", "--phylotree", "17", "--metric", "1" });
 		test.start();
 
 	}
