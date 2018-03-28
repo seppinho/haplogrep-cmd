@@ -27,6 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.JDOMException;
 
+import core.Polymorphism;
 import core.SampleFile;
 import core.TestSample;
 import exceptions.parse.HsdFileException;
@@ -43,8 +44,9 @@ public class HaplogrepCMD extends Tool {
 
 		addParameter("in", "hsd file");
 		addParameter("out", "write haplogrep final file");
+		addParameter("ext", "write extended haplogrep out file (0:no, 1:yes)", INTEGER);
 		addParameter("phylotree", "specifiy phylotree version");
-		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard");
+		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard)");
 		addParameter("format", "hsd");
 
 	}
@@ -63,6 +65,7 @@ public class HaplogrepCMD extends Tool {
 
 		String in = (String) getValue("in");
 		String out = (String) getValue("out");
+		int ext = (int) getValue("ext");
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
@@ -102,7 +105,7 @@ public class HaplogrepCMD extends Tool {
 
 					determineHaplogroup(session, phylotree, fluctrates, metric);
 
-					exportResults(session, out);
+					exportResults(session, out, ext);
 
 				}
 
@@ -176,7 +179,7 @@ public class HaplogrepCMD extends Tool {
 
 	}
 
-	private static void exportResults(Session session, String outFilename) throws IOException {
+	private static void exportResults(Session session, String outFilename, int ext) throws IOException {
 
 		StringBuffer result = new StringBuffer();
 
@@ -186,8 +189,11 @@ public class HaplogrepCMD extends Tool {
 
 		Collections.sort((List<TestSample>) sampleCollection);
 
-		result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
-
+		if(ext==0)
+			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
+		else if (ext==1)
+			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
+		
 		if (sampleCollection != null) {
 
 			for (TestSample sample : sampleCollection) {
@@ -204,8 +210,53 @@ public class HaplogrepCMD extends Tool {
 
 					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
-					result.append("\n");
+					if (ext==1) {
+						result.append("\t");
 
+						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
+								.getFoundPolys();
+						ArrayList<Polymorphism> expected = currentResult.getSearchResult().getDetailedResult()
+								.getExpectedPolys();
+						Collections.sort(found);
+						Collections.sort(expected);
+						for (Polymorphism currentPoly : expected) {
+							if (!found.contains(currentPoly))
+								result.append(" " + currentPoly);
+						}
+						result.append("\t");
+						ArrayList<Polymorphism> hghelp = new ArrayList<>();
+						for (Polymorphism currentPoly : found) {
+									result.append(" "+currentPoly);
+											
+						}
+						
+						result.append("\t");
+						ArrayList<Polymorphism> allChecked = currentResult.getSearchResult().getDetailedResult()
+								.getRemainingPolysInSample();
+						Collections.sort(allChecked);
+						for (Polymorphism currentPoly : allChecked) {
+							result.append(" " + currentPoly);
+						}
+						result.append("\t");
+						ArrayList<Polymorphism> aac = currentResult.getSearchResult().getDetailedResult()
+								.getRemainingPolysInSample();
+						Collections.sort(aac);
+						for (Polymorphism currentPoly : aac) {
+							if (currentPoly.getAnnotation() != null)
+								result.append(
+										" " + currentPoly + " [" + currentPoly.getAnnotation().getAminoAcidChange()
+												+ "| Codon " + currentPoly.getAnnotation().getCodon() + " | "
+												+ currentPoly.getAnnotation().getGene() + " ]");
+						}
+						result.append("\t");
+						ArrayList<Polymorphism> input = sample.getSample().getPolymorphisms();
+						Collections.sort(input);
+						for (Polymorphism currentPoly : input) {
+							result.append(" " + currentPoly);
+						}
+					}
+					result.append("\n");	
+					
 				}
 			}
 		}
@@ -225,7 +276,7 @@ public class HaplogrepCMD extends Tool {
 	public static void main(String[] args) throws IOException {
 
 		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.hsd", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "hsd", "--phylotree", "17", "--metric", "1" });
+				"test-data/h100-haplogrep.txt", "--ext", "1", "--format", "hsd", "--phylotree", "17", "--metric", "1" });
 		test.start();
 
 	}
