@@ -1,5 +1,6 @@
-# haplogrep-cmd
-This repository includes a main class to call haplogrep from Java. It currently includes the haplogrep-core as a jar 
+# haplogrep2 - commandline tool
+
+Haplogrep allows you to classify your mtDNA profiles.
 
 ## Start from Executable
      mkdir haplogrep-cmd
