@@ -36,9 +36,9 @@ import core.TestSample;
 import exceptions.parse.HsdFileException;
 import exceptions.parse.sample.InvalidRangeException;
 
-public class HaplogrepCMD extends Tool {
+public class Haplogrep extends Tool {
 
-	public HaplogrepCMD(String[] args) {
+	public Haplogrep(String[] args) {
 		super(args);
 	}
 
@@ -329,7 +329,7 @@ public class HaplogrepCMD extends Tool {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		HaplogrepCMD haplogrep = new HaplogrepCMD(args);
+		Haplogrep haplogrep = new Haplogrep(args);
 
 		haplogrep.start();
 
