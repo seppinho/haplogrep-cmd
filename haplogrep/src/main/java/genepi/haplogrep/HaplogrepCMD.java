@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom.JDOMException;
 
 import core.Polymorphism;
@@ -58,7 +56,7 @@ public class HaplogrepCMD extends Tool {
 
 	@Override
 	public void init() {
-		System.out.println("Welcome to Haplogrep 2.0 \n\n");
+		System.out.println("Welcome to Haplogrep 2.1.3 \n\n");
 	}
 
 	@Override
@@ -195,9 +193,9 @@ public class HaplogrepCMD extends Tool {
 					}
 				}
 			}
-			
+
 			if (profile.length() > 0) {
-			samples.add(sample + "\t" + "1-16569" + "\t" + "?" + "\t" + profile.toString() + "\n");
+				samples.add(sample + "\t" + "1-16569" + "\t" + "?" + "\t" + profile.toString() + "\n");
 			}
 		}
 
@@ -244,11 +242,12 @@ public class HaplogrepCMD extends Tool {
 
 		Collections.sort((List<TestSample>) sampleCollection);
 
-		if(ext==0)
+		if (ext == 0)
 			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
-		else if (ext==1)
-			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
-		
+		else if (ext == 1)
+			result.append(
+					"SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
+
 		if (sampleCollection != null) {
 
 			for (TestSample sample : sampleCollection) {
@@ -265,7 +264,7 @@ public class HaplogrepCMD extends Tool {
 
 					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
-					if (ext==1) {
+					if (ext == 1) {
 						result.append("\t");
 
 						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
@@ -281,10 +280,10 @@ public class HaplogrepCMD extends Tool {
 						result.append("\t");
 						ArrayList<Polymorphism> hghelp = new ArrayList<>();
 						for (Polymorphism currentPoly : found) {
-									result.append(" "+currentPoly);
-											
+							result.append(" " + currentPoly);
+
 						}
-						
+
 						result.append("\t");
 						ArrayList<Polymorphism> allChecked = currentResult.getSearchResult().getDetailedResult()
 								.getRemainingPolysInSample();
@@ -310,8 +309,8 @@ public class HaplogrepCMD extends Tool {
 							result.append(" " + currentPoly);
 						}
 					}
-					result.append("\n");	
-					
+					result.append("\n");
+
 				}
 			}
 		}
@@ -330,9 +329,9 @@ public class HaplogrepCMD extends Tool {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.txt", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "vcf", "--phylotree", "17", "--metric", "1" });
+		HaplogrepCMD haplogrep = new HaplogrepCMD(args);
 
+		haplogrep.start();
 
 	}
 
