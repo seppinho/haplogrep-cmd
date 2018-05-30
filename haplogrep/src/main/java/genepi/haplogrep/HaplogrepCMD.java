@@ -1,6 +1,11 @@
 package genepi.haplogrep;
 
 import genepi.base.Tool;
+import htsjdk.variant.variantcontext.Genotype;
+import htsjdk.variant.variantcontext.GenotypeType;
+import htsjdk.variant.variantcontext.VariantContext;
+import htsjdk.variant.vcf.VCFFileReader;
+import htsjdk.variant.vcf.VCFHeader;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
 import search.ranking.HammingRanking;
@@ -67,9 +72,9 @@ public class HaplogrepCMD extends Tool {
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
 
-		File f = new File(in);
+		File input = new File(in);
 
-		if (!f.exists()) {
+		if (!input.exists()) {
 			System.out.println("Error. Please check if input file exists");
 			return -1;
 		}
@@ -80,7 +85,7 @@ public class HaplogrepCMD extends Tool {
 
 		try {
 
-			if (f.isFile()) {
+			if (input.isFile()) {
 
 				String uniqueID = UUID.randomUUID().toString();
 
@@ -90,7 +95,13 @@ public class HaplogrepCMD extends Tool {
 
 				if (format.equals("hsd")) {
 
-					lines = importData(f);
+					lines = importDataHsd(input);
+
+				}
+
+				else if (format.equals("vcf")) {
+
+					lines = importVcf(input);
 
 				}
 
@@ -121,7 +132,8 @@ public class HaplogrepCMD extends Tool {
 		return 0;
 	}
 
-	private static ArrayList<String> importData(File file) throws FileNotFoundException, IOException, HsdFileException {
+	private static ArrayList<String> importDataHsd(File file)
+			throws FileNotFoundException, IOException, HsdFileException {
 
 		ArrayList<String> lines = new ArrayList<String>();
 
@@ -131,9 +143,9 @@ public class HaplogrepCMD extends Tool {
 
 		String line = "";
 
-		line = in.readLine(); // skip first line, because its the header
+		line = in.readLine();
 
-		if (!line.startsWith("SampleId\tRange") && !line.toUpperCase().contains("RANGE")) {
+		if (!line.startsWith("SampleId\tRange")) {
 
 			lines.add(line);
 		}
@@ -146,6 +158,49 @@ public class HaplogrepCMD extends Tool {
 
 		return lines;
 
+	}
+
+	public ArrayList<String> importVcf(File file) throws Exception {
+
+		final VCFFileReader vcfReader = new VCFFileReader(file, false);
+		VCFHeader vcfHeader = vcfReader.getFileHeader();
+		ArrayList<String> samples = new ArrayList<>();
+
+		for (String sample : vcfHeader.getSampleNamesInOrder()) {
+
+			StringBuilder profile = new StringBuilder();
+
+			for (final VariantContext vc : vcfReader) {
+
+				if (vc.getType() == VariantContext.Type.SNP) {
+
+					Genotype sampleGenotype = vc.getGenotype(sample);
+
+					if (vc.getGenotype(sample).getType() == GenotypeType.HOM_VAR) {
+						profile.append(vc.getStart() + vc.getAlternateAllele(0).toString());
+						profile.append("\t");
+					}
+
+					if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
+
+						String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
+
+						if (Double.valueOf(hetFrequency) >= 0.96) {
+							profile.append(vc.getStart() + vc.getAlternateAllele(0).toString());
+							profile.append("\t");
+						}
+					}
+				}
+			}
+			
+			if (profile.length() > 0) {
+			samples.add(sample + "\t" + "1-16569" + "\t" + "?" + "\t" + profile.toString() + "\n");
+			}
+		}
+
+		vcfReader.close();
+
+		return samples;
 	}
 
 	private static void determineHaplogroup(Session session, String phyloTree, String fluctrates, String metric)
@@ -224,8 +279,8 @@ public class HaplogrepCMD extends Tool {
 	 */
 	public static void main(String[] args) throws IOException {
 
-		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.hsd", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "hsd", "--phylotree", "17", "--metric", "1" });
+		HaplogrepCMD test = new HaplogrepCMD(new String[] { "--in", "test-data/h100.txt", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "vcf", "--phylotree", "17", "--metric", "1" });
 		test.start();
 
 	}
