@@ -2,6 +2,9 @@
 
 Haplogrep allows you to classify your mtDNA profiles.
 
+## Google User Group
+If you have any questions reagrding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
+
 ## Start from Executable
      mkdir haplogrep-cmd
      cd haplogrep-cmd
