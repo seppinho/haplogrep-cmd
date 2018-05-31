@@ -47,10 +47,10 @@ public class Haplogrep extends Tool {
 
 		addParameter("in", "hsd file");
 		addParameter("out", "write haplogrep final file");
-		addParameter("ext", "write extended haplogrep out file (0:no, 1:yes)", INTEGER);
-		addParameter("phylotree", "specifiy phylotree version");
-		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard)");
 		addParameter("format", "hsd");
+		addParameter("phylotree", "specifiy phylotree version");
+		addParameter("export", "specify export format (1: simple; 2: extended)", INTEGER);
+		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard)");
 
 	}
 
@@ -68,10 +68,10 @@ public class Haplogrep extends Tool {
 
 		String in = (String) getValue("in");
 		String out = (String) getValue("out");
-		int ext = (int) getValue("ext");
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
+		int export = (int) getValue("export");
 
 		File input = new File(in);
 
@@ -114,7 +114,7 @@ public class Haplogrep extends Tool {
 
 					determineHaplogroup(session, phylotree, fluctrates, metric);
 
-					exportResults(session, out, ext);
+					exportResults(session, out, export);
 
 				}
 
@@ -129,7 +129,9 @@ public class Haplogrep extends Tool {
 		}
 
 		System.out.println("");
+
 		System.out.println("Haplogrep file written to " + out);
+
 		return 0;
 	}
 
@@ -232,7 +234,7 @@ public class Haplogrep extends Tool {
 
 	}
 
-	private static void exportResults(Session session, String outFilename, int ext) throws IOException {
+	private static void exportResults(Session session, String outFilename, int export) throws IOException {
 
 		StringBuffer result = new StringBuffer();
 
@@ -242,11 +244,12 @@ public class Haplogrep extends Tool {
 
 		Collections.sort((List<TestSample>) sampleCollection);
 
-		if (ext == 0)
+		if (export == 0) {
 			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
-		else if (ext == 1)
+		} else if (export == 1) {
 			result.append(
 					"SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
+		}
 
 		if (sampleCollection != null) {
 
@@ -264,21 +267,26 @@ public class Haplogrep extends Tool {
 
 					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
-					if (ext == 1) {
+					if (export == 1) {
 						result.append("\t");
 
 						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
 								.getFoundPolys();
+
 						ArrayList<Polymorphism> expected = currentResult.getSearchResult().getDetailedResult()
 								.getExpectedPolys();
+
 						Collections.sort(found);
+
 						Collections.sort(expected);
+
 						for (Polymorphism currentPoly : expected) {
 							if (!found.contains(currentPoly))
 								result.append(" " + currentPoly);
 						}
+
 						result.append("\t");
-						ArrayList<Polymorphism> hghelp = new ArrayList<>();
+
 						for (Polymorphism currentPoly : found) {
 							result.append(" " + currentPoly);
 
@@ -288,13 +296,17 @@ public class Haplogrep extends Tool {
 						ArrayList<Polymorphism> allChecked = currentResult.getSearchResult().getDetailedResult()
 								.getRemainingPolysInSample();
 						Collections.sort(allChecked);
+
 						for (Polymorphism currentPoly : allChecked) {
 							result.append(" " + currentPoly);
 						}
+
 						result.append("\t");
+
 						ArrayList<Polymorphism> aac = currentResult.getSearchResult().getDetailedResult()
 								.getRemainingPolysInSample();
 						Collections.sort(aac);
+
 						for (Polymorphism currentPoly : aac) {
 							if (currentPoly.getAnnotation() != null)
 								result.append(
@@ -302,9 +314,13 @@ public class Haplogrep extends Tool {
 												+ "| Codon " + currentPoly.getAnnotation().getCodon() + " | "
 												+ currentPoly.getAnnotation().getGene() + " ]");
 						}
+
 						result.append("\t");
+
 						ArrayList<Polymorphism> input = sample.getSample().getPolymorphisms();
+
 						Collections.sort(input);
+
 						for (Polymorphism currentPoly : input) {
 							result.append(" " + currentPoly);
 						}
