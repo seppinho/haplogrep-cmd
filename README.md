@@ -4,12 +4,16 @@ HaploGrep provides a fully automated way to determine the haplogroup of mtDNA pr
 ## Run Haplogrep
 Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your profiles. 
 
-## Run Haplogrep locally
+## Install Haplogrep locally
      mkdir haplogrep-cmd
      cd haplogrep-cmd
      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.3/haplogrep-2.1.3.jar      
-     java -jar haplogrep-2.1.3.jar  haplogrep --in test-data/h100.hsd --ext 0 --format hsd --phylotree 17 --out final.txt --metric 1
-     
+
+## Run Haplogrep locally     
+       java -jar haplogrep-2.1.3.jar --in test-data/h100.hsd --export 1 --format hsd --phylotree 17 --out final.txt --metric 1
+
+For VCF, only SNPs and therefore no INDELS are added to the profile. 
+
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
 
@@ -19,7 +23,6 @@ Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 ## Contribute
     git clone https://github.com/seppinho/haplogrep-cmd
     cd haplogrep; mvn install 
-    java -jar target/haplogrep-2.1.3.jar haplogrep --in test-data/h100.hsd --format hsd --phylotree 17 --out final.txt --metric 1
     
 ## Cite use
 If you use Haplogrep, please cite or two papers:
