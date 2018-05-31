@@ -30,6 +30,7 @@ http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
 
 ## Contact
 Division of Genetic Epidemiology
+
 Medical University of Innsbruck 
 
 [Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) 
