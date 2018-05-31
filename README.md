@@ -1,6 +1,6 @@
 # Haplogrep
 
-HaploGrep determines the haplogroup of your mtDNA profiles fully automatically.  It supports standardized input (e.g. VCF) and output (e.g. VCF, fasta, multiple alignment) formats and provides several tools for an intensive quality control. HaploGrep is based on Phylotree, a periodically updated classification tree. 
+HaploGrep determines the haplogroup of your mtDNA profiles fully automatically.  It supports standardized input (e.g. VCF)/ output formats (e.g. VCF, fasta, multiple alignment) and provides several tools for an intensive quality control. HaploGrep is based on Phylotree, a periodically updated classification tree. 
 
 ## Run Haplogrep
 Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your profiles. 
@@ -13,6 +13,9 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
      
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
+
+## Blog
+Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 
 ## Contribute
     git clone https://github.com/seppinho/haplogrep-cmd
@@ -30,4 +33,4 @@ http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
 Division of Genetic Epidemiology
 Medical University of Innsbruck 
 
-[Sebastian Schoenherr](mailto:sebastia.schoenherr@i-med.ac.at) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) 
+[Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) 
