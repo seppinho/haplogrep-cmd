@@ -1,6 +1,9 @@
 # Haplogrep
 
-HaploGrep determines the haplogroup of your mtDNA profiles fully automatically. 
+HaploGrep determines the haplogroup of your mtDNA profiles fully automatically.  It supports standardized input (e.g. VCF) and output (e.g. VCF, fasta, multiple alignment) formats and provides several tools for an intensive quality control. HaploGrep is based on Phylotree, a periodically updated classification tree. 
+
+## Run Haplogrep
+Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your profiles. 
 
 ## Run Haplogrep locally
      mkdir haplogrep-cmd
@@ -20,6 +23,7 @@ We would love to hear your input. If you have any questions regarding Haplogrep,
 If you use Haplogrep, please cite or two papers:
 
 https://onlinelibrary.wiley.com/doi/full/10.1002/humu.21382
+
 http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
 
 ## Contact
