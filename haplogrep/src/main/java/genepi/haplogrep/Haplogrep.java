@@ -107,7 +107,7 @@ public class Haplogrep extends Tool {
 				}
 
 				if (lines != null) {
-
+					
 					SampleFile newSampleFile = new SampleFile(lines);
 
 					session.setCurrentSampleFile(newSampleFile);
@@ -148,7 +148,7 @@ public class Haplogrep extends Tool {
 
 		line = in.readLine();
 
-		if (!line.startsWith("SampleId\tRange")) {
+		if (!line.contains("Range")) {
 
 			lines.add(line);
 		}
