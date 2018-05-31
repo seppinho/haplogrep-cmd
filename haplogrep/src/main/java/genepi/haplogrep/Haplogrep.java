@@ -56,7 +56,11 @@ public class Haplogrep extends Tool {
 
 	@Override
 	public void init() {
-		System.out.println("Welcome to Haplogrep 2.1.3 \n\n");
+		System.out.println("#############");
+		System.out.println("Welcome to Haplogrep 2.1.3");
+		System.out.println("Developed by Sebastian Schoenherr & Hansi Weissensteiner");
+		System.out.println("Division of Genetic Epidemiology, Medical University of Innsbruck");
+		System.out.println("#############");
 	}
 
 	@Override
