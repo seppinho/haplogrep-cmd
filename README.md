@@ -17,11 +17,13 @@ We would love to hear your input. If you have any questions regarding Haplogrep,
     java -jar target/haplogrep-2.1.3.jar haplogrep --in test-data/h100.hsd --format hsd --phylotree 17 --out final.txt --metric 1
     
 ## Cite use
-If you use Haplogrep, please cite or two papers 
+If you use Haplogrep, please cite or two papers:
+
 https://onlinelibrary.wiley.com/doi/full/10.1002/humu.21382
 http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
 
 ## Contact
 Division of Genetic Epidemiology
 Medical University of Innsbruck 
+
 [Sebastian Schoenherr](mailto:sebastia.schoenherr@i-med.ac.at) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) 
