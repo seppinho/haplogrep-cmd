@@ -1,6 +1,7 @@
 package genepi.haplogrep;
 
 import genepi.base.Tool;
+import htsjdk.samtools.util.CloseableIterator;
 import htsjdk.variant.variantcontext.Genotype;
 import htsjdk.variant.variantcontext.GenotypeType;
 import htsjdk.variant.variantcontext.VariantContext;
@@ -32,6 +33,7 @@ import org.jdom.JDOMException;
 
 import core.Polymorphism;
 import core.SampleFile;
+import core.SampleRanges;
 import core.TestSample;
 import exceptions.parse.HsdFileException;
 import exceptions.parse.sample.InvalidRangeException;
@@ -47,9 +49,10 @@ public class Haplogrep extends Tool {
 
 		addParameter("in", "hsd file");
 		addParameter("out", "write haplogrep final file");
-		addParameter("format", "hsd");
+		addParameter("format", "hsd or vcf");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
 		addFlag("extend-report", "add flag for a extended final output");
+		addFlag("chip", "VCF data from a genotype chip");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
 
 	}
@@ -57,10 +60,11 @@ public class Haplogrep extends Tool {
 	@Override
 	public void init() {
 		System.out.println("#############");
-		System.out.println("Welcome to Haplogrep 2.1.3");
+		System.out.println("Welcome to HaploGrep 2.1.4");
 		System.out.println("Developed by Sebastian Schoenherr & Hansi Weissensteiner");
 		System.out.println("Division of Genetic Epidemiology, Medical University of Innsbruck");
 		System.out.println("#############");
+		System.out.println("");
 
 	}
 
@@ -78,6 +82,13 @@ public class Haplogrep extends Tool {
 		String metric = (String) getValue("metric");
 
 		boolean extended = isFlagSet("extend-report");
+
+		boolean chip = isFlagSet("chip");
+
+		if (chip && !format.equals("vcf")) {
+			System.out.println("Please select VCF format when selecting chip parameter");
+			return -1;
+		}
 
 		if (metric == null) {
 			metric = "kulczynski";
@@ -98,12 +109,16 @@ public class Haplogrep extends Tool {
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
 
-		System.out.println("Parameters: " + format);
+		System.out.println("Parameters:");
 		System.out.println("Input Format: " + format);
 		System.out.println("Phylotree Version: " + tree);
 		System.out.println("Extended Report: " + extended);
 		System.out.println("Used Metric: " + metric);
+		System.out.println("Chip array data: " + chip);
 		System.out.println("");
+
+		long start = System.currentTimeMillis();
+		System.out.println("Start Classification...");
 
 		try {
 
@@ -123,7 +138,7 @@ public class Haplogrep extends Tool {
 
 				else if (format.equals("vcf")) {
 
-					lines = importVcf(input);
+					lines = importVcf(input, chip);
 
 				}
 
@@ -149,9 +164,8 @@ public class Haplogrep extends Tool {
 			return -1;
 		}
 
-		System.out.println("");
-
-		System.out.println("Haplogrep file written to " + out);
+		System.out.println("Classification finished in " + (System.currentTimeMillis() - start) / 1000 + "sec");
+		System.out.println("HaploGrep file written to " + out);
 
 		return 0;
 	}
@@ -169,7 +183,7 @@ public class Haplogrep extends Tool {
 
 		line = in.readLine();
 
-		if (!line.contains("Range")) {
+		if (!line.toLowerCase().contains("range")) {
 
 			lines.add(line);
 		}
@@ -184,13 +198,32 @@ public class Haplogrep extends Tool {
 
 	}
 
-	public ArrayList<String> importVcf(File file) throws Exception {
+	public ArrayList<String> importVcf(File file, boolean chip) throws Exception {
 
 		final VCFFileReader vcfReader = new VCFFileReader(file, false);
 		VCFHeader vcfHeader = vcfReader.getFileHeader();
 		ArrayList<String> samples = new ArrayList<>();
+		StringBuilder range = new StringBuilder();
 
+		if (chip) {
+			VCFFileReader headerReader = new VCFFileReader(file, false);
+			CloseableIterator<VariantContext> itPos = headerReader.iterator();
+			while (itPos.hasNext()) {
+				VariantContext vc = itPos.next();
+				range.append(vc.getStart() + ";");
+			}
+			headerReader.close();
+
+		} else {
+			range.append("1-16569");
+		}
+
+		int count = 0;
 		for (String sample : vcfHeader.getSampleNamesInOrder()) {
+			count++;
+
+			if (count > 10)
+				continue;
 
 			StringBuilder profile = new StringBuilder();
 
@@ -218,12 +251,11 @@ public class Haplogrep extends Tool {
 			}
 
 			if (profile.length() > 0) {
-				samples.add(sample + "\t" + "1-16569" + "\t" + "?" + "\t" + profile.toString() + "\n");
+				samples.add(sample + "\t" + range + "\t" + "?" + "\t" + profile.toString() + "\n");
 			}
 		}
 
 		vcfReader.close();
-
 		return samples;
 	}
 
@@ -276,13 +308,28 @@ public class Haplogrep extends Tool {
 
 			for (TestSample sample : sampleCollection) {
 
-				result.append(sample.getSampleID());
+				result.append(sample.getSampleID() + "\t");
 
 				TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
 				for (RankedResult currentResult : currentSample.getResults()) {
 
-					result.append("\t" + sample.getSample().getSampleRanges().toString().replaceAll("\\|", ""));
+					SampleRanges range = sample.getSample().getSampleRanges();
+
+					ArrayList<Integer> startRange = range.getStarts();
+
+					ArrayList<Integer> endRange = range.getEnds();
+
+					String resultRange = "";
+
+					for (int i = 0; i < startRange.size(); i++) {
+						if (startRange.get(i).equals(endRange.get(i))) {
+							resultRange += startRange.get(i) + ";";
+						} else {
+							resultRange += startRange.get(i) + "-" + endRange.get(i) + ";";
+						}
+					}
+					result.append(resultRange + "\t");
 
 					result.append("\t" + currentResult.getHaplogroup());
 
@@ -368,10 +415,10 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		haplogrep.start();
+		/*haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase.vcf", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "vcf" });*/
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100.hsd", "--out",
-		//		"test-data/h100-haplogrep.txt", "--format", "hsd", "--extend-report" });
+		haplogrep.start();
 
 	}
 
