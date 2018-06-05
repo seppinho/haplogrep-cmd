@@ -1,15 +1,15 @@
-# Haplogrep
+# HaploGrep
 HaploGrep provides a fully automated way to determine the haplogroup of mtDNA profiles.
 
-## Run Haplogrep
+## Run HaploGrep
 Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your profiles. 
 
-## Install Haplogrep locally
+## Install HaploGrep locally
      mkdir haplogrep-cmd
      cd haplogrep-cmd
      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.3/haplogrep-2.1.3.jar      
 
-## Run Haplogrep locally     
+## Run HaploGrep locally     
        java -jar haplogrep-2.1.3.jar --in test-data/h100.hsd --export 1 --format hsd --phylotree 17 --out final.txt --metric 1
 
 For VCF, only SNPs and therefore no INDELS are added to the profile. 
