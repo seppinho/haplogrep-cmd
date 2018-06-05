@@ -11,7 +11,7 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
     java -jar haplogrep-2.1.5.jar --in <input.vcf> --format vcf/hsd --out haplogroups.txt
 
     
-## Additonal Parameters      
+## Additional Parameters      
 * If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag. Default is off.
 * To change the metric to Hamming or Jaccard add the `--metric` parameter. Default ist Kulczynski.
