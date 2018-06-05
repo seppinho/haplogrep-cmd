@@ -12,10 +12,10 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
 
     
 ## Additonal Parameters      
-* If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only include included chip SNPs)
-* For adding additional output columns (found/remaining polymorphisms) please add the `--extend-report` flag. 
-* To change the default metric (Kulczynski) to Hamming or Jaccard add the `--metric` parameter. 
-* The used Phylotree version can be changed using the `--phylotree` parameter.
+* If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
+* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag. Default is off.
+* To change the metric to Hamming or Jaccard add the `--metric` parameter. Default ist Kulczynski.
+* The used Phylotree version can be changed using the `--phylotree` parameter. Default is 17.
 
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
