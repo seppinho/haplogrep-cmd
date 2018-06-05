@@ -7,11 +7,10 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
 ## Getting started
     mkdir haplogrep-cmd
     cd haplogrep-cmd
-    wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.3/haplogrep-2.1.3.jar
-    java -jar haplogrep-2.1.3.jar --in test-data/h100.hsd --export 1 --format hsd --phylotree 17 --out final.txt --metric 1
+    wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.4/haplogrep-2.1.4.jar
+    java -jar haplogrep-2.1.4.jar --in <input.vcf> --format vcf --out haplogroups.txt
 
       
-
 For VCF, only SNPs and therefore no INDELS are added to the profile. 
 
 ## Google User Group
