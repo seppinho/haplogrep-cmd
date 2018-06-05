@@ -48,9 +48,9 @@ public class Haplogrep extends Tool {
 		addParameter("in", "hsd file");
 		addParameter("out", "write haplogrep final file");
 		addParameter("format", "hsd");
-		addParameter("phylotree", "specifiy phylotree version");
-		addParameter("export", "specify export format (1: simple; 2: extended)", INTEGER);
-		addParameter("metric", "specifiy metric (1:default; 2:Hamming, 3:Jaccard)");
+		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
+		addFlag("extend-report", "add flag for a extended final output");
+		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
 
 	}
 
@@ -61,6 +61,7 @@ public class Haplogrep extends Tool {
 		System.out.println("Developed by Sebastian Schoenherr & Hansi Weissensteiner");
 		System.out.println("Division of Genetic Epidemiology, Medical University of Innsbruck");
 		System.out.println("#############");
+
 	}
 
 	@Override
@@ -75,7 +76,16 @@ public class Haplogrep extends Tool {
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
-		int export = (int) getValue("export");
+
+		boolean extended = isFlagSet("extend-report");
+
+		if (metric == null) {
+			metric = "kulczynski";
+		}
+
+		if (tree == null) {
+			tree = "17";
+		}
 
 		File input = new File(in);
 
@@ -87,6 +97,13 @@ public class Haplogrep extends Tool {
 		phylotree = phylotree.replace("$VERSION", tree);
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
+
+		System.out.println("Parameters: " + format);
+		System.out.println("Input Format: " + format);
+		System.out.println("Phylotree Version: " + tree);
+		System.out.println("Extended Report: " + extended);
+		System.out.println("Used Metric: " + metric);
+		System.out.println("");
 
 		try {
 
@@ -111,14 +128,14 @@ public class Haplogrep extends Tool {
 				}
 
 				if (lines != null) {
-					
+
 					SampleFile newSampleFile = new SampleFile(lines);
 
 					session.setCurrentSampleFile(newSampleFile);
 
 					determineHaplogroup(session, phylotree, fluctrates, metric);
 
-					exportResults(session, out, export);
+					exportResults(session, out, extended);
 
 				}
 
@@ -218,15 +235,15 @@ public class Haplogrep extends Tool {
 		RankingMethod newRanker = null;
 
 		switch (metric) {
-		case "1":
+		case "kulczynski":
 			newRanker = new KulczynskiRanking(1);
 			break;
 
-		case "2":
+		case "hamming":
 			newRanker = new HammingRanking(1);
 			break;
 
-		case "3":
+		case "jaccard":
 			newRanker = new JaccardRanking(1);
 			break;
 
@@ -238,7 +255,7 @@ public class Haplogrep extends Tool {
 
 	}
 
-	private static void exportResults(Session session, String outFilename, int export) throws IOException {
+	private static void exportResults(Session session, String outFilename, boolean extended) throws IOException {
 
 		StringBuffer result = new StringBuffer();
 
@@ -248,9 +265,9 @@ public class Haplogrep extends Tool {
 
 		Collections.sort((List<TestSample>) sampleCollection);
 
-		if (export == 0) {
+		if (!extended) {
 			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
-		} else if (export == 1) {
+		} else {
 			result.append(
 					"SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
 		}
@@ -271,7 +288,7 @@ public class Haplogrep extends Tool {
 
 					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
-					if (export == 1) {
+					if (extended) {
 						result.append("\t");
 
 						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
@@ -352,6 +369,9 @@ public class Haplogrep extends Tool {
 		Haplogrep haplogrep = new Haplogrep(args);
 
 		haplogrep.start();
+
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100.hsd", "--out",
+		//		"test-data/h100-haplogrep.txt", "--format", "hsd", "--extend-report" });
 
 	}
 
