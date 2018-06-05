@@ -8,10 +8,11 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
     mkdir haplogrep-cmd
     cd haplogrep-cmd
     wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.4/haplogrep-2.1.4.jar
-    java -jar haplogrep-2.1.4.jar --in <input.vcf> --format vcf --out haplogroups.txt
+    java -jar haplogrep-2.1.4.jar --in <input.vcf> --format vcf/hsd --out haplogroups.txt
 
-      
-For VCF, only SNPs and therefore no INDELS are added to the profile. 
+    
+## Additonal Parameters      
+For adding additional output columns (found/remaining polymorphisms) please add the `--extend-report` flag. To change the default metric (Kulczynski) to Hamming or Jaccard add the `--metric` parameter. The used Phylotree version can be changed using the `--phylotree` parameter.
 
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
