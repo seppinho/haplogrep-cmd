@@ -1,17 +1,14 @@
 # HaploGrep
 HaploGrep provides a fully automated way to determine the haplogroup of mtDNA profiles.
 
-## Run HaploGrep
-Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your profiles. 
+## Run HaploGrep 
+We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive classified profiles in return.
 
-## Getting started
+## Commandline Version
     mkdir haplogrep-cmd
     cd haplogrep-cmd
     wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar
     java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
-    java -jar haplogrep-2.1.6.jar --in test-data/h100.txt --format hsd --out haplogroups-hsd.txt
-    java -jar haplogrep-2.1.6.jar --in test-data/ALL.chrMT.phase1.vcf --format vcf --out haplogroups-vcf.txt
-
    
 ## Additional Parameters      
 * If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
