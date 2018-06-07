@@ -2,8 +2,8 @@
 
 We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
 
-## Commandline Version
-HaploGrep only requires Java 8 and therefor works on Windows, Linux and Mac OS. 
+## Commandline Version for local usage
+HaploGrep only requires Java 8 and therefore works on Windows, Linux and Mac operation systems. 
 
 ### Download & Run HaploGrep
 The latest release can be downloaded from [here](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (Currently 2.1.6).
