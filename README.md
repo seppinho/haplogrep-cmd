@@ -24,12 +24,9 @@ Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check fo
 ## Blog
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 
-   
 ## Cite use
 If you use HaploGrep, please cite 
 [HaploGrep2](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432).
 
 ## Contact
-- Division of Genetic Epidemiology
-  Medical University of Innsbruck 
-  [Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) 
+[Sebastian](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi](mailto:hansi.weissensteiner@i-med.ac.at); Medical University of Innsbruck
