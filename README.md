@@ -7,15 +7,20 @@ Please use our [web service](https://haplogrep.uibk.ac.at/) to classify your pro
 ## Getting started
     mkdir haplogrep-cmd
     cd haplogrep-cmd
-    wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.5/haplogrep-2.1.5.jar
-    java -jar haplogrep-2.1.5.jar --in <input.vcf> --format vcf/hsd --out haplogroups.txt
+    wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar
+    java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
+    java -jar haplogrep-2.1.6.jar --in test-data/h100.txt --format hsd --out haplogroups-hsd.txt
+    java -jar haplogrep-2.1.6.jar --in test-data/ALL.chrMT.phase1.vcf --format vcf --out haplogroups-vcf.txt
 
-    
+   
 ## Additional Parameters      
 * If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag. Default is off.
 * To change the metric to Hamming or Jaccard add the `--metric` parameter. Default ist Kulczynski.
 * The used Phylotree version can be changed using the `--phylotree` parameter. Default is 17.
+
+# Heteroplasmies
+VCF files are often storing heteroplasmies in form of a heterozygous genotype (0/1). If a HF field (Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the profile. Please have a look athttp://mtdna-server.uibk.ac.at to check for heteroplasmies and contamination in your NGS data.   
 
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
