@@ -15,7 +15,9 @@ We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.
 * The used Phylotree version can be changed using the `--phylotree` parameter. Default is 17.
 
 # Heteroplasmies
-VCF files are often storing heteroplasmies in form of a heterozygous genotype (0/1). If a HF field (Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the profile. Please have a look athttp://mtdna-server.uibk.ac.at to check for heteroplasmies and contamination in your NGS data.   
+Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
+
+Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.   
 
 ## Google User Group
 We would love to hear your input. If you have any questions regarding Haplogrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
