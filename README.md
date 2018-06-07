@@ -11,10 +11,10 @@ The latest release can be downloaded from [here](https://github.com/seppinho/hap
     java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
 ## Additional Parameters      
-* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag. (Default: off).
-* To change the metric to Hamming or Jaccard add the `--metric` parameter. (Default: kulczynski).
-* The used Phylotree version can be changed using the `--phylotree` parameter. (Default: 17).
-* If your variants are from genotyping arrays, please addd the `--chip` parameter. The range will then be limited to available array SNPs. (Default: off).
+* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
+* To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
+* The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
+* If your variants are from genotyping arrays, please addd the `--chip` parameter. The range will then be limited to array SNPs only (Default: off).
 
 ## Heteroplasmies
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
@@ -32,10 +32,8 @@ Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 If you use HaploGrep, please cite 
 http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
 
-as well as Mannis van Ovens work - Phylotree 17: 
+in combination with Phylotree 17: 
 https://www.sciencedirect.com/science/article/pii/S1875176815302432
-or Phylotree in general
-https://www.ncbi.nlm.nih.gov/pubmed/18853457
 
 ## Contact
 Division of Genetic Epidemiology
