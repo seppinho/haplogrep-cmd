@@ -1,6 +1,6 @@
 # HaploGrep
 
-We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
 
 ## Commandline Version
     mkdir haplogrep-cmd
@@ -14,7 +14,7 @@ We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.
 * To change the metric to Hamming or Jaccard add the `--metric` parameter. Default ist Kulczynski.
 * The used Phylotree version can be changed using the `--phylotree` parameter. Default is 17.
 
-# Heteroplasmies
+## Heteroplasmies
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
 
 Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.   
