@@ -1,6 +1,6 @@
 # HaploGrep
 
-We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive profiles including the mt haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
+We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
 
 ## Commandline Version
     mkdir haplogrep-cmd
