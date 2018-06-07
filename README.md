@@ -1,8 +1,6 @@
 # HaploGrep
-HaploGrep provides a fully automated way to determine the haplogroup of mtDNA profiles.
 
-## Run HaploGrep 
-We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive classified profiles in return.
+We provide a free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive profiles including the mt haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
 
 ## Commandline Version
     mkdir haplogrep-cmd
