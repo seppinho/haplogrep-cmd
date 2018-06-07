@@ -1,12 +1,12 @@
 
-We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD format) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please register to our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and current discussions. 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD format) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
 ## Command-line Version for local usage
 
 * First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (v2.1.6). 
 * Second, execute the following command:
  
-    java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
 Sample VCF and HSD files are available in this [repository](https://github.com/seppinho/haplogrep-cmd/tree/master/haplogrep/test-data).
  
