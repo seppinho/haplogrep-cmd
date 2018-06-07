@@ -30,10 +30,7 @@ Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
    
 ## Cite use
 If you use HaploGrep, please cite 
-http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
-
-in combination with Phylotree 17: 
-https://www.sciencedirect.com/science/article/pii/S1875176815302432
+[HaploGrep2](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432).
 
 ## Contact
 Division of Genetic Epidemiology
