@@ -40,6 +40,8 @@ import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
+	public static String VERSION = "2.1.5";
+
 	public Haplogrep(String[] args) {
 		super(args);
 	}
@@ -59,11 +61,9 @@ public class Haplogrep extends Tool {
 
 	@Override
 	public void init() {
-		System.out.println("#############");
-		System.out.println("Welcome to HaploGrep 2.1.4");
-		System.out.println("Developed by Sebastian Schoenherr & Hansi Weissensteiner");
+
+		System.out.println("Welcome to HaploGrep " + VERSION);
 		System.out.println("Division of Genetic Epidemiology, Medical University of Innsbruck");
-		System.out.println("#############");
 		System.out.println("");
 
 	}
@@ -118,6 +118,7 @@ public class Haplogrep extends Tool {
 		System.out.println("");
 
 		long start = System.currentTimeMillis();
+
 		System.out.println("Start Classification...");
 
 		try {
@@ -164,8 +165,8 @@ public class Haplogrep extends Tool {
 			return -1;
 		}
 
-		System.out.println("Classification finished in " + (System.currentTimeMillis() - start) / 1000 + "sec");
-		System.out.println("HaploGrep file written to " + out);
+		System.out.println("HaploGrep file written to " + out + " (Time: "
+				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
 
 		return 0;
 	}
@@ -201,41 +202,61 @@ public class Haplogrep extends Tool {
 	public ArrayList<String> importVcf(File file, boolean chip) throws Exception {
 
 		final VCFFileReader vcfReader = new VCFFileReader(file, false);
+
 		VCFHeader vcfHeader = vcfReader.getFileHeader();
-		ArrayList<String> samples = new ArrayList<>();
+
 		StringBuilder range = new StringBuilder();
 
 		if (chip) {
-			VCFFileReader headerReader = new VCFFileReader(file, false);
-			CloseableIterator<VariantContext> itPos = headerReader.iterator();
-			while (itPos.hasNext()) {
-				VariantContext vc = itPos.next();
+
+			for (VariantContext vc : vcfReader) {
+
 				range.append(vc.getStart() + ";");
+
 			}
-			headerReader.close();
+
+			vcfReader.close();
 
 		} else {
+
 			range.append("1-16569");
+
 		}
 
-		int count = 0;
-		for (String sample : vcfHeader.getSampleNamesInOrder()) {
-			count++;
+		ArrayList<StringBuilder> profiles = new ArrayList<StringBuilder>();
 
-			if (count > 10)
-				continue;
+		for (String sample : vcfHeader.getSampleNamesInOrder()) {
 
 			StringBuilder profile = new StringBuilder();
 
-			for (final VariantContext vc : vcfReader) {
+			profiles.add(profile.append(sample + "\t" + range + "\t" + "?" + "\t"));
+
+		}
+
+		for (final VariantContext vc : vcfReader) {
+
+			if (vc.getStart() > 16569) {
+
+				System.out.println("Error! Position " + vc.getStart()
+						+ " outside the range. Please double check if VCF only includes mtDNA data mapped to rCRS");
+				System.exit(-1);
+
+			}
+
+			int index = 0;
+
+			for (String sample : vcfHeader.getSampleNamesInOrder()) {
 
 				if (vc.getType() == VariantContext.Type.SNP) {
 
 					Genotype sampleGenotype = vc.getGenotype(sample);
 
 					if (vc.getGenotype(sample).getType() == GenotypeType.HOM_VAR) {
-						profile.append(vc.getStart() + vc.getAlternateAllele(0).toString());
-						profile.append("\t");
+
+						profiles.get(index).append(vc.getStart() + vc.getAlternateAllele(0).toString());
+
+						profiles.get(index).append("\t");
+
 					}
 
 					if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
@@ -243,20 +264,39 @@ public class Haplogrep extends Tool {
 						String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
 
 						if (Double.valueOf(hetFrequency) >= 0.96) {
-							profile.append(vc.getStart() + vc.getAlternateAllele(0).toString());
-							profile.append("\t");
+
+							profiles.get(index).append(vc.getStart() + vc.getAlternateAllele(0).toString());
+
+							profiles.get(index).append("\t");
+
 						}
 					}
 				}
-			}
 
-			if (profile.length() > 0) {
-				samples.add(sample + "\t" + range + "\t" + "?" + "\t" + profile.toString() + "\n");
+				index++;
 			}
 		}
 
+		ArrayList<String> result = new ArrayList<>();
+
+		for (StringBuilder profile : profiles) {
+
+			// default length
+			if (profile.length() > 18) {
+
+				result.add(profile.toString() + "\n");
+
+			} else {
+				System.out.println(
+						"Info: No variants found for sample " + profile.toString().substring(0, profile.indexOf("\t"))
+								+ " and therefore excluded. Please double check used reference (rCRS required!)");
+			}
+
+		}
+
 		vcfReader.close();
-		return samples;
+
+		return result;
 	}
 
 	private static void determineHaplogroup(Session session, String phyloTree, String fluctrates, String metric)
@@ -267,6 +307,7 @@ public class Haplogrep extends Tool {
 		RankingMethod newRanker = null;
 
 		switch (metric) {
+
 		case "kulczynski":
 			newRanker = new KulczynskiRanking(1);
 			break;
@@ -281,6 +322,7 @@ public class Haplogrep extends Tool {
 
 		default:
 			newRanker = new KulczynskiRanking(1);
+
 		}
 
 		session.getCurrentSampleFile().updateClassificationResults(phylotree, newRanker);
@@ -298,8 +340,11 @@ public class Haplogrep extends Tool {
 		Collections.sort((List<TestSample>) sampleCollection);
 
 		if (!extended) {
+
 			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
+
 		} else {
+
 			result.append(
 					"SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
 		}
@@ -336,6 +381,7 @@ public class Haplogrep extends Tool {
 					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
 					if (extended) {
+
 						result.append("\t");
 
 						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
@@ -415,7 +461,7 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		/*haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase.vcf", "--out",
+	/*	haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
 				"test-data/h100-haplogrep.txt", "--format", "vcf" });*/
 
 		haplogrep.start();
