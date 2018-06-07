@@ -1,15 +1,15 @@
-# HaploGrep 2
 
-We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD format) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please register to our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and current discussions. 
 
-## Commandline Version for local usage
-HaploGrep only requires Java 8 and therefore works on Linux, Windows and Mac systems. 
+## Command-line Version for local usage
 
-### Download & Run
-The latest release can be downloaded from [here](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (Currently v2.1.6). VCF and HSD sample files can be found [here](https://github.com/seppinho/haplogrep-cmd/tree/master/haplogrep/test-data).
+* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (v2.1.6). 
+* Second, execute the following command:
  
     java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
+Sample VCF and HSD files are available in this [repository](https://github.com/seppinho/haplogrep-cmd/tree/master/haplogrep/test-data).
+ 
 ## Additional Parameters      
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
@@ -20,9 +20,6 @@ The latest release can be downloaded from [here](https://github.com/seppinho/hap
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
 
 Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.   
-
-## Google User Group
-We would love to hear your input. If you have any questions regarding HaploGrep, please join our [Google User Group](https://groups.google.com/forum/#!forum/haplogrep).
 
 ## Blog
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
