@@ -9,10 +9,10 @@ We provide a fast and free [haplogroup classification service](https://haplogrep
     java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
 ## Additional Parameters      
-* If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag. Default is off.
 * To change the metric to Hamming or Jaccard add the `--metric` parameter. Default ist Kulczynski.
 * The used Phylotree version can be changed using the `--phylotree` parameter. Default is 17.
+* If your variants are from genotyping arrays, please addd the `--chip` parameter (Range will only cover included SNPs from the array). Default is off.
 
 ## Heteroplasmies
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
