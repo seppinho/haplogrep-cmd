@@ -1,6 +1,6 @@
 # HaploGrep
 
-We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep has been cited over 400 times (June 2018). 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles (VCF or HSD) and receive the mitochondrial haplogroup in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). 
 
 ## Commandline Version for local usage
 HaploGrep only requires Java 8 and therefore works on Windows, Linux and Mac operation systems. 
@@ -29,11 +29,13 @@ Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 
    
 ## Cite use
-If you use Haplogrep, please cite or two papers:
-
-https://onlinelibrary.wiley.com/doi/full/10.1002/humu.21382
-
+If you use Haplogrep, please cite 
 http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233
+
+as well as Mannis van Ovens work - Phylotree 17: 
+https://www.sciencedirect.com/science/article/pii/S1875176815302432
+or Phylotree in general
+https://www.ncbi.nlm.nih.gov/pubmed/18853457
 
 ## Contact
 Division of Genetic Epidemiology
