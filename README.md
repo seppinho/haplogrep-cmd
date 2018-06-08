@@ -29,4 +29,4 @@ If you use HaploGrep, please cite
 [HaploGrep2](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432).
 
 ## Contact
-[Sebastian](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi](mailto:hansi.weissensteiner@i-med.ac.at); Medical University of Innsbruck
+[Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho)) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/haansi)); Division of Genetic Epidemiology, Medical University of Innsbruck;
