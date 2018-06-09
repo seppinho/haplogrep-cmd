@@ -40,7 +40,7 @@ import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "2.1.5";
+	public static String VERSION = "2.1.7";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -180,10 +180,9 @@ public class Haplogrep extends Tool {
 
 		in = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 
-		String line = "";
+		String line = in.readLine();
 
-		line = in.readLine();
-
+		// skip first line
 		if (!line.toLowerCase().contains("range")) {
 
 			lines.add(line);
@@ -263,10 +262,11 @@ public class Haplogrep extends Tool {
 							profiles.get(index).append(vc.getStart() + "" + genotype);
 
 							profiles.get(index).append("\t");
-							
+
 						} else {
 
-							// not completely sure if this is needed, but let's check for longer genotype strings on which pos SNP is located
+							// not completely sure if this is needed, but let's check for longer genotype
+							// strings on which pos SNP is located
 							for (int i = 0; i < genotype.length(); i++) {
 
 								if (reference.charAt(i) != genotype.charAt(i)) {
@@ -274,9 +274,9 @@ public class Haplogrep extends Tool {
 									profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
 
 									profiles.get(index).append("\t");
-									
+
 									break;
-									
+
 								}
 
 							}
@@ -286,19 +286,19 @@ public class Haplogrep extends Tool {
 
 					// DELETIONS
 					else if (reference.length() > genotype.length()) {
-						
+
 						profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
 								+ (vc.getStart() + reference.length() - 1) + "d");
 
 						profiles.get(index).append("\t");
-						}
+					}
 
 					// INSERTIONS
 					else if (reference.length() < genotype.length()) {
 
-						//only simple case
-						//TODO
-						if (reference.length() == 1) {	
+						// only simple case
+						// TODO
+						if (reference.length() == 1) {
 
 							profiles.get(index).append(vc.getStart() + "." + 1
 									+ genotype.substring(reference.length(), (genotype.length())));
@@ -354,13 +354,14 @@ public class Haplogrep extends Tool {
 
 		for (StringBuilder profile : profiles) {
 
-			// 18 = length without variants
-			if (profile.length() > 18) {
+			String profileString = profile.toString();
 
-				result.add(profile.toString() + "\n");
+			if (profileString.split("\t").length > 3) {
+
+				result.add(profileString + "\n");
 
 			} else {
-				System.out.println("Info: Sample " + profile.toString().substring(0, profile.indexOf("\t"))
+				System.out.println("Info: Sample " + profileString.substring(0, profile.indexOf("\t"))
 						+ " excluded. No variants detected. Please double check if data has been aligned to rCRS reference");
 			}
 
