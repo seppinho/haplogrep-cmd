@@ -243,53 +243,123 @@ public class Haplogrep extends Tool {
 
 			}
 
+			String refernceString = vc.getReference().getBaseString();
+
 			int index = 0;
 
 			for (String sample : vcfHeader.getSampleNamesInOrder()) {
 
-				if (vc.getType() == VariantContext.Type.SNP) {
+				Genotype sampleGenotype = vc.getGenotype(sample);
 
-					Genotype sampleGenotype = vc.getGenotype(sample);
+				String genotypeString = sampleGenotype.getGenotypeString(false);
 
-					if (vc.getGenotype(sample).getType() == GenotypeType.HOM_VAR) {
+				if (sampleGenotype.getType() == GenotypeType.HOM_VAR) {
 
-						profiles.get(index).append(vc.getStart() + vc.getAlternateAllele(0).toString());
+					// SNPs
+					if (genotypeString.length() == refernceString.length()) {
+
+						if (genotypeString.length() == 1) {
+
+							profiles.get(index).append(vc.getStart() + "" + genotypeString);
+
+							profiles.get(index).append("\t");
+
+						} else {
+
+							// not completely sure if this is needed, but let's check where SNP is located
+							for (int i = 0; i < genotypeString.length(); i++) {
+
+								if (refernceString.charAt(i) != genotypeString.charAt(i)) {
+
+									profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
+
+									profiles.get(index).append("\t");
+
+									break;
+								}
+
+							}
+
+						}
+					}
+
+					// DELETIONS
+					else if (refernceString.length() > genotypeString.length()) {
+
+						profiles.get(index).append((vc.getStart() + genotypeString.length()) + "-"
+								+ (vc.getStart() + refernceString.length() - 1) + "d");
 
 						profiles.get(index).append("\t");
 
 					}
 
-					if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
+					// INSERTIONS
+					else if (refernceString.length() < genotypeString.length()) {
 
-						String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
+						if (refernceString.length() == 1) {
 
-						if (Double.valueOf(hetFrequency) >= 0.96) {
-
-							profiles.get(index).append(vc.getStart() + vc.getAlternateAllele(0).toString());
+							profiles.get(index).append(vc.getStart() + "." + 1
+									+ genotypeString.substring(refernceString.length(), (genotypeString.length())));
 
 							profiles.get(index).append("\t");
 
 						}
 					}
+
 				}
 
+				// Heteroplasmies
+				if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
+
+					String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
+
+					if (Double.valueOf(hetFrequency) >= 0.96) {
+
+						if (genotypeString.length() == refernceString.length()) {
+
+							if (genotypeString.length() == 1) {
+
+								profiles.get(index).append(vc.getStart() + "" + genotypeString);
+
+								profiles.get(index).append("\t");
+
+							} else {
+
+								for (int i = 0; i < genotypeString.length(); i++) {
+
+									if (refernceString.charAt(i) != genotypeString.charAt(i)) {
+
+										profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
+
+										profiles.get(index);
+
+										break;
+									}
+
+								}
+
+							}
+
+						}
+					}
+				}
 				index++;
-			}
-		}
+			} // end samples
+
+		} // end variants
 
 		ArrayList<String> result = new ArrayList<>();
 
 		for (StringBuilder profile : profiles) {
 
-			// default length
+			// 18 = length without variants
 			if (profile.length() > 18) {
 
 				result.add(profile.toString() + "\n");
 
 			} else {
-				System.out.println(
-						"Info: No variants found for sample " + profile.toString().substring(0, profile.indexOf("\t"))
-								+ " and therefore excluded. Please double check used reference (rCRS required!)");
+				System.out.println("Info: Sample " + profile.toString().substring(0, profile.indexOf("\t"))
+						+ " excluded. No variants detected. Please double check if data has been aligned to rCRS reference");
 			}
 
 		}
@@ -297,6 +367,7 @@ public class Haplogrep extends Tool {
 		vcfReader.close();
 
 		return result;
+
 	}
 
 	private static void determineHaplogroup(Session session, String phyloTree, String fluctrates, String metric)
@@ -461,8 +532,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-	/*	haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "vcf" });*/
+		haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "vcf" });
 
 		haplogrep.start();
 
