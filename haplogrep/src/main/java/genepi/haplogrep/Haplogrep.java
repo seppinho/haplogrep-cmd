@@ -49,13 +49,13 @@ public class Haplogrep extends Tool {
 	@Override
 	public void createParameters() {
 
-		addParameter("in", "hsd file");
-		addParameter("out", "write haplogrep final file");
+		addParameter("in", "input VCF or hsd file");
+		addParameter("out", "haplogroup output file");
 		addParameter("format", "hsd or vcf");
-		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
-		addFlag("extend-report", "add flag for a extended final output");
-		addFlag("chip", "VCF data from a genotype chip");
-		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
+		addOptionalParameter("phylotree", "specify an alternative phylotree version", Tool.STRING);
+		addFlag("extend-report", "add additional information to output file");
+		addFlag("chip", "data derived from a genotyping chip");
+		addOptionalParameter("metric", "specify an alternative metric (hamming or jaccard)", Tool.STRING);
 
 	}
 
