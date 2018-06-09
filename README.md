@@ -3,12 +3,12 @@ We provide a fast and free [haplogroup classification service](https://haplogrep
 
 ## Command-line Version for local usage
 
-* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (v2.1.6). 
+* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.7.jar) (v2.1.7). 
 * Second, execute the following command:
  
-      java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.7.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
-Sample VCF and HSD files are available in this [repository](https://github.com/seppinho/haplogrep-cmd/tree/master/haplogrep/test-data).
+HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
