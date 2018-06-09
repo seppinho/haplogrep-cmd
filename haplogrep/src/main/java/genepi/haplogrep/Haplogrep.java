@@ -287,22 +287,18 @@ public class Haplogrep extends Tool {
 					// DELETIONS
 					else if (reference.length() > genotype.length()) {
 						
-						//only simple case (not ACAT -> AC)
-						if((reference.length() -1) == genotype.length()) {
-							
 						profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
 								+ (vc.getStart() + reference.length() - 1) + "d");
 
 						profiles.get(index).append("\t");
-
 						}
-					}
 
 					// INSERTIONS
 					else if (reference.length() < genotype.length()) {
 
 						//only simple case
-						if (reference.length() == 1) {
+						//TODO
+						if (reference.length() == 1) {	
 
 							profiles.get(index).append(vc.getStart() + "." + 1
 									+ genotype.substring(reference.length(), (genotype.length())));
@@ -362,6 +358,7 @@ public class Haplogrep extends Tool {
 			if (profile.length() > 18) {
 
 				result.add(profile.toString() + "\n");
+				System.out.println("XX " + profile.toString());
 
 			} else {
 				System.out.println("Info: Sample " + profile.toString().substring(0, profile.indexOf("\t"))
