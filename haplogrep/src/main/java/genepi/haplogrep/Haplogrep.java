@@ -358,7 +358,6 @@ public class Haplogrep extends Tool {
 			if (profile.length() > 18) {
 
 				result.add(profile.toString() + "\n");
-				System.out.println("XX " + profile.toString());
 
 			} else {
 				System.out.println("Info: Sample " + profile.toString().substring(0, profile.indexOf("\t"))
