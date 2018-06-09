@@ -243,7 +243,7 @@ public class Haplogrep extends Tool {
 
 			}
 
-			String refernceString = vc.getReference().getBaseString();
+			String reference = vc.getReference().getBaseString();
 
 			int index = 0;
 
@@ -251,31 +251,32 @@ public class Haplogrep extends Tool {
 
 				Genotype sampleGenotype = vc.getGenotype(sample);
 
-				String genotypeString = sampleGenotype.getGenotypeString(false);
+				String genotype = sampleGenotype.getGenotypeString(false);
 
 				if (sampleGenotype.getType() == GenotypeType.HOM_VAR) {
 
 					// SNPs
-					if (genotypeString.length() == refernceString.length()) {
+					if (genotype.length() == reference.length()) {
 
-						if (genotypeString.length() == 1) {
+						if (genotype.length() == 1) {
 
-							profiles.get(index).append(vc.getStart() + "" + genotypeString);
+							profiles.get(index).append(vc.getStart() + "" + genotype);
 
 							profiles.get(index).append("\t");
-
+							
 						} else {
 
-							// not completely sure if this is needed, but let's check where SNP is located
-							for (int i = 0; i < genotypeString.length(); i++) {
+							// not completely sure if this is needed, but let's check for longer genotype strings on which pos SNP is located
+							for (int i = 0; i < genotype.length(); i++) {
 
-								if (refernceString.charAt(i) != genotypeString.charAt(i)) {
+								if (reference.charAt(i) != genotype.charAt(i)) {
 
-									profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
+									profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
 
 									profiles.get(index).append("\t");
-
+									
 									break;
+									
 								}
 
 							}
@@ -284,22 +285,27 @@ public class Haplogrep extends Tool {
 					}
 
 					// DELETIONS
-					else if (refernceString.length() > genotypeString.length()) {
-
-						profiles.get(index).append((vc.getStart() + genotypeString.length()) + "-"
-								+ (vc.getStart() + refernceString.length() - 1) + "d");
+					else if (reference.length() > genotype.length()) {
+						
+						//only simple case (not ACAT -> AC)
+						if((reference.length() -1) == genotype.length()) {
+							
+						profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
+								+ (vc.getStart() + reference.length() - 1) + "d");
 
 						profiles.get(index).append("\t");
 
+						}
 					}
 
 					// INSERTIONS
-					else if (refernceString.length() < genotypeString.length()) {
+					else if (reference.length() < genotype.length()) {
 
-						if (refernceString.length() == 1) {
+						//only simple case
+						if (reference.length() == 1) {
 
 							profiles.get(index).append(vc.getStart() + "." + 1
-									+ genotypeString.substring(refernceString.length(), (genotypeString.length())));
+									+ genotype.substring(reference.length(), (genotype.length())));
 
 							profiles.get(index).append("\t");
 
@@ -315,21 +321,21 @@ public class Haplogrep extends Tool {
 
 					if (Double.valueOf(hetFrequency) >= 0.96) {
 
-						if (genotypeString.length() == refernceString.length()) {
+						if (genotype.length() == reference.length()) {
 
-							if (genotypeString.length() == 1) {
+							if (genotype.length() == 1) {
 
-								profiles.get(index).append(vc.getStart() + "" + genotypeString);
+								profiles.get(index).append(vc.getStart() + "" + genotype);
 
 								profiles.get(index).append("\t");
 
 							} else {
 
-								for (int i = 0; i < genotypeString.length(); i++) {
+								for (int i = 0; i < genotype.length(); i++) {
 
-									if (refernceString.charAt(i) != genotypeString.charAt(i)) {
+									if (reference.charAt(i) != genotype.charAt(i)) {
 
-										profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
+										profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
 
 										profiles.get(index);
 
