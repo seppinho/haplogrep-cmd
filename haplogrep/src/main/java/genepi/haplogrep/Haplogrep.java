@@ -84,7 +84,7 @@ public class Haplogrep extends Tool {
 		boolean extended = isFlagSet("extend-report");
 
 		boolean chip = isFlagSet("chip");
-		
+
 		boolean lineage = isFlagSet("lineage");
 
 		if (chip && !format.equals("vcf")) {
@@ -155,9 +155,10 @@ public class Haplogrep extends Tool {
 					determineHaplogroup(session, phylotree, fluctrates, metric);
 
 					exportResults(session, out, extended);
-					
-					calcLineage(session,out);
 
+					if (lineage) {
+						calcLineage(session, out);
+					}
 				}
 
 			} else {
@@ -531,22 +532,22 @@ public class Haplogrep extends Tool {
 		fileWriter.close();
 
 	}
-	
-	
+
 	private void calcLineage(Session session, String out) throws IOException {
-		
+
 		StringBuilder build = new StringBuilder();
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
-			
-			build.append(sample.getSampleID()+"\n");
-			
+
+			build.append(sample.getSampleID() + "\n");
+
 			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
 			for (RankedResult currentResult : currentSample.getResults()) {
-				
-				ArrayList<SearchResultTreeNode> currentPath = currentResult.getSearchResult().getDetailedResult().getPhyloTreePath();
-				
+
+				ArrayList<SearchResultTreeNode> currentPath = currentResult.getSearchResult().getDetailedResult()
+						.getPhyloTreePath();
+
 				for (int i = 1; i < currentPath.size(); i++) {
 
 					if (i == 1) {
@@ -574,22 +575,21 @@ public class Haplogrep extends Tool {
 					}
 
 				}
-				
+
 				build.append("\n");
 				build.append("\n");
 			}
-			
+
 		}
-		
-		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf("."))+".lineage");
+
+		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf(".")) + ".lineage");
 
 		fileWriter.write(build.toString());
 
 		fileWriter.close();
-		
 
 	}
-	
+
 	/**
 	 * @param args
 	 * @throws IOException
@@ -598,9 +598,9 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
-		//		"test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
-
+		// haplogrep = new Haplogrep(new String[] { "--in",
+		// "test-data/ALL.chrMT.phase1.vcf", "--out",
+		// "test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
 
 		haplogrep.start();
 
