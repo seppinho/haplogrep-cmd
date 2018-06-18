@@ -3,12 +3,12 @@ We provide a fast and free [haplogroup classification service](https://haplogrep
 
 ## Command-line Version for local usage
 
-* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.6/haplogrep-2.1.6.jar) (v2.1.6). 
+* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.7.jar) (v2.1.7). 
 * Second, execute the following command:
  
-      java -jar haplogrep-2.1.6.jar --in <input> --format vcf/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.7.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
-Sample VCF and HSD files are available in this [repository](https://github.com/seppinho/haplogrep-cmd/tree/master/haplogrep/test-data).
+HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
@@ -25,8 +25,7 @@ Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check fo
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 
 ## Cite use
-If you use HaploGrep, please cite 
-[HaploGrep2](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432).
+If you use HaploGrep, please cite our two HaploGrep papers ([HaploGrep](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382), [HaploGrep2](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233)) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432).
 
 ## Contact
-[Sebastian](mailto:sebastian.schoenherr@i-med.ac.at) and [Hansi](mailto:hansi.weissensteiner@i-med.ac.at); Medical University of Innsbruck
+[Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho)) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/whansi)); Division of Genetic Epidemiology, Medical University of Innsbruck;
