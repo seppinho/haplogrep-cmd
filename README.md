@@ -3,10 +3,10 @@ We provide a fast and free [haplogroup classification service](https://haplogrep
 
 ## Command-line Version for local usage
 
-* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.7.jar) (v2.1.7). 
+* First, download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.8.jar) (v2.1.8). 
 * Second, execute the following command:
  
-      java -jar haplogrep-2.1.7.jar --in <input> --format vcf/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.8.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
@@ -15,6 +15,7 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your variants are from genotyping arrays, please addd the `--chip` parameter. The range will then be limited to array SNPs only (Default: off).
+* **Beta:** To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). Export file format tbd. 
 
 ## Heteroplasmies
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
