@@ -1,7 +1,6 @@
 package genepi.haplogrep;
 
 import genepi.base.Tool;
-import htsjdk.samtools.util.CloseableIterator;
 import htsjdk.variant.variantcontext.Genotype;
 import htsjdk.variant.variantcontext.GenotypeType;
 import htsjdk.variant.variantcontext.VariantContext;
@@ -599,8 +598,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
+		//		"test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
 
 
 		haplogrep.start();
