@@ -41,7 +41,7 @@ import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "2.1.7";
+	public static String VERSION = "2.1.8";
 
 	public Haplogrep(String[] args) {
 		super(args);
