@@ -9,6 +9,7 @@ import htsjdk.variant.vcf.VCFFileReader;
 import htsjdk.variant.vcf.VCFHeader;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
+import search.SearchResultTreeNode;
 import search.ranking.HammingRanking;
 import search.ranking.JaccardRanking;
 import search.ranking.KulczynskiRanking;
@@ -40,7 +41,7 @@ import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "2.1.5";
+	public static String VERSION = "2.1.7";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -56,6 +57,7 @@ public class Haplogrep extends Tool {
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
+		addFlag("lineage", "export lineage information");
 
 	}
 
@@ -84,6 +86,8 @@ public class Haplogrep extends Tool {
 		boolean extended = isFlagSet("extend-report");
 
 		boolean chip = isFlagSet("chip");
+		
+		boolean lineage = isFlagSet("lineage");
 
 		if (chip && !format.equals("vcf")) {
 			System.out.println("Please select VCF format when selecting chip parameter");
@@ -115,6 +119,7 @@ public class Haplogrep extends Tool {
 		System.out.println("Extended Report: " + extended);
 		System.out.println("Used Metric: " + metric);
 		System.out.println("Chip array data: " + chip);
+		System.out.println("Lineage: " + lineage);
 		System.out.println("");
 
 		long start = System.currentTimeMillis();
@@ -152,6 +157,8 @@ public class Haplogrep extends Tool {
 					determineHaplogroup(session, phylotree, fluctrates, metric);
 
 					exportResults(session, out, extended);
+					
+					calcLineage(session,out);
 
 				}
 
@@ -452,7 +459,65 @@ public class Haplogrep extends Tool {
 		fileWriter.close();
 
 	}
+	
+	
+	private void calcLineage(Session session, String out) throws IOException {
+		
+		StringBuilder build = new StringBuilder();
 
+		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
+			
+			build.append(sample.getSampleID()+"\n");
+			
+			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
+
+			for (RankedResult currentResult : currentSample.getResults()) {
+				
+				ArrayList<SearchResultTreeNode> currentPath = currentResult.getSearchResult().getDetailedResult().getPhyloTreePath();
+				
+				for (int i = 1; i < currentPath.size(); i++) {
+
+					if (i == 1) {
+						build.append(currentPath.get(i).getHaplogroup() + "\t");
+					}
+
+					else {
+
+						if (currentPath.get(i).getExpectedPolys().size() == 0) {
+							build.append("-");
+						} else {
+
+							for (Polymorphism currentPoly : currentPath.get(i).getExpectedPolys()) {
+
+								if (currentPath.get(i).getFoundPolys().contains(currentPoly)) {
+									build.append(currentPoly + " ");
+								}
+							}
+						}
+
+						build.append("\t" + currentPath.get(i).getHaplogroup() + "\n");
+
+						build.append(currentPath.get(i).getHaplogroup() + "\t");
+
+					}
+
+				}
+				
+				build.append("\n");
+
+			}
+			
+		}
+		
+		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf("."))+".lineage");
+
+		fileWriter.write(build.toString());
+
+		fileWriter.close();
+		
+
+	}
+	
 	/**
 	 * @param args
 	 * @throws IOException
@@ -461,8 +526,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-	/*	haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "vcf" });*/
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
+		//		"test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
 
 		haplogrep.start();
 
