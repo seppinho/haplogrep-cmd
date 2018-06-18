@@ -3,8 +3,7 @@ We provide a fast and free [haplogroup classification service](https://haplogrep
 
 ## Command-line Version for local usage
 
-* Download the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.8.jar) (v2.1.8). 
-* Usage:
+Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.7/haplogrep-2.1.8.jar) (v2.1.8). 
  
       java -jar haplogrep-2.1.8.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
