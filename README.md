@@ -14,11 +14,14 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
-* If your variants are from genotyping arrays, please add the `--chip` parameter (VCF only!). The range will then be limited to array SNPs only (Default: off).
+* If your variants are from genotyping arrays, please add the `--chip` parameter. The range will then be limited to array SNPs only (Default: off).
 * To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
 
 ## File Formats
-The recommended input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
+The default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
+
+## Reference sequence
+Several mtDNA references exist, HaploGrep currently assumes that everything is aligned to rCRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
 
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
