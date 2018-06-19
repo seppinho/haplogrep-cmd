@@ -538,6 +538,8 @@ public class Haplogrep extends Tool {
 		StringBuilder build = new StringBuilder();
 
 		StringBuilder graphViz = new StringBuilder();
+		
+		build.append("#Tab-delimited columns: FROM	POLYS_ON_PATH	TO\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
