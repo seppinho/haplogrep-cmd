@@ -14,12 +14,12 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your variants are from genotyping arrays, please addd the `--chip` parameter (VCF only!). The range will then be limited to array SNPs only (Default: off).
-* **Beta:** To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). Export file format tbd. 
+* To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and an import format for [Graphviz](http://www.graphviz.org/documentation/). You can also upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph).
 
 ## File Formats
-HaploGrep's default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your samples in the hsd format, a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited. An example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd).
+HaploGrep's default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your samples in the hsd format, a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited. An example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
 
-## Heteroplasmies (vcf only)
+## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
 
 Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.   
