@@ -539,13 +539,13 @@ public class Haplogrep extends Tool {
 
 		StringBuilder graphViz = new StringBuilder();
 		
-		build.append("#Tab-delimited columns: FROM	POLYS_ON_PATH	TO\n");
+		build.append("#Tab-delimited columns: From_HG,WITH_POLYS,To_HG\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
-			build.append(sample.getSampleID() + "\n");
+			build.append(sample.getSampleID() + " (HG: "+ sample.getResults().get(0).getHaplogroup() +  ") \n");
 
-			graphViz.append("digraph {   \n");
+			graphViz.append("digraph {  label=\"SampleID: "+ sample.getSampleID() + "\"\n");
 
 			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
@@ -563,22 +563,28 @@ public class Haplogrep extends Tool {
 
 					else {
 
+						StringBuilder polys = new StringBuilder();
 						if (currentPath.get(i).getExpectedPolys().size() == 0) {
-							build.append("-");
+							polys.append("-");
 						} else {
 
 							for (Polymorphism currentPoly : currentPath.get(i).getExpectedPolys()) {
 
 								if (currentPath.get(i).getFoundPolys().contains(currentPoly)) {
-									build.append(currentPoly + " ");
+									polys.append(currentPoly + " ");
 								}
 							}
 						}
 
+						//add polys
+						build.append(polys.toString().trim());
+						
 						build.append("\t" + currentPath.get(i).getHaplogroup() + "\n");
 
-						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\";\n");
+						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\"[label=\""+ polys.toString().trim() + "\"];\n");
 
+						
+						// dont do this for last element
 						if (i != (currentPath.size()-1)) {
 
 							graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\" -> ");
