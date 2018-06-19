@@ -537,9 +537,13 @@ public class Haplogrep extends Tool {
 
 		StringBuilder build = new StringBuilder();
 
+		StringBuilder graphViz = new StringBuilder();
+
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
 			build.append(sample.getSampleID() + "\n");
+
+			graphViz.append("digraph {   \n");
 
 			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
@@ -548,10 +552,11 @@ public class Haplogrep extends Tool {
 				ArrayList<SearchResultTreeNode> currentPath = currentResult.getSearchResult().getDetailedResult()
 						.getPhyloTreePath();
 
-				for (int i = 1; i < currentPath.size(); i++) {
+				for (int i = 0; i < currentPath.size(); i++) {
 
-					if (i == 1) {
+					if (i == 0) {
 						build.append(currentPath.get(i).getHaplogroup() + "\t");
+						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\" -> ");
 					}
 
 					else {
@@ -570,23 +575,38 @@ public class Haplogrep extends Tool {
 
 						build.append("\t" + currentPath.get(i).getHaplogroup() + "\n");
 
-						build.append(currentPath.get(i).getHaplogroup() + "\t");
+						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\";\n");
 
+						if (i != (currentPath.size()-1)) {
+
+							graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\" -> ");
+
+							build.append(currentPath.get(i).getHaplogroup() + "\t");
+
+						}
 					}
 
 				}
 
 				build.append("\n");
-				build.append("\n");
+				graphViz.append("}");
+				graphViz.append("\n");
+				graphViz.append("\n");
 			}
 
 		}
 
-		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf(".")) + ".lineage");
+		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf(".")) + "_lineage.txt");
 
 		fileWriter.write(build.toString());
 
+		FileWriter fileWriter2 = new FileWriter(out.substring(0, out.lastIndexOf(".")) + "_graphviz.txt");
+
+		fileWriter2.write(graphViz.toString());
+
 		fileWriter.close();
+
+		fileWriter2.close();
 
 	}
 
@@ -598,9 +618,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		// haplogrep = new Haplogrep(new String[] { "--in",
-		// "test-data/ALL.chrMT.phase1.vcf", "--out",
-		// "test-data/h100-haplogrep.txt", "--format", "vcf","--lineage"});
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
+		//		"test-data/h100-haplogrep.txt", "--format", "vcf", "--lineage" });
 
 		haplogrep.start();
 
