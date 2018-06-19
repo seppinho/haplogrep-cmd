@@ -14,7 +14,7 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
-* If your variants are from genotyping arrays, please add the `--chip` parameter. The range will then be limited to array SNPs only (Default: off).
+* If your variants are from genotyping arrays, please add the `--chip` parameter (VCF only). The range will then be limited to array SNPs only (Default: off). To get the same behaviour with hsd, please add **only** the variants to the range, which are included in the array or the range you have sequenced (e.g. control region), seperated by ";" (e.g. 1-576; 34) .
 * To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
 
 ## File Formats
@@ -22,6 +22,9 @@ The default input format is [VCF](http://www.internationalgenome.org/wiki/Analys
 
 ## Reference sequence
 Several mtDNA references exist, HaploGrep currently assumes that everything is aligned to rCRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
+
+## Genotyping arrays
+If you are using HaploGrep for genotyping array, please have a look to the `--chip` parameter above. 
 
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
