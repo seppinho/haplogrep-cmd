@@ -71,9 +71,9 @@ public class Haplogrep extends Tool {
 	@Override
 	public int run() {
 
-		String phylotree = "phylotree$VERSION.xml";
+		String phylotree = "phylotree/phylotree$VERSION.xml";
 
-		String fluctrates = "weights$VERSION.txt";
+		String fluctrates = "weights/weights$VERSION.txt";
 
 		String in = (String) getValue("in");
 		String out = (String) getValue("out");
@@ -626,8 +626,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
-				"test-data/h100-haplogrep.txt", "--format", "vcf"});
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/ALL.chrMT.phase1.vcf", "--out",
+		//		"test-data/h100-haplogrep.txt", "--format", "vcf"});
 
 		haplogrep.start();
 

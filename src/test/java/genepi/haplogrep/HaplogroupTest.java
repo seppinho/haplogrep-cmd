@@ -26,10 +26,8 @@ public class HaplogroupTest {
 	@BeforeClass
 	public static void init() throws NumberFormatException, IOException, JDOMException, InvalidPolymorphismException
 	{	
-		 phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml","weights17.txt");
-		 if(phylotree == null) {
-			 System.out.println("????");
-		 }
+		 phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree/phylotree17.xml","weights/weights17.txt");
+		
 	}
 	
 	@Test
