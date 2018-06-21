@@ -27,7 +27,7 @@ public class VcfTest {
 			actual.append(splits[i] + ",");
 		}
 
-		assertEquals("8281-8289d,8307-8307d,8860G,", actual.toString());
+		assertEquals("8281-8289d,8307d,8860G,", actual.toString());
 
 	}
 
@@ -46,8 +46,7 @@ public class VcfTest {
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
 		}
-
-		assertEquals("249-249d,290-291d,308-308d,310-310d,498-498d,521-524d,523-524d,8281-8289d,16188T,8307-8307d,",
+		assertEquals("249d,290-291d,308d,310d,498d,521-524d,523-524d,8281-8289d,16188T,8307d,",
 				actual.toString());
 
 		splits = samples.get(1).split("\t");
@@ -55,9 +54,8 @@ public class VcfTest {
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
 		}
-		
 		//TODO ,309.1CC,
-		assertEquals("105T,249-249d,", actual.toString());
+		assertEquals("105T,249d,", actual.toString());
 
 		splits = samples.get(2).split("\t");
 		actual.setLength(0);
@@ -72,7 +70,7 @@ public class VcfTest {
 			actual.append(splits[i] + ",");
 		}
 		//TODO 309.1C,
-		assertEquals("16189-16189d,", actual.toString());
+		assertEquals("16189d,", actual.toString());
 
 	}
 

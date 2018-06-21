@@ -50,7 +50,7 @@ public class VcfImporter {
 			if (vc.getStart() > 16569) {
 
 				System.out.println("Error! Position " + vc.getStart()
-						+ " outside the range. Please double check if VCF only includes mtDNA data mapped to rCRS");
+						+ " outside the range. Please double check if VCF includes variants mapped to rCRS only.");
 				System.exit(-1);
 
 			}
@@ -71,19 +71,18 @@ public class VcfImporter {
 					if (genotype.length() == reference.length()) {
 
 						if (genotype.length() == 1) {
-							
+
 							profiles.get(index).append("\t");
 
 							profiles.get(index).append(vc.getStart() + "" + genotype);
 
 						} else {
 
-							// not completely sure if this is needed, but let's check for longer genotype
-							// strings on which pos SNP is located
+							// check for SNPS with complex genotypes (REF: ACA, GT: ACT --> SNP is T)
 							for (int i = 0; i < genotype.length(); i++) {
 
 								if (reference.charAt(i) != genotype.charAt(i)) {
-									
+
 									profiles.get(index).append("\t");
 
 									profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
@@ -101,10 +100,14 @@ public class VcfImporter {
 					else if (reference.length() > genotype.length()) {
 
 						profiles.get(index).append("\t");
-						
-						profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
-								+ (vc.getStart() + reference.length() - 1) + "d");
 
+						// one position deletion
+						if ((reference.length() - genotype.length()) == 1) {
+							profiles.get(index).append(vc.getStart() + genotype.length() + "d");
+						} else {
+							profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
+									+ (vc.getStart() + reference.length() - 1) + "d");
+						}
 					}
 
 					// INSERTIONS
@@ -113,7 +116,7 @@ public class VcfImporter {
 						// only simple case
 						// TODO
 						if (reference.length() == 1) {
-							
+
 							profiles.get(index).append("\t");
 
 							profiles.get(index).append(vc.getStart() + "." + 1
@@ -136,7 +139,7 @@ public class VcfImporter {
 							if (genotype.length() == 1) {
 
 								profiles.get(index).append("\t");
-								
+
 								profiles.get(index).append(vc.getStart() + "" + genotype);
 
 							} else {
@@ -144,7 +147,7 @@ public class VcfImporter {
 								for (int i = 0; i < genotype.length(); i++) {
 
 									if (reference.charAt(i) != genotype.charAt(i)) {
-										
+
 										profiles.get(index).append("\t");
 
 										profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
