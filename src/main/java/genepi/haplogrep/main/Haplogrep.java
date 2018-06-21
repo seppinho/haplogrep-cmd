@@ -45,7 +45,7 @@ import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "2.1.8";
+	public static String VERSION = "v2.1.9";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -56,7 +56,7 @@ public class Haplogrep extends Tool {
 
 		addParameter("in", "input VCF or hsd file");
 		addParameter("out", "haplogroup output file");
-		addParameter("format", "hsd or vcf");
+		addParameter("format", "vcf or hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
@@ -93,7 +93,8 @@ public class Haplogrep extends Tool {
 		boolean lineage = isFlagSet("lineage");
 
 		if (chip && !format.equals("vcf")) {
-			System.out.println("Please select VCF format when selecting chip parameter");
+			System.out.println(
+					"The --chip flag only works for VCF format. For hsd, please specify the included variants in the Haplogrep range.");
 			return -1;
 		}
 
@@ -161,7 +162,7 @@ public class Haplogrep extends Tool {
 
 					HgClassifier.run(session, phylotree, fluctrates, metric);
 
-					ExportTools.exportResults(session, out, extended);
+					ExportTools.createReport(session, out, extended);
 
 					if (lineage) {
 						ExportTools.calcLineage(session, out);
@@ -184,17 +185,13 @@ public class Haplogrep extends Tool {
 		return 0;
 	}
 
-
-	/**
-	 * @param args
-	 * @throws IOException
-	 */
 	public static void main(String[] args) throws IOException {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
-		//		"test-data/h100-haplogrep.txt", "--format", "vcf"});
+		// haplogrep = new Haplogrep(new String[] { "--in",
+		// "test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
+		// "test-data/h100-haplogrep.txt", "--format", "vcf"});
 
 		haplogrep.start();
 
