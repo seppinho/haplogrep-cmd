@@ -54,8 +54,7 @@ public class VcfTest {
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
 		}
-		//TODO ,309.1CC,
-		assertEquals("105T,249d,", actual.toString());
+		assertEquals("105T,249d,309.1CC,", actual.toString());
 
 		splits = samples.get(2).split("\t");
 		actual.setLength(0);
@@ -69,8 +68,7 @@ public class VcfTest {
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
 		}
-		//TODO 309.1C,
-		assertEquals("16189d,", actual.toString());
+		assertEquals("309.1C,16189d,", actual.toString());
 
 	}
 

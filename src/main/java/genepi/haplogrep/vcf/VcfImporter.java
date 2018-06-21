@@ -113,15 +113,14 @@ public class VcfImporter {
 					// INSERTIONS
 					else if (reference.length() < genotype.length()) {
 
-						// only simple case
-						// TODO
-						if (reference.length() == 1) {
+						profiles.get(index).append("\t");
 
-							profiles.get(index).append("\t");
-
+						if (reference.length() == 1) { 	
 							profiles.get(index).append(vc.getStart() + "." + 1
 									+ genotype.substring(reference.length(), (genotype.length())));
-
+						} else {
+							profiles.get(index).append(vc.getStart() + "." + 1
+									+ genotype.substring(0, (genotype.length() - reference.length())));
 						}
 					}
 
@@ -168,8 +167,6 @@ public class VcfImporter {
 		} // end variants
 
 		ArrayList<String> result = new ArrayList<>();
-
-		boolean lineBreak = false;
 
 		for (StringBuilder profile : profiles) {
 
