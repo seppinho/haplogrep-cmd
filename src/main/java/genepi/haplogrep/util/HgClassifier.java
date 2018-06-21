@@ -13,7 +13,7 @@ import search.ranking.JaccardRanking;
 import search.ranking.KulczynskiRanking;
 import search.ranking.RankingMethod;
 
-public class Classifier {
+public class HgClassifier {
 	
 	public static void run(Session session, String phyloTree, String fluctrates, String metric)
 			throws JDOMException, IOException, InvalidRangeException {

@@ -2,15 +2,15 @@ package genepi.haplogrep.main;
 
 import genepi.base.Tool;
 import genepi.haplogrep.Session;
-import genepi.haplogrep.hsd.HsdImporter;
-import genepi.haplogrep.util.Classifier;
+import genepi.haplogrep.util.HgClassifier;
 import genepi.haplogrep.util.ExportTools;
-import genepi.haplogrep.vcf.VcfImporter;
 import htsjdk.variant.variantcontext.Genotype;
 import htsjdk.variant.variantcontext.GenotypeType;
 import htsjdk.variant.variantcontext.VariantContext;
 import htsjdk.variant.vcf.VCFFileReader;
 import htsjdk.variant.vcf.VCFHeader;
+import importer.HsdImporter;
+import importer.VcfImporter;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
 import search.SearchResultTreeNode;
@@ -159,7 +159,7 @@ public class Haplogrep extends Tool {
 
 					session.setCurrentSampleFile(newSampleFile);
 
-					Classifier.run(session, phylotree, fluctrates, metric);
+					HgClassifier.run(session, phylotree, fluctrates, metric);
 
 					ExportTools.exportResults(session, out, extended);
 

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import genepi.haplogrep.vcf.VcfImporter;
+import importer.VcfImporter;
 
 public class VcfTest {
 

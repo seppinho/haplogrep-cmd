@@ -1,4 +1,4 @@
-package genepi.haplogrep.vcf;
+package importer;
 
 import java.io.File;
 import java.util.ArrayList;
