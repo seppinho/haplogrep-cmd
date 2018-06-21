@@ -1,0 +1,11 @@
+##fileformat=VCFv4.1
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele	count	in	genotypes,	for	each	ALT	allele,	in	the	same	order	as	listed">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total	number	of	alleles	in	called	genotypes">
+##contig=<ID=MT,length=16569,md5=5d155a500975d0115cbea18770554f48>
+##reference=file:rCRS.fa
+##reference=rCRS
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	TL064
+MT	8270	.	CACCCCCTCTACCCCCTCTA	CACCCCCTCTA	.	PASS	.	GT	1
+MT	8306	.	TA	T	.	PASS	.	GT	1
+MT	8860	.	A	G	.	PASS	.	GT	1

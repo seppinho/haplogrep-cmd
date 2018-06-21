@@ -1,6 +1,7 @@
 package genepi.haplogrep;
 
 import genepi.base.Tool;
+import genepi.haplogrep.vcf.VcfImporter;
 import htsjdk.variant.variantcontext.Genotype;
 import htsjdk.variant.variantcontext.GenotypeType;
 import htsjdk.variant.variantcontext.VariantContext;
@@ -142,7 +143,8 @@ public class Haplogrep extends Tool {
 
 				else if (format.equals("vcf")) {
 
-					lines = importVcf(input, chip);
+					VcfImporter importer = new VcfImporter();
+					lines = importer.vcfToHsd(input, chip);
 
 				}
 
@@ -201,181 +203,6 @@ public class Haplogrep extends Tool {
 		in.close();
 
 		return lines;
-
-	}
-
-	public ArrayList<String> importVcf(File file, boolean chip) throws Exception {
-
-		final VCFFileReader vcfReader = new VCFFileReader(file, false);
-
-		VCFHeader vcfHeader = vcfReader.getFileHeader();
-
-		StringBuilder range = new StringBuilder();
-
-		if (chip) {
-
-			for (VariantContext vc : vcfReader) {
-
-				range.append(vc.getStart() + ";");
-
-			}
-
-			vcfReader.close();
-
-		} else {
-
-			range.append("1-16569");
-
-		}
-
-		ArrayList<StringBuilder> profiles = new ArrayList<StringBuilder>();
-
-		for (String sample : vcfHeader.getSampleNamesInOrder()) {
-
-			StringBuilder profile = new StringBuilder();
-
-			profiles.add(profile.append(sample + "\t" + range + "\t" + "?" + "\t"));
-
-		}
-
-		for (final VariantContext vc : vcfReader) {
-
-			if (vc.getStart() > 16569) {
-
-				System.out.println("Error! Position " + vc.getStart()
-						+ " outside the range. Please double check if VCF only includes mtDNA data mapped to rCRS");
-				System.exit(-1);
-
-			}
-
-			String reference = vc.getReference().getBaseString();
-
-			int index = 0;
-
-			for (String sample : vcfHeader.getSampleNamesInOrder()) {
-
-				Genotype sampleGenotype = vc.getGenotype(sample);
-
-				String genotype = sampleGenotype.getGenotypeString(false);
-
-				if (sampleGenotype.getType() == GenotypeType.HOM_VAR) {
-
-					// SNPs
-					if (genotype.length() == reference.length()) {
-
-						if (genotype.length() == 1) {
-
-							profiles.get(index).append(vc.getStart() + "" + genotype);
-
-							profiles.get(index).append("\t");
-
-						} else {
-
-							// not completely sure if this is needed, but let's check for longer genotype
-							// strings on which pos SNP is located
-							for (int i = 0; i < genotype.length(); i++) {
-
-								if (reference.charAt(i) != genotype.charAt(i)) {
-
-									profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
-
-									profiles.get(index).append("\t");
-
-									break;
-
-								}
-
-							}
-
-						}
-					}
-
-					// DELETIONS
-					else if (reference.length() > genotype.length()) {
-
-						profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
-								+ (vc.getStart() + reference.length() - 1) + "d");
-
-						profiles.get(index).append("\t");
-					}
-
-					// INSERTIONS
-					else if (reference.length() < genotype.length()) {
-
-						// only simple case
-						// TODO
-						if (reference.length() == 1) {
-
-							profiles.get(index).append(vc.getStart() + "." + 1
-									+ genotype.substring(reference.length(), (genotype.length())));
-
-							profiles.get(index).append("\t");
-
-						}
-					}
-
-				}
-
-				// Heteroplasmies
-				if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
-
-					String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
-
-					if (Double.valueOf(hetFrequency) >= 0.96) {
-
-						if (genotype.length() == reference.length()) {
-
-							if (genotype.length() == 1) {
-
-								profiles.get(index).append(vc.getStart() + "" + genotype);
-
-								profiles.get(index).append("\t");
-
-							} else {
-
-								for (int i = 0; i < genotype.length(); i++) {
-
-									if (reference.charAt(i) != genotype.charAt(i)) {
-
-										profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
-
-										profiles.get(index);
-
-										break;
-									}
-
-								}
-
-							}
-
-						}
-					}
-				}
-				index++;
-			} // end samples
-
-		} // end variants
-
-		ArrayList<String> result = new ArrayList<>();
-
-		for (StringBuilder profile : profiles) {
-
-			String profileString = profile.toString();
-
-			if (profileString.split("\t").length > 3) {
-
-				result.add(profileString + "\n");
-
-			} else {
-				System.out.println("Info: Sample " + profileString.substring(0, profile.indexOf("\t"))
-						+ " excluded. No variants detected. Please double check if data has been aligned to rCRS reference");
-			}
-
-		}
-
-		vcfReader.close();
-
-		return result;
 
 	}
 
