@@ -21,7 +21,6 @@ public class VcfTest {
 		VcfImporter impvcf = new VcfImporter();
 		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
 
-		// System.out.println(samples.toString());
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
@@ -38,10 +37,6 @@ public class VcfTest {
 		VcfImporter impvcf = new VcfImporter();
 		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
 		
-		for(int i = 0; i < samples.size(); i++) {
-			System.out.println(samples.get(i));
-		}
-
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
