@@ -76,9 +76,9 @@ public class Haplogrep extends Tool {
 	@Override
 	public int run() {
 
-		String phylotree = "data/phylotree/phylotree$VERSION.xml";
+		String phylotree = "phylotree/phylotree$VERSION.xml";
 
-		String fluctrates = "data/weights/weights$VERSION.txt";
+		String fluctrates = "weights/weights$VERSION.txt";
 
 		String in = (String) getValue("in");
 		String out = (String) getValue("out");
@@ -94,7 +94,7 @@ public class Haplogrep extends Tool {
 
 		if (chip && !format.equals("vcf")) {
 			System.out.println(
-					"The --chip flag only works for VCF format. For hsd, please specify the included variants in the Haplogrep range.");
+					"The --chip flag only works for VCF. For hsd, please specify the included variants in the Haplogrep range.");
 			return -1;
 		}
 
