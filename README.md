@@ -12,7 +12,7 @@ Download and execute the [latest release](https://github.com/seppinho/haplogrep-
 HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
-* **Beta:** If your data is aligned to the RSRS reference please add the `--rsrs` parameter (Default: off). It would be great to hear your feedback. Learn more about the different references [here](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/).
+* **Beta:** We expect that your data is aligned against rCRS (which is included in hg19 and hg38). If your data is aligned against RSRS, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding `--rsrs`.
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
