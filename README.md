@@ -12,8 +12,8 @@ Download and execute the [latest release](https://github.com/seppinho/haplogrep-
 HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
-* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
+* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your variants are from genotyping arrays, please add the `--chip` parameter. The range will then be limited to array SNPs only (Default: off). This will only work for VCF. To get the same behaviour for hsd files, please add **only** the variants to the range, which are included in the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
 * To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
