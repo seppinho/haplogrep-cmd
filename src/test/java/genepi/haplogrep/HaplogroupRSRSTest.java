@@ -18,7 +18,7 @@ import exceptions.parse.sample.InvalidPolymorphismException;
 import exceptions.parse.samplefile.InvalidColumnCountException;
 import junit.framework.TestCase;
 
-public class HaplogroupTestRsrs {
+public class HaplogroupRSRSTest {
 
 
 	private static Phylotree phylotree = null;
