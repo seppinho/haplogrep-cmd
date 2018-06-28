@@ -1,7 +1,7 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Build Status](https://travis-ci.org/seppinho/haplogrep-cmd.svg?branch=master)](https://travis-ci.org/seppinho/haplogrep-cmd)
 
-We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles ([vcf](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/) or [hsd](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd) format) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to rCRS ([vcf](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/) or [hsd](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd) format) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
 ## Command-line Version for local usage
 
@@ -22,7 +22,7 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 The default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
 
 ## Reference sequence
-Several mtDNA references exist, HaploGrep currently assumes that everything is aligned to rCRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
+Several mtDNA references exist, HaploGrep currently assumes that everything is aligned to rCRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic. If your interested in a RSRS version, please let us know. 
 
 ## Genotyping arrays
 If you are using HaploGrep for genotyping array, please have a look at the `--chip` parameter above. 
