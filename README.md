@@ -12,7 +12,7 @@ Download and execute the [latest release](https://github.com/seppinho/haplogrep-
 HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
-* **Beta:** If your data is aligned to RSRS add the `--metric` parameter (Default: off). It would be great to hear your feedback.
+* **Beta:** If your data is aligned to the RSRS reference add the `--rsrs` parameter (Default: off). It would be great to hear your feedback. Learn more about the different references [here](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
@@ -23,7 +23,7 @@ HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems
 The default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
 
 ## Reference sequence
-Several mtDNA references exist, HaploGrep currently assumes that everything is aligned to rCRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic. If your interested in a RSRS version, please let us know. 
+Several mtDNA references exist, HaploGrep supports rCRS and RSRS (currently in beta!). Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic. If your interested in a RSRS version, please let us know. 
 
 ## Genotyping arrays
 If you are using HaploGrep for genotyping array, please have a look at the `--chip` parameter above. 
