@@ -58,6 +58,7 @@ public class Haplogrep extends Tool {
 		addParameter("out", "haplogroup output file");
 		addParameter("format", "vcf or hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
+		addFlag("rsrs", "use RSRS Version");
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
@@ -68,17 +69,14 @@ public class Haplogrep extends Tool {
 	public void init() {
 
 		System.out.println("Welcome to HaploGrep " + VERSION);
-		System.out.println("Division of Genetic Epidemiology, Medical University of Innsbruck");
+		System.out.println("(c) Division of Genetic Epidemiology, Medical University of Innsbruck");
+		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schönherr");
 		System.out.println("");
 
 	}
 
 	@Override
 	public int run() {
-
-		String phylotree = "phylotree/phylotree$VERSION.xml";
-
-		String fluctrates = "weights/weights$VERSION.txt";
 
 		String in = (String) getValue("in");
 		String out = (String) getValue("out");
@@ -89,8 +87,10 @@ public class Haplogrep extends Tool {
 		boolean extended = isFlagSet("extend-report");
 
 		boolean chip = isFlagSet("chip");
-
+		
 		boolean lineage = isFlagSet("lineage");
+		
+		boolean rsrs = isFlagSet("rsrs");
 
 		if (chip && !format.equals("vcf")) {
 			System.out.println(
@@ -112,11 +112,25 @@ public class Haplogrep extends Tool {
 			System.out.println("Error. Please check if input file exists");
 			return -1;
 		}
+		
+		String phylotree = "phylotree/phylotree$VERSION$RSRS.xml";
 
+		String fluctrates = "weights/weights$VERSION$RSRS.txt";
+		
 		phylotree = phylotree.replace("$VERSION", tree);
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
+		
+		if(rsrs) {
+			phylotree = phylotree.replace("$RSRS", "_rsrs");	
+			fluctrates = fluctrates.replace("$RSRS", "_rsrs");
+		} else {
+			phylotree = phylotree.replace("$RSRS", "");	
+			fluctrates = fluctrates.replace("$RSRS", "");
+		}
 
+		
+		System.out.println(phylotree);
 		System.out.println("Parameters:");
 		System.out.println("Input Format: " + format);
 		System.out.println("Phylotree Version: " + tree);
