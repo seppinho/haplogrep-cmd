@@ -1,32 +1,33 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Build Status](https://travis-ci.org/seppinho/haplogrep-cmd.svg?branch=master)](https://travis-ci.org/seppinho/haplogrep-cmd)
 
-We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS or RSRS** (June 18: currently in beta) receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
+We provide a fast and free [haplogroup classification service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (June 18: RSRS currently in beta!) and receive mitochondrial haplogroups in return. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
 ## Command-line Version for local usage
 
-Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.9/haplogrep-2.1.9.jar) (v2.1.9). 
+Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.10/haplogrep-2.1.10.jar) (v2.1.10). 
  
-      java -jar haplogrep-2.1.9.jar --in <input> --format vcf/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.10.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
  
 ## Additional Parameters      
-* **Beta:** If your data is aligned to the RSRS reference add the `--rsrs` parameter (Default: off). It would be great to hear your feedback. Learn more about the different references [here](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/).
+* **Beta:** If your data is aligned to the RSRS reference please add the `--rsrs` parameter (Default: off). It would be great to hear your feedback. Learn more about the different references [here](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/).
 * To change the metric to Hamming or Jaccard add the `--metric` parameter (Default: kulczynski).
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
-* If your variants are from genotyping arrays, please add the `--chip` parameter. The range will then be limited to array SNPs only (Default: off). This will only work for VCF. To get the same behaviour for hsd files, please add **only** the variants to the range, which are included in the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
+* If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
+To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
 * To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
 
 ## File Formats
-The default input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd). 
+The recommended input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/haplogrep/test-data/h100.hsd.txt). 
 
-## Reference sequence
-Several mtDNA references exist, HaploGrep supports rCRS and RSRS (currently in beta!). Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic. If your interested in a RSRS version, please let us know. 
+## mtDNA reference sequences
+Several mtDNA references exist, HaploGrep supports rCRS and RSRS (RSRS is currently in beta). Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
 
 ## Genotyping arrays
-If you are using HaploGrep for genotyping array, please have a look at the `--chip` parameter above. 
+If you are using HaploGrep for genotyping array data, please have a look at the `--chip` parameter above. 
 
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
