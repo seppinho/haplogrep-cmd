@@ -40,10 +40,14 @@ public class QualityTest {
 		double found = searchResult.getWeightFoundPolys();
 		double sample = searchResult.getSumWeightsAllPolysSample();
 		double expected = searchResult.getExpectedWeightPolys();
-		Assert.assertEquals(41.5, found, 0.0);
-		Assert.assertEquals(46, sample, 0.0);
-		Assert.assertEquals(43.5, expected, 0.0);
-	}
+		
+		Assert.assertEquals(0.924, result.get(0).getDistance(),0.01);
+		
+		Assert.assertEquals(38.2, found, 0.01);
+		Assert.assertEquals(42.7, sample, 0.01);
+		Assert.assertEquals(40.2, expected, 0.01);
+		
+			}
 	
 	
 }
