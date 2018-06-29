@@ -5,7 +5,7 @@
 
 	<groupId>genepi</groupId>
 	<artifactId>haplogrep</artifactId>
-	<version>2.1.10</version>
+	<version>2.1.11</version>
 	<packaging>jar</packaging>
 
 	<name>HaploGrep Command-line</name>
@@ -54,6 +54,13 @@
 					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
+			 <resource>
+            <directory>src/main/resources</directory>
+            <targetPath>${project.build.directory}</targetPath>
+            <includes>
+                <include>log4j.properties</include>
+            </includes>
+        </resource>
 		</resources>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>

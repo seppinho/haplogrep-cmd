@@ -87,9 +87,9 @@ public class Haplogrep extends Tool {
 		boolean extended = isFlagSet("extend-report");
 
 		boolean chip = isFlagSet("chip");
-		
+
 		boolean lineage = isFlagSet("lineage");
-		
+
 		boolean rsrs = isFlagSet("rsrs");
 
 		if (chip && !format.equals("vcf")) {
@@ -112,28 +112,28 @@ public class Haplogrep extends Tool {
 			System.out.println("Error. Please check if input file exists");
 			return -1;
 		}
-		
+
 		String phylotree = "phylotree/phylotree$VERSION$RSRS.xml";
 
 		String fluctrates = "weights/weights$VERSION$RSRS.txt";
-		
+
 		phylotree = phylotree.replace("$VERSION", tree);
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
-		
-		if(rsrs) {
-			phylotree = phylotree.replace("$RSRS", "_rsrs");	
+
+		if (rsrs) {
+			phylotree = phylotree.replace("$RSRS", "_rsrs");
 			fluctrates = fluctrates.replace("$RSRS", "_rsrs");
 		} else {
-			phylotree = phylotree.replace("$RSRS", "");	
+			phylotree = phylotree.replace("$RSRS", "");
 			fluctrates = fluctrates.replace("$RSRS", "");
 		}
 
-		
 		System.out.println(phylotree);
 		System.out.println("Parameters:");
 		System.out.println("Input Format: " + format);
 		System.out.println("Phylotree Version: " + tree);
+		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
 		System.out.println("Extended Report: " + extended);
 		System.out.println("Used Metric: " + metric);
 		System.out.println("Chip array data: " + chip);
@@ -203,7 +203,7 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		// haplogrep = new Haplogrep(new String[] { "--in",
+		 //haplogrep = new Haplogrep(new String[] { "--in",
 		// "test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
 		// "test-data/h100-haplogrep.txt", "--format", "vcf"});
 
