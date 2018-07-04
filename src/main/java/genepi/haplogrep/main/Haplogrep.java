@@ -4,44 +4,14 @@ import genepi.base.Tool;
 import genepi.haplogrep.Session;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.haplogrep.util.ExportTools;
-import htsjdk.variant.variantcontext.Genotype;
-import htsjdk.variant.variantcontext.GenotypeType;
-import htsjdk.variant.variantcontext.VariantContext;
-import htsjdk.variant.vcf.VCFFileReader;
-import htsjdk.variant.vcf.VCFHeader;
 import importer.HsdImporter;
 import importer.VcfImporter;
-import phylotree.Phylotree;
-import phylotree.PhylotreeManager;
-import search.SearchResultTreeNode;
-import search.ranking.HammingRanking;
-import search.ranking.JaccardRanking;
-import search.ranking.KulczynskiRanking;
-import search.ranking.RankingMethod;
-import search.ranking.results.RankedResult;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
-
-import org.jdom.JDOMException;
-
-import core.Polymorphism;
+import phylotree.Annotation;
 import core.SampleFile;
-import core.SampleRanges;
-import core.TestSample;
-import exceptions.parse.HsdFileException;
-import exceptions.parse.sample.InvalidRangeException;
 
 public class Haplogrep extends Tool {
 
@@ -140,6 +110,8 @@ public class Haplogrep extends Tool {
 		System.out.println("Lineage: " + lineage);
 		System.out.println("");
 
+		Annotation.setAnnotationPath("annotation/aminoacidchange.txt");
+		
 		long start = System.currentTimeMillis();
 
 		System.out.println("Start Classification...");
@@ -204,8 +176,8 @@ public class Haplogrep extends Tool {
 		Haplogrep haplogrep = new Haplogrep(args);
 
 		 //haplogrep = new Haplogrep(new String[] { "--in",
-		// "test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
-		// "test-data/h100-haplogrep.txt", "--format", "vcf"});
+		 //"test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
+		// "test-data/h100-haplogrep.txt", "--format", "vcf","--extend-report"});
 
 		haplogrep.start();
 
