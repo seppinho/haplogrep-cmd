@@ -2,8 +2,11 @@ package importer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
+import htsjdk.variant.variantcontext.Allele;
 import htsjdk.variant.variantcontext.Genotype;
+import htsjdk.variant.variantcontext.GenotypeBuilder;
 import htsjdk.variant.variantcontext.GenotypeType;
 import htsjdk.variant.variantcontext.VariantContext;
 import htsjdk.variant.vcf.VCFFileReader;
@@ -61,31 +64,46 @@ public class VcfImporter {
 
 			for (String sample : vcfHeader.getSampleNamesInOrder()) {
 
-				Genotype sampleGenotype = vc.getGenotype(sample);
+				Genotype genotype = vc.getGenotype(sample);
 
-				String genotype = sampleGenotype.getGenotypeString(false);
+				String genotypeString = genotype.getGenotypeString(true);
 
-				if (sampleGenotype.getType() == GenotypeType.HOM_VAR) {
+				if (genotype.getType() == GenotypeType.HOM_VAR) {
+
+					// diploid to haploid
+					if (genotype.getPloidy() > 1) {
+
+						Allele altAllele = Allele.create(genotype.getAlleles().get(0), false);
+
+						final List<Allele> alleles = new ArrayList<Allele>();
+
+						alleles.add(altAllele);
+
+						genotype = new GenotypeBuilder(genotype).alleles(alleles).make();
+
+					}
+
+					genotypeString = genotype.getGenotypeString(true);
 
 					// SNPs
-					if (genotype.length() == reference.length()) {
+					if (genotypeString.length() == reference.length()) {
 
-						if (genotype.length() == 1) {
+						if (genotypeString.length() == 1) {
 
 							profiles.get(index).append("\t");
 
-							profiles.get(index).append(vc.getStart() + "" + genotype);
+							profiles.get(index).append(vc.getStart() + "" + genotypeString);
 
 						} else {
 
 							// check for SNPS with complex genotypes (REF: ACA, GT: ACT --> SNP is T)
-							for (int i = 0; i < genotype.length(); i++) {
+							for (int i = 0; i < genotypeString.length(); i++) {
 
-								if (reference.charAt(i) != genotype.charAt(i)) {
+								if (reference.charAt(i) != genotypeString.charAt(i)) {
 
 									profiles.get(index).append("\t");
 
-									profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
+									profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
 
 									break;
 
@@ -97,59 +115,59 @@ public class VcfImporter {
 					}
 
 					// DELETIONS
-					else if (reference.length() > genotype.length()) {
+					else if (reference.length() > genotypeString.length()) {
 
 						profiles.get(index).append("\t");
 
 						// one position deletion
-						if ((reference.length() - genotype.length()) == 1) {
-							profiles.get(index).append(vc.getStart() + genotype.length() + "d");
+						if ((reference.length() - genotypeString.length()) == 1) {
+							profiles.get(index).append(vc.getStart() + genotypeString.length() + "d");
 						} else {
-							profiles.get(index).append((vc.getStart() + genotype.length()) + "-"
+							profiles.get(index).append((vc.getStart() + genotypeString.length()) + "-"
 									+ (vc.getStart() + reference.length() - 1) + "d");
 						}
 					}
 
 					// INSERTIONS
-					else if (reference.length() < genotype.length()) {
+					else if (reference.length() < genotypeString.length()) {
 
 						profiles.get(index).append("\t");
 
-						if (reference.length() == 1) { 	
+						if (reference.length() == 1) {
 							profiles.get(index).append(vc.getStart() + "." + 1
-									+ genotype.substring(reference.length(), (genotype.length())));
+									+ genotypeString.substring(reference.length(), (genotypeString.length())));
 						} else {
 							profiles.get(index).append(vc.getStart() + "." + 1
-									+ genotype.substring(0, (genotype.length() - reference.length())));
+									+ genotypeString.substring(0, (genotypeString.length() - reference.length())));
 						}
 					}
 
 				}
 
 				// Heteroplasmies
-				if (sampleGenotype.getType() == GenotypeType.HET && sampleGenotype.hasAnyAttribute("HF")) {
+				if (genotype.getType() == GenotypeType.HET && genotype.hasAnyAttribute("HF")) {
 
 					String hetFrequency = (String) vc.getGenotype(sample).getAnyAttribute("HF");
 
 					if (Double.valueOf(hetFrequency) >= 0.96) {
 
-						if (genotype.length() == reference.length()) {
+						if (genotypeString.length() == reference.length()) {
 
-							if (genotype.length() == 1) {
+							if (genotypeString.length() == 1) {
 
 								profiles.get(index).append("\t");
 
-								profiles.get(index).append(vc.getStart() + "" + genotype);
+								profiles.get(index).append(vc.getStart() + "" + genotypeString);
 
 							} else {
 
-								for (int i = 0; i < genotype.length(); i++) {
+								for (int i = 0; i < genotypeString.length(); i++) {
 
-									if (reference.charAt(i) != genotype.charAt(i)) {
+									if (reference.charAt(i) != genotypeString.charAt(i)) {
 
 										profiles.get(index).append("\t");
 
-										profiles.get(index).append((vc.getStart() + i) + "" + genotype.charAt(i));
+										profiles.get(index).append((vc.getStart() + i) + "" + genotypeString.charAt(i));
 
 										break;
 									}

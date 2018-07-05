@@ -29,6 +29,39 @@ public class VcfTest {
 		assertEquals("8281-8289d,8307d,8860G,", actual.toString());
 
 	}
+	
+	@Test
+	public void VcfPolyHaploidTest() throws Exception {
+		String file = "test-data/vcf/HG00097.vcf";
+		StringBuilder actual = new StringBuilder();
+		VcfImporter impvcf = new VcfImporter();
+		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+
+		String[] splits = samples.get(0).split("\t");
+		for (int i = 3; i < splits.length; i++) {
+			actual.append(splits[i] + ",");
+		}
+
+		assertEquals("73G,195C,263G,309.1CC,315.1C,709A,750G,1438G,1888A,2706G,4216C,4769G,4917G,5277C,5426C,6489A,7028T,8697A,8860G,10463C,11251G,11719A,11812G,13368A,14233G,14766T,14905A,15028A,15043A,15326G,15452A,15607G,15928A,16126C,16182C,16183C,16189C,16294T,16296T,16298C,16519C,", actual.toString());
+
+	}
+	
+	@Test
+	public void VcfPolyDiploidTest() throws Exception {
+		String file = "test-data/vcf/HG00097_Diploid.vcf";
+		StringBuilder actual = new StringBuilder();
+		VcfImporter impvcf = new VcfImporter();
+		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+
+		String[] splits = samples.get(0).split("\t");
+		for (int i = 3; i < splits.length; i++) {
+			System.out.println(splits[i]);
+			actual.append(splits[i] + ",");
+		}
+
+		assertEquals("73G,195C,263G,309.1CC,315.1C,709A,750G,1438G,1888A,2706G,4216C,4769G,4917G,5277C,5426C,6489A,7028T,8697A,8860G,10463C,11251G,11719A,11812G,13368A,14233G,14766T,14905A,15028A,15043A,15326G,15452A,15607G,15928A,16126C,16182C,16183C,16189C,16294T,16296T,16298C,16519C,", actual.toString());
+
+	}
 
 	@Test
 	public void test1000Del() throws Exception {
