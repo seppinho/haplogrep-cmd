@@ -5,11 +5,11 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.13/haplogrep-2.1.13.jar) (v2.1.13). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.13/haplogrep-2.1.13.jar) (v2.1.13). 
  
       java -jar haplogrep-2.1.13.jar --in <input> --format vcf/hsd --out haplogroups.txt
    
-HaploGrep requires Java 8 and works for Windows, Linux and Mac operating systems.
+HaploGrep only requires Java 8 and works on Windows, Linux and Mac.
  
 ## Additional Parameters      
 * By default HaploGrep expects that your data is aligned against rCRS (which is included in the human references hg19 and hg38). If your data is aligned against RSRS, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.
