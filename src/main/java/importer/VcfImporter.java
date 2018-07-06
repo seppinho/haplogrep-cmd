@@ -196,7 +196,7 @@ public class VcfImporter {
 
 			} else {
 				System.out.println("Info: Sample " + profileString.substring(0, profile.indexOf("\t"))
-						+ " excluded. No variants detected. Please double check if data has been aligned to rCRS reference");
+						+ " excluded. No variants detected, assuming same haplogroup as the reference (rCRS: H2a2a1");
 			}
 
 		}
