@@ -206,4 +206,13 @@ public class HaplogroupTest {
 		Assert.assertEquals("H2a2b3", result.get(0).getHaplogroup().toString());
 	}
 	
+	@Test //GH #11
+	public void testW1_119() throws NumberFormatException, JDOMException, IOException, InvalidPolymorphismException, HsdFileException, InvalidColumnCountException
+	{
+
+		List<RankedResult> result =  phylotree.search(TestSample.parse("ID	1-16569	W1+119	73G 94A 103A 118C 119C 189G 195C 198T 204C 207A 263G 709A 750G 1243C 1438G 2706G 3505G 4769G 5046A 5460A 7028T 7864T 8251A 8860G 8994A 11674T 11719A 11947G 12414C 12705T 14766T 15326G 15884C 16223T 16278T 16292T 16295T 16519C"),new HammingRanking());
+			
+		Assert.assertEquals("W1+119", result.get(0).getHaplogroup().toString());
+	}
+	
 }

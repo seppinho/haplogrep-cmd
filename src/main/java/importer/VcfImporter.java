@@ -65,7 +65,7 @@ public class VcfImporter {
 			for (String sample : vcfHeader.getSampleNamesInOrder()) {
 
 				Genotype genotype = vc.getGenotype(sample);
-
+				
 				String genotypeString = genotype.getGenotypeString(true);
 
 				if (genotype.getType() == GenotypeType.HOM_VAR) {
@@ -91,7 +91,11 @@ public class VcfImporter {
 						if (genotypeString.length() == 1) {
 
 							profiles.get(index).append("\t");
-
+							
+							//NEW in GATK 3.3 * for deletion
+							if (genotype.getGenotypeString().equals("*"))
+								profiles.get(index).append(vc.getStart() + "d");
+							else
 							profiles.get(index).append(vc.getStart() + "" + genotypeString);
 
 						} else {

@@ -26,7 +26,7 @@ public class VcfTest {
 			actual.append(splits[i] + ",");
 		}
 
-		assertEquals("8281-8289d,8307d,8860G,", actual.toString());
+		assertEquals("8281-8289d,8307d,8860G,15940C,15940d,", actual.toString());
 
 	}
 	

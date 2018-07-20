@@ -62,7 +62,7 @@ public class ExportTools {
 							resultRange += startRange.get(i) + "-" + endRange.get(i) + ";";
 						}
 					}
-					result.append(resultRange + "\t");
+					result.append(resultRange);
 
 					result.append("\t" + currentResult.getHaplogroup());
 
@@ -84,7 +84,7 @@ public class ExportTools {
 
 						for (Polymorphism currentPoly : expected) {
 							if (!found.contains(currentPoly))
-								result.append(" " + currentPoly);
+								result.append(currentPoly);
 						}
 
 						result.append("\t");
@@ -134,8 +134,8 @@ public class ExportTools {
 		}
 
 		FileWriter fileWriter = new FileWriter(outFilename);
-
-		fileWriter.write(result.toString());
+		//GH issue #11
+		fileWriter.write(result.toString().replace("\t ", "\t"));
 
 		fileWriter.close();
 
@@ -211,12 +211,15 @@ public class ExportTools {
 			}
 
 		}
-
-		FileWriter fileWriter = new FileWriter(out.substring(0, out.lastIndexOf(".")) + "_lineage.txt");
+		//issue #10 
+		if (out.contains("\\.")) {
+			out= out.substring(0, out.lastIndexOf("."));
+		}
+		FileWriter fileWriter = new FileWriter(out + "_lineage.txt");
 
 		fileWriter.write(build.toString());
 
-		FileWriter fileWriter2 = new FileWriter(out.substring(0, out.lastIndexOf(".")) + "_graphviz.txt");
+		FileWriter fileWriter2 = new FileWriter(out + "_graphviz.txt");
 
 		fileWriter2.write(graphViz.toString());
 
