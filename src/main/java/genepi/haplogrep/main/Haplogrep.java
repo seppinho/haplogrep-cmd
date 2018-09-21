@@ -3,13 +3,28 @@ package genepi.haplogrep.main;
 import genepi.base.Tool;
 import genepi.haplogrep.Session;
 import genepi.haplogrep.util.HgClassifier;
+import genepi.io.FileUtil;
+import htsjdk.samtools.SAMFileHeader;
+import htsjdk.samtools.SAMLineParser;
+import htsjdk.samtools.SAMRecord;
+import htsjdk.samtools.SAMSequenceRecord;
+import htsjdk.samtools.reference.FastaSequenceFile;
+import htsjdk.samtools.reference.ReferenceSequence;
 import genepi.haplogrep.util.ExportTools;
+import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import com.github.lindenb.jbwa.jni.*;
+
 import phylotree.Annotation;
 import core.SampleFile;
 
@@ -111,7 +126,7 @@ public class Haplogrep extends Tool {
 		System.out.println("");
 
 		Annotation.setAnnotationPath("annotation/aminoacidchange.txt");
-		
+
 		long start = System.currentTimeMillis();
 
 		System.out.println("Start Classification...");
@@ -124,12 +139,12 @@ public class Haplogrep extends Tool {
 
 				Session session = new Session(uniqueID);
 
-				ArrayList<String> lines = null;
+				ArrayList<String> lines = new ArrayList<String>();
 
 				if (format.equals("hsd")) {
 
 					HsdImporter importer = new HsdImporter();
-					lines = importer.loadHsd(input);
+					lines = importer.loadHsd(input); 
 
 				}
 
@@ -138,6 +153,13 @@ public class Haplogrep extends Tool {
 					VcfImporter importer = new VcfImporter();
 					lines = importer.vcfToHsd(input, chip);
 
+				}
+
+				else if (format.equals("fasta")) {
+
+					FastaImporter importer = new FastaImporter();
+					lines = importer.loadFasta(input, rsrs);
+					
 				}
 
 				if (lines != null) {
@@ -175,9 +197,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		 //haplogrep = new Haplogrep(new String[] { "--in",
-		 //"test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
-		// "test-data/h100-haplogrep.txt", "--format", "vcf","--extend-report"});
+		haplogrep = new Haplogrep(new String[] { "--in", "test-data/fasta/AY195749.fasta", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "fasta", "--extend-report", "--rsrs" });
 
 		haplogrep.start();
 
