@@ -3,34 +3,21 @@ package genepi.haplogrep.main;
 import genepi.base.Tool;
 import genepi.haplogrep.Session;
 import genepi.haplogrep.util.HgClassifier;
-import genepi.io.FileUtil;
-import htsjdk.samtools.SAMFileHeader;
-import htsjdk.samtools.SAMLineParser;
-import htsjdk.samtools.SAMRecord;
-import htsjdk.samtools.SAMSequenceRecord;
-import htsjdk.samtools.reference.FastaSequenceFile;
-import htsjdk.samtools.reference.ReferenceSequence;
 import genepi.haplogrep.util.ExportTools;
 import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.github.lindenb.jbwa.jni.*;
 
 import phylotree.Annotation;
 import core.SampleFile;
-
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.13";
+	public static String VERSION = "v2.1.15";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -39,9 +26,9 @@ public class Haplogrep extends Tool {
 	@Override
 	public void createParameters() {
 
-		addParameter("in", "input VCF or hsd file");
+		addParameter("in", "input VCF, fasta or hsd file");
 		addParameter("out", "haplogroup output file");
-		addParameter("format", "vcf or hsd");
+		addParameter("format", "vcf, fasta, hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
 		addFlag("rsrs", "use RSRS Version");
 		addFlag("extend-report", "add flag for a extended final output");
@@ -55,7 +42,7 @@ public class Haplogrep extends Tool {
 
 		System.out.println("Welcome to HaploGrep " + VERSION);
 		System.out.println("(c) Division of Genetic Epidemiology, Medical University of Innsbruck");
-		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schönherr");
+		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schoenherr");
 		System.out.println("");
 
 	}
