@@ -64,8 +64,7 @@ public class FastaTest {
 			actual.append(splits[i] + ",");
 		}
 		
-		System.out.println(count);
-
+		//exactly 52 differences between rsrs and rCRS
 		assertEquals(52, (splits.length)-3);
 
 	}
