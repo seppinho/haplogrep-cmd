@@ -144,21 +144,21 @@ public class Haplogrep extends Tool {
 				if (format.equals("hsd")) {
 
 					HsdImporter importer = new HsdImporter();
-					lines = importer.loadHsd(input); 
+					lines = importer.load(input); 
 
 				}
 
 				else if (format.equals("vcf")) {
 
 					VcfImporter importer = new VcfImporter();
-					lines = importer.vcfToHsd(input, chip);
+					lines = importer.load(input, chip);
 
 				}
 
 				else if (format.equals("fasta")) {
 
 					FastaImporter importer = new FastaImporter();
-					lines = importer.loadFasta(input, rsrs);
+					lines = importer.load(input, rsrs);
 					
 				}
 

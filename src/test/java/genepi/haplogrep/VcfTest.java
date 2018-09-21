@@ -19,7 +19,7 @@ public class VcfTest {
 		String file = "test-data/vcf/testIndel.vcf";
 		StringBuilder actual = new StringBuilder();
 		VcfImporter impvcf = new VcfImporter();
-		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+		ArrayList<String> samples = impvcf.load(new File(file), false);
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
@@ -35,7 +35,7 @@ public class VcfTest {
 		String file = "test-data/vcf/HG00097.vcf";
 		StringBuilder actual = new StringBuilder();
 		VcfImporter impvcf = new VcfImporter();
-		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+		ArrayList<String> samples = impvcf.load(new File(file), false);
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
@@ -51,7 +51,7 @@ public class VcfTest {
 		String file = "test-data/vcf/HG00097_Diploid.vcf";
 		StringBuilder actual = new StringBuilder();
 		VcfImporter impvcf = new VcfImporter();
-		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+		ArrayList<String> samples = impvcf.load(new File(file), false);
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
@@ -68,7 +68,7 @@ public class VcfTest {
 		String file = "test-data/vcf/1000Gdel.vcf";
 		StringBuilder actual = new StringBuilder();
 		VcfImporter impvcf = new VcfImporter();
-		ArrayList<String> samples = impvcf.vcfToHsd(new File(file), false);
+		ArrayList<String> samples = impvcf.load(new File(file), false);
 		
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
