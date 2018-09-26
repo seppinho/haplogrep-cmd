@@ -195,13 +195,5 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.github.samtools/htsjdk -->
-		<dependency>
-			<groupId>com.github.samtools</groupId>
-			<artifactId>htsjdk</artifactId>
-			<version>2.16.1</version>
-		</dependency>
-
-
 	</dependencies>
 </project>
