@@ -55,7 +55,6 @@ public class VcfTest {
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
-			System.out.println(splits[i]);
 			actual.append(splits[i] + ",");
 		}
 
