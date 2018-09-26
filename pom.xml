@@ -22,7 +22,7 @@
 			<name>In Project Repo</name>
 			<url>file://${basedir}/libs</url>
 		</repository>
-		
+
 		<repository>
 			<id>genepi</id>
 			<url>https://raw.github.com/genepi/maven-repository/mvn-repo/</url>
@@ -31,8 +31,8 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
-		
-		
+
+
 	</repositories>
 
 	<build>
@@ -55,13 +55,13 @@
 					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
-			 <resource>
-            <directory>src/main/resources</directory>
-            <targetPath>${project.build.directory}</targetPath>
-            <includes>
-                <include>log4j.properties</include>
-            </includes>
-        </resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.build.directory}</targetPath>
+				<includes>
+					<include>log4j.properties</include>
+				</includes>
+			</resource>
 		</resources>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
@@ -168,7 +168,7 @@
 			<version>1.1</version>
 		</dependency>
 
-	
+
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep</artifactId>
@@ -180,13 +180,13 @@
 			<artifactId>json</artifactId>
 			<version>20180130</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>genepi-io</artifactId>
 			<version>1.0.6</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -194,6 +194,14 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.github.samtools/htsjdk -->
+		<dependency>
+			<groupId>com.github.samtools</groupId>
+			<artifactId>htsjdk</artifactId>
+			<version>2.16.1</version>
+		</dependency>
+
 
 	</dependencies>
 </project>
