@@ -10,6 +10,11 @@ We also provide a command line version for local usage. Download and execute the
       java -jar haplogrep-2.1.15.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
+
+
+## Input File Formats
+The recommended input format is [**VCF**](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/) or **FASTA**. For alignment, bwa version 0.7.17 is used. 
+You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
  
 ## Additional Parameters      
 * By default HaploGrep expects that your data is aligned against rCRS (which is included in the human references hg19 and hg38). If your data is aligned against RSRS, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.
@@ -19,9 +24,6 @@ HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 * If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
 * To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
-
-## File Formats
-The recommended input format is [VCF](http://www.internationalgenome.org/wiki/Analysis/vcf4.0/). You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
