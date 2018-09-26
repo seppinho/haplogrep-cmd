@@ -4,18 +4,20 @@ import genepi.base.Tool;
 import genepi.haplogrep.Session;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.haplogrep.util.ExportTools;
+import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+
 import phylotree.Annotation;
 import core.SampleFile;
-
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.13";
+	public static String VERSION = "v2.1.15";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -24,9 +26,9 @@ public class Haplogrep extends Tool {
 	@Override
 	public void createParameters() {
 
-		addParameter("in", "input VCF or hsd file");
+		addParameter("in", "input VCF, fasta or hsd file");
 		addParameter("out", "haplogroup output file");
-		addParameter("format", "vcf or hsd");
+		addParameter("format", "vcf, fasta, hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
 		addFlag("rsrs", "use RSRS Version");
 		addFlag("extend-report", "add flag for a extended final output");
@@ -40,7 +42,7 @@ public class Haplogrep extends Tool {
 
 		System.out.println("Welcome to HaploGrep " + VERSION);
 		System.out.println("(c) Division of Genetic Epidemiology, Medical University of Innsbruck");
-		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schönherr");
+		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schoenherr");
 		System.out.println("");
 
 	}
@@ -111,7 +113,7 @@ public class Haplogrep extends Tool {
 		System.out.println("");
 
 		Annotation.setAnnotationPath("annotation/aminoacidchange.txt");
-		
+
 		long start = System.currentTimeMillis();
 
 		System.out.println("Start Classification...");
@@ -124,20 +126,27 @@ public class Haplogrep extends Tool {
 
 				Session session = new Session(uniqueID);
 
-				ArrayList<String> lines = null;
+				ArrayList<String> lines = new ArrayList<String>();
 
 				if (format.equals("hsd")) {
 
 					HsdImporter importer = new HsdImporter();
-					lines = importer.loadHsd(input);
+					lines = importer.load(input); 
 
 				}
 
 				else if (format.equals("vcf")) {
 
 					VcfImporter importer = new VcfImporter();
-					lines = importer.vcfToHsd(input, chip);
+					lines = importer.load(input, chip);
 
+				}
+
+				else if (format.equals("fasta")) {
+
+					FastaImporter importer = new FastaImporter();
+					lines = importer.load(input, rsrs);
+					
 				}
 
 				if (lines != null) {
@@ -175,9 +184,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		 //haplogrep = new Haplogrep(new String[] { "--in",
-		 //"test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
-		// "test-data/h100-haplogrep.txt", "--format", "vcf","--extend-report"});
+		haplogrep = new Haplogrep(new String[] { "--in", "test-data/fasta/AY195749.fasta", "--out",
+				"test-data/h100-haplogrep.txt", "--format", "fasta", "--extend-report"});
 
 		haplogrep.start();
 
