@@ -11,6 +11,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import importer.FastaImporter;
+import importer.FastaImporter.References;
 import importer.VcfImporter;
 import junit.framework.Assert;
 
@@ -21,7 +22,7 @@ public class FastaTest {
 		String file = "test-data/fasta/rCRS.fasta";
 		StringBuilder actual = new StringBuilder();
 		FastaImporter impFasta = new FastaImporter();
-		ArrayList<String> samples = impFasta.load(new File(file), false);
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
@@ -30,13 +31,13 @@ public class FastaTest {
 
 		assertEquals(0, actual.length());
 	}
-	
+
 	@Test
 	public void rsrsTest() throws Exception {
 		String file = "test-data/fasta/rsrs.fasta";
 		StringBuilder actual = new StringBuilder();
 		FastaImporter impFasta = new FastaImporter();
-		ArrayList<String> samples = impFasta.load(new File(file), true);
+		ArrayList<String> samples = impFasta.load(new File(file), References.RSRS);
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
@@ -46,29 +47,23 @@ public class FastaTest {
 		assertEquals(0, actual.length());
 
 	}
-	
+
 	@Test
 	public void rCrsWithRsrsReferenceTest() throws Exception {
 		String file = "test-data/fasta/rCRS.fasta";
 		StringBuilder actual = new StringBuilder();
 		FastaImporter impFasta = new FastaImporter();
-		ArrayList<String> samples = impFasta.load(new File(file), true);
+		ArrayList<String> samples = impFasta.load(new File(file), References.RSRS);
 
 		String[] splits = samples.get(0).split("\t");
-		
-		
-		int count = 0;
-		
+
 		for (int i = 3; i < splits.length; i++) {
-			count++;
 			actual.append(splits[i] + ",");
 		}
-		
-		//exactly 52 differences between rsrs and rCRS
-		assertEquals(52, (splits.length)-3);
+
+		// exactly 52 differences between rsrs and rCRS
+		assertEquals(52, (splits.length) - 3);
 
 	}
-	
-
 
 }

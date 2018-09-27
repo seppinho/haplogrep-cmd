@@ -7,14 +7,16 @@ import genepi.haplogrep.util.ExportTools;
 import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
+import importer.FastaImporter.References;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-
 import phylotree.Annotation;
 import core.SampleFile;
+
 public class Haplogrep extends Tool {
 
 	public static String VERSION = "v2.1.15";
@@ -131,7 +133,7 @@ public class Haplogrep extends Tool {
 				if (format.equals("hsd")) {
 
 					HsdImporter importer = new HsdImporter();
-					lines = importer.load(input); 
+					lines = importer.load(input);
 
 				}
 
@@ -145,8 +147,12 @@ public class Haplogrep extends Tool {
 				else if (format.equals("fasta")) {
 
 					FastaImporter importer = new FastaImporter();
-					lines = importer.load(input, rsrs);
-					
+					if (rsrs) {
+						lines = importer.load(input, References.RSRS);
+					} else {
+						lines = importer.load(input, References.RCRS);
+					}
+
 				}
 
 				if (lines != null) {
@@ -184,8 +190,9 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/fasta/AY195749.fasta", "--out",
-		//		"test-data/h100-haplogrep.txt", "--format", "fasta", "--extend-report"});
+		// haplogrep = new Haplogrep(new String[] { "--in",
+		// "test-data/fasta/AY195749.fasta", "--out",
+		// "test-data/h100-haplogrep.txt", "--format", "fasta", "--extend-report"});
 
 		haplogrep.start();
 
