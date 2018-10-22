@@ -24,7 +24,7 @@ You can also specify your profiles in hsd format, which is a simple tab-delimite
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
-* To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). We provide a textual format (`*.lineage.txt`) and a [Graphviz](http://www.graphviz.org/documentation/) DOT format. You can upload the HaploGrep `*.graphviz.txt` file [here](https://graphs.grevian.org/graph) or process it with the Graphviz library.
+* To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). All input samples are combined to a tree. We use the [Graphviz](http://www.graphviz.org/documentation/) DOT format and provide a SVG file as an output. You can also upload the HaploGrep `*.dot` file [here](https://graphs.grevian.org/graph).
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.

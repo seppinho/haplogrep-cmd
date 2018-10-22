@@ -1,5 +1,6 @@
 package genepi.haplogrep.util;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import core.Polymorphism;
 import core.SampleRanges;
 import core.TestSample;
 import genepi.haplogrep.Session;
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.model.MutableGraph;
+import guru.nidi.graphviz.parse.Parser;
 import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
@@ -144,24 +149,20 @@ public class ExportTools {
 	}
 
 	public static void calcLineage(Session session, String out) throws IOException {
-		
+
 		if (out.endsWith(".txt")) {
 			out = out.substring(0, out.lastIndexOf("."));
 		}
 
-		StringBuilder build = new StringBuilder();
 		HashSet<String> set = new HashSet<String>();
 		String tmpNode = "";
 
-		build.append("#Tab-delimited columns: From_HG,WITH_POLYS,To_HG\n");
-
-		FileWriter graphVizWriter = new FileWriter(out + "_graphviz.txt");
+		String graphViz = out + "_lineage.dot";
+		FileWriter graphVizWriter = new FileWriter(graphViz);
 
 		graphVizWriter.write("digraph {  label=\"SampleID: " + "SET" + "\"\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
-
-			build.append(sample.getSampleID() + " (HG: " + sample.getResults().get(0).getHaplogroup() + ") \n");
 
 			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
@@ -175,7 +176,6 @@ public class ExportTools {
 					Haplogroup currentHg = currentPath.get(i).getHaplogroup();
 
 					if (i == 0) {
-						build.append(currentHg + "\t");
 						tmpNode = "\"" + currentHg + "\" -> ";
 					}
 
@@ -193,11 +193,6 @@ public class ExportTools {
 							}
 						}
 
-						// add polys
-						build.append(polys.toString().trim());
-
-						build.append("\t" + currentHg + "\n");
-
 						String node = "\"" + currentHg + "\"[label=\"" + polys.toString().trim() + "\"];\n";
 
 						if (!set.contains(tmpNode + node)) {
@@ -206,29 +201,25 @@ public class ExportTools {
 							tmpNode = "";
 						}
 
-						// Write currentHG also in new line for next iteration, but don't do this for last element
+						// Write currentHG also in new line for next iteration, but don't do this for
+						// last element
 						if (i != (currentPath.size() - 1)) {
 							tmpNode = "\"" + currentHg + "\" -> ";
-							build.append(currentHg + "\t");
 						}
 					}
 
 				}
-
-				build.append("\n");
 			}
 
 		}
 
 		graphVizWriter.write("}");
 
-		FileWriter fileWriter = new FileWriter(out + "_lineage.txt");
-
-		fileWriter.write(build.toString());
-
-		fileWriter.close();
-
 		graphVizWriter.close();
+
+		MutableGraph g = Parser.read(new File(graphViz));
+		
+		Graphviz.fromGraph(g).width(700).render(Format.SVG).toFile(new File(out+".svg"));
 
 	}
 
