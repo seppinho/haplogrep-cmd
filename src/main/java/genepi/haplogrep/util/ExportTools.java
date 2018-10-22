@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import core.Haplogroup;
 import core.Polymorphism;
 import core.SampleRanges;
 import core.TestSample;
@@ -16,7 +18,7 @@ import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
 public class ExportTools {
-	
+
 	public static void createReport(Session session, String outFilename, boolean extended) throws IOException {
 
 		StringBuffer result = new StringBuffer();
@@ -134,7 +136,7 @@ public class ExportTools {
 		}
 
 		FileWriter fileWriter = new FileWriter(outFilename);
-		//GH issue #11
+		// GH issue #11
 		fileWriter.write(result.toString().replace("\t ", "\t"));
 
 		fileWriter.close();
@@ -142,18 +144,24 @@ public class ExportTools {
 	}
 
 	public static void calcLineage(Session session, String out) throws IOException {
+		
+		if (out.endsWith(".txt")) {
+			out = out.substring(0, out.lastIndexOf("."));
+		}
 
 		StringBuilder build = new StringBuilder();
+		HashSet<String> set = new HashSet<String>();
+		String tmpNode = "";
 
-		StringBuilder graphViz = new StringBuilder();
-		
 		build.append("#Tab-delimited columns: From_HG,WITH_POLYS,To_HG\n");
+
+		FileWriter graphVizWriter = new FileWriter(out + "_graphviz.txt");
+
+		graphVizWriter.write("digraph {  label=\"SampleID: " + "SET" + "\"\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
-			build.append(sample.getSampleID() + " (HG: "+ sample.getResults().get(0).getHaplogroup() +  ") \n");
-
-			graphViz.append("digraph {  label=\"SampleID: "+ sample.getSampleID() + "\"\n");
+			build.append(sample.getSampleID() + " (HG: " + sample.getResults().get(0).getHaplogroup() + ") \n");
 
 			TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
@@ -164,70 +172,64 @@ public class ExportTools {
 
 				for (int i = 0; i < currentPath.size(); i++) {
 
+					Haplogroup currentHg = currentPath.get(i).getHaplogroup();
+
 					if (i == 0) {
-						build.append(currentPath.get(i).getHaplogroup() + "\t");
-						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\" -> ");
+						build.append(currentHg + "\t");
+						tmpNode = "\"" + currentHg + "\" -> ";
 					}
 
 					else {
 
 						StringBuilder polys = new StringBuilder();
+
 						if (currentPath.get(i).getExpectedPolys().size() == 0) {
 							polys.append("-");
 						} else {
-
 							for (Polymorphism currentPoly : currentPath.get(i).getExpectedPolys()) {
-
 								if (currentPath.get(i).getFoundPolys().contains(currentPoly)) {
 									polys.append(currentPoly + " ");
 								}
 							}
 						}
 
-						//add polys
+						// add polys
 						build.append(polys.toString().trim());
-						
-						build.append("\t" + currentPath.get(i).getHaplogroup() + "\n");
 
-						graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\"[label=\""+ polys.toString().trim() + "\"];\n");
+						build.append("\t" + currentHg + "\n");
 
-						
-						// dont do this for last element
-						if (i != (currentPath.size()-1)) {
+						String node = "\"" + currentHg + "\"[label=\"" + polys.toString().trim() + "\"];\n";
 
-							graphViz.append("\"" + currentPath.get(i).getHaplogroup() + "\" -> ");
+						if (!set.contains(tmpNode + node)) {
+							graphVizWriter.write(tmpNode + node);
+							set.add(tmpNode + node);
+							tmpNode = "";
+						}
 
-							build.append(currentPath.get(i).getHaplogroup() + "\t");
-
+						// Write currentHG also in new line for next iteration, but don't do this for last element
+						if (i != (currentPath.size() - 1)) {
+							tmpNode = "\"" + currentHg + "\" -> ";
+							build.append(currentHg + "\t");
 						}
 					}
 
 				}
 
 				build.append("\n");
-				graphViz.append("}");
-				graphViz.append("\n");
-				graphViz.append("\n");
 			}
 
 		}
-		//issue #10 
-		if (out.contains("\\.")) {
-			out= out.substring(0, out.lastIndexOf("."));
-		}
+
+		graphVizWriter.write("}");
+
 		FileWriter fileWriter = new FileWriter(out + "_lineage.txt");
 
 		fileWriter.write(build.toString());
 
-		FileWriter fileWriter2 = new FileWriter(out + "_graphviz.txt");
-
-		fileWriter2.write(graphViz.toString());
-
 		fileWriter.close();
 
-		fileWriter2.close();
+		graphVizWriter.close();
 
 	}
-	
 
 }
