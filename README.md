@@ -5,9 +5,9 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.15/haplogrep-2.1.15.jar) (v2.1.15). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.16/haplogrep-2.1.16.jar) (v2.1.16). 
  
-      java -jar haplogrep-2.1.15.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.16.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
@@ -24,7 +24,7 @@ You can also specify your profiles in hsd format, which is a simple tab-delimite
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
-* To output the complete path from rCRS root to your input sample use the `--lineage` parameter. (Default: off). All input samples are combined to a tree. We use the [Graphviz](http://www.graphviz.org/documentation/) DOT format and provide a SVG file as an output. You can also upload the HaploGrep `*.dot` file [here](https://graphs.grevian.org/graph).
+* Create a **graphical tree** of all input samples by using the `--lineage` parameter. (Default: off). We use the [Graphviz](http://www.graphviz.org/documentation/) DOT format and provide a SVG file as an output. 
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
