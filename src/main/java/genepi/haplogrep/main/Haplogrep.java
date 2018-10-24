@@ -182,7 +182,7 @@ public class Haplogrep extends Tool {
 
 		System.out.println("HaploGrep file written to " + out + " (Time: "
 				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
-
+ 
 		return 0;
 	}
 

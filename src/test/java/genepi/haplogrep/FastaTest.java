@@ -187,7 +187,7 @@ public class FastaTest {
 
 	}
 
-	@Test
+/*	@Test
 	public void parsePhylotree17() throws Exception {
 		String file = "test-data/fasta/Phylotree17hgs.zip";
 		String fileTemp = "test-data/fasta/temp.fasta";
@@ -231,5 +231,5 @@ public class FastaTest {
 		}
 		zin.close();
 
-	}
+	}*/
 }
