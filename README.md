@@ -24,7 +24,7 @@ You can also specify your profiles in hsd format, which is a simple tab-delimite
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
-* Create a **graphical tree** of all input samples by using the `--lineage` parameter. (Default: off). We use the [Graphviz](http://www.graphviz.org/documentation/) DOT format and provide a SVG file as an output. 
+* Create a graph of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
@@ -35,7 +35,7 @@ If you are using HaploGrep for genotyping array data, please have a look at the 
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
 
-Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.   
+Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.
 
 ## Blog
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
