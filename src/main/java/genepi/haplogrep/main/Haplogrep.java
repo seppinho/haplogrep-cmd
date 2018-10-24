@@ -19,7 +19,7 @@ import core.SampleFile;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.15";
+	public static String VERSION = "v2.1.16";
 
 	public Haplogrep(String[] args) {
 		super(args);
