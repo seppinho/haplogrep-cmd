@@ -15,10 +15,6 @@ import core.Polymorphism;
 import core.SampleRanges;
 import core.TestSample;
 import genepi.haplogrep.Session;
-import guru.nidi.graphviz.engine.Format;
-import guru.nidi.graphviz.engine.Graphviz;
-import guru.nidi.graphviz.model.MutableGraph;
-import guru.nidi.graphviz.parse.Parser;
 import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
@@ -141,7 +137,6 @@ public class ExportTools {
 		}
 
 		FileWriter fileWriter = new FileWriter(outFilename);
-		// GH issue #11
 		fileWriter.write(result.toString().replace("\t ", "\t"));
 
 		fileWriter.close();
@@ -157,10 +152,11 @@ public class ExportTools {
 		HashSet<String> set = new HashSet<String>();
 		String tmpNode = "";
 
-		String graphViz = out + "_lineage.dot";
+		String graphViz = out + ".dot";
+		
 		FileWriter graphVizWriter = new FileWriter(graphViz);
 
-		graphVizWriter.write("digraph {  label=\"SampleID: " + "SET" + "\"\n");
+		graphVizWriter.write("digraph {  label=\"Sample File: " + out +  "\"\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
@@ -214,12 +210,7 @@ public class ExportTools {
 		}
 
 		graphVizWriter.write("}");
-
 		graphVizWriter.close();
-
-		MutableGraph g = Parser.read(new File(graphViz));
-		
-		Graphviz.fromGraph(g).width(700).render(Format.SVG).toFile(new File(out+".svg"));
 
 	}
 

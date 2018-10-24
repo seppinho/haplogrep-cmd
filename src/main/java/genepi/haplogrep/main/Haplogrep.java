@@ -180,7 +180,7 @@ public class Haplogrep extends Tool {
 			return -1;
 		}
 
-		System.out.println("HaploGrep file written to " + out + " (Time: "
+		System.out.println("HaploGrep file written to " + new File(out).getAbsolutePath() + " (Time: "
 				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
  
 		return 0;
