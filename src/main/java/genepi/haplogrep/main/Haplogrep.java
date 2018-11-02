@@ -192,9 +192,9 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		haplogrep = new Haplogrep(
-				new String[] { "--in", "/home/seb/Desktop/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
-						"--out", "test-data/h100-haplogrep.txt", "--format", "vcf", });
+		//haplogrep = new Haplogrep(
+		//		new String[] { "--in", "/home/seb/Desktop/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
+		//				"--out", "test-data/h100-haplogrep.txt", "--format", "vcf", });
 
 		haplogrep.start();
 
