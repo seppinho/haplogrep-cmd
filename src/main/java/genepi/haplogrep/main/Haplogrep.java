@@ -142,7 +142,7 @@ public class Haplogrep extends Tool {
 				else if (format.equals("vcf")) {
 					VcfImporter importerVcf = new VcfImporter();
 					HashMap<String, Sample> samples = importerVcf.load(input, chip);
-					lines = ExportTools.writeHsd(samples);
+					lines = ExportTools.vcfToHsd(samples);
 
 				}
 

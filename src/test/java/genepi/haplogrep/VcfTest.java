@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -13,7 +11,6 @@ import org.junit.Test;
 import contamination.objects.Sample;
 import contamination.objects.Variant;
 import genepi.haplogrep.util.ExportTools;
-import importer.VcfImporterOld;
 import importer.VcfImporter;
 
 public class VcfTest {
@@ -24,9 +21,10 @@ public class VcfTest {
 		VcfImporter impvcf = new VcfImporter();
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 
-		ArrayList<String> lines = ExportTools.writeHsd(samples);
-		
-		assertEquals("TL064	1-16569	?	8281d	8282d	8283d	8284d	8285d	8286d	8287d	8288d	8289d	8307d	8860G	15940C	15941d",
+		ArrayList<String> lines = ExportTools.vcfToHsd(samples);
+
+		assertEquals(
+				"TL064	1-16569	?	8281d	8282d	8283d	8284d	8285d	8286d	8287d	8288d	8289d	8307d	8860G	15940C	15941d",
 				lines.get(0).toString().trim());
 
 	}
@@ -34,14 +32,11 @@ public class VcfTest {
 	@Test
 	public void VcfPolyHaploidTest() throws Exception {
 		String file = "test-data/vcf/HG00097.vcf";
-		StringBuilder actual = new StringBuilder();
 		VcfImporter impvcf = new VcfImporter();
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 
-		Sample sample = samples.get("HG00097");
-		
-		ArrayList<String> lines = ExportTools.writeHsd(samples);
-		
+		ArrayList<String> lines = ExportTools.vcfToHsd(samples);
+
 		// currently excluded: 309.1CC complex INSERTION
 		assertEquals(
 				"HG00097	1-16569	?	73G	195C	263G	315.1C	709A	750G	1438G	1888A	2706G	4216C	4769G	4917G	5277C	5426C	6489A	7028T	8697A	8860G	10463C	11251G	11719A	11812G	13368A	14233G	14766T	14905A	15028A	15043A	15326G	15452A	15607G	15928A	16126C	16182C	16183C	16189C	16294T	16296T	16298C	16519C",
@@ -58,6 +53,7 @@ public class VcfTest {
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 
 		Sample sample = samples.get("HG00097");
+
 		for (Variant var : sample.getVariants()) {
 			if (var.getType() != 5) {
 				actual.append(var.getPos() + "" + var.getVariant() + ",");

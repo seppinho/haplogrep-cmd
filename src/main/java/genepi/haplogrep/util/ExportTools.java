@@ -21,8 +21,8 @@ import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
 public class ExportTools {
-	
-	public static ArrayList<String> writeHsd(HashMap<String, Sample> samples) {
+
+	public static ArrayList<String> vcfToHsd(HashMap<String, Sample> samples) {
 		ArrayList<String> lines = new ArrayList<String>();
 		for (Sample sam : samples.values()) {
 
@@ -30,14 +30,14 @@ public class ExportTools {
 			build.append(sam.getId() + "\t" + sam.getRange() + "\t" + "?");
 
 			for (Variant var : sam.getVariants()) {
-				if (var.getType() != 5) {
+				if (var.getType() == 1 || var.getType() == 4 || (var.getType() == 2 && var.getLevel() >= 0.8)) {
 					build.append("\t" + var.getPos() + "" + var.getVariant());
-				} else {
+				} else if (var.getType() == 5) {
 					build.append("\t" + var.getInsertion());
 				}
 			}
 			build.append("\n");
-			
+
 			lines.add(build.toString());
 		}
 		return lines;
@@ -176,10 +176,10 @@ public class ExportTools {
 		String tmpNode = "";
 
 		String graphViz = out + ".dot";
-		
+
 		FileWriter graphVizWriter = new FileWriter(graphViz);
 
-		graphVizWriter.write("digraph {  label=\"Sample File: " + out +  "\"\n");
+		graphVizWriter.write("digraph {  label=\"Sample File: " + out + "\"\n");
 
 		for (TestSample sample : session.getCurrentSampleFile().getTestSamples()) {
 
