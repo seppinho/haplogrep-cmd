@@ -1,15 +1,17 @@
 package genepi.haplogrep.util;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import contamination.objects.Sample;
+import contamination.objects.Variant;
 import core.Haplogroup;
 import core.Polymorphism;
 import core.SampleRanges;
@@ -19,6 +21,27 @@ import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
 public class ExportTools {
+	
+	public static ArrayList<String> writeHsd(HashMap<String, Sample> samples) {
+		ArrayList<String> lines = new ArrayList<String>();
+		for (Sample sam : samples.values()) {
+
+			StringBuilder build = new StringBuilder();
+			build.append(sam.getId() + "\t" + sam.getRange() + "\t" + "?");
+
+			for (Variant var : sam.getVariants()) {
+				if (var.getType() != 5) {
+					build.append("\t" + var.getPos() + "" + var.getVariant());
+				} else {
+					build.append("\t" + var.getInsertion());
+				}
+			}
+			build.append("\n");
+			
+			lines.add(build.toString());
+		}
+		return lines;
+	}
 
 	public static void createReport(Session session, String outFilename, boolean extended) throws IOException {
 

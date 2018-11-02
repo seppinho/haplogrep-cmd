@@ -12,8 +12,10 @@ import importer.FastaImporter.References;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
-
+import contamination.objects.Sample;
+import contamination.util.Utils;
 import phylotree.Annotation;
 import core.SampleFile;
 
@@ -138,9 +140,9 @@ public class Haplogrep extends Tool {
 				}
 
 				else if (format.equals("vcf")) {
-
-					VcfImporter importer = new VcfImporter();
-					lines = importer.load(input, chip);
+					VcfImporter importerVcf = new VcfImporter();
+					HashMap<String, Sample> samples = importerVcf.load(input, chip);
+					lines = ExportTools.writeHsd(samples);
 
 				}
 
@@ -182,7 +184,7 @@ public class Haplogrep extends Tool {
 
 		System.out.println("HaploGrep file written to " + new File(out).getAbsolutePath() + " (Time: "
 				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
- 
+
 		return 0;
 	}
 
@@ -190,9 +192,9 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		// haplogrep = new Haplogrep(new String[] { "--in",
-		// "test-data/vcf/ALL.chrMT.phase1.vcf", "--out",
-		// "test-data/h100-haplogrep.txt", "--format", "vcf", "--lineage"});
+		haplogrep = new Haplogrep(
+				new String[] { "--in", "/home/seb/Desktop/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
+						"--out", "test-data/h100-haplogrep.txt", "--format", "vcf", });
 
 		haplogrep.start();
 
