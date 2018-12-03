@@ -17,6 +17,7 @@ import core.Polymorphism;
 import core.SampleRanges;
 import core.TestSample;
 import genepi.haplogrep.Session;
+import genepi.io.table.writer.CsvTableWriter;
 import search.SearchResultTreeNode;
 import search.ranking.results.RankedResult;
 
@@ -45,9 +46,9 @@ public class ExportTools {
 
 	public static void createReport(Session session, String outFilename, boolean extended) throws IOException {
 
-		StringBuffer result = new StringBuffer();
-
 		Collection<TestSample> sampleCollection = null;
+
+		CsvTableWriter writer = new CsvTableWriter(outFilename,'\t');
 
 		sampleCollection = session.getCurrentSampleFile().getTestSamples();
 
@@ -55,19 +56,20 @@ public class ExportTools {
 
 		if (!extended) {
 
-			result.append("SampleID\tRange\tHaplogroup\tOverall_Rank\n");
+			writer.setColumns(new String[] { "SampleID", "Range", "Haplogroup", "Overall_Rank" });
 
 		} else {
 
-			result.append(
-					"SampleID\tRange\tHaplogroup\tOverall_Rank\tNot_Found_Polys\tFound_Polys\tRemaining_Polys\tAAC_In_Remainings\t Input_Sample\n");
+			writer.setColumns(new String[] { "SampleID", "Range", "Haplogroup", "Overall_Rank", "Not_Found_Polys",
+					"Found_Polys", "Remaining_Polys", "AAC_In_Remainings", "Input_Sample" });
+
 		}
 
 		if (sampleCollection != null) {
 
 			for (TestSample sample : sampleCollection) {
 
-				result.append(sample.getSampleID() + "\t");
+				writer.setString("SampleID", sample.getSampleID());
 
 				TestSample currentSample = session.getCurrentSampleFile().getTestSample(sample.getSampleID());
 
@@ -88,53 +90,56 @@ public class ExportTools {
 							resultRange += startRange.get(i) + "-" + endRange.get(i) + ";";
 						}
 					}
-					result.append(resultRange);
-
-					result.append("\t" + currentResult.getHaplogroup());
-
-					result.append("\t" + String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
+					writer.setString("Range", resultRange);
+					
+					writer.setString("Haplogroup", currentResult.getHaplogroup().toString());
+					
+					writer.setString("Overall_Rank", String.format(Locale.ROOT, "%.4f", currentResult.getDistance()));
 
 					if (extended) {
 
-						result.append("\t");
-
-						ArrayList<Polymorphism> found = currentResult.getSearchResult().getDetailedResult()
+						ArrayList<Polymorphism> foundPolys = currentResult.getSearchResult().getDetailedResult()
 								.getFoundPolys();
 
-						ArrayList<Polymorphism> expected = currentResult.getSearchResult().getDetailedResult()
+						ArrayList<Polymorphism> expectedPolys = currentResult.getSearchResult().getDetailedResult()
 								.getExpectedPolys();
 
-						Collections.sort(found);
+						Collections.sort(foundPolys);
 
-						Collections.sort(expected);
+						Collections.sort(expectedPolys);
 
-						for (Polymorphism currentPoly : expected) {
-							if (!found.contains(currentPoly))
-								result.append(currentPoly);
+						StringBuffer result = new StringBuffer();
+						for (Polymorphism expected : expectedPolys) {
+							if (!foundPolys.contains(expected)) {
+								result.append(" " + expected.toString());
+							}
 						}
 
-						result.append("\t");
+						writer.setString("Not_Found_Polys", result.toString().trim());
 
-						for (Polymorphism currentPoly : found) {
+						result = new StringBuffer();
+						for (Polymorphism currentPoly : foundPolys) {
 							result.append(" " + currentPoly);
-
 						}
 
-						result.append("\t");
+						writer.setString("Found_Polys", result.toString().trim());
+
 						ArrayList<Polymorphism> allChecked = currentResult.getSearchResult().getDetailedResult()
 								.getRemainingPolysInSample();
 						Collections.sort(allChecked);
 
+						result = new StringBuffer();
 						for (Polymorphism currentPoly : allChecked) {
 							result.append(" " + currentPoly);
 						}
 
-						result.append("\t");
+						writer.setString("Remaining_Polys", result.toString().trim());
 
 						ArrayList<Polymorphism> aac = currentResult.getSearchResult().getDetailedResult()
 								.getRemainingPolysInSample();
 						Collections.sort(aac);
 
+						result = new StringBuffer();
 						for (Polymorphism currentPoly : aac) {
 							if (currentPoly.getAnnotation() != null)
 								result.append(
@@ -143,26 +148,28 @@ public class ExportTools {
 												+ currentPoly.getAnnotation().getGene() + " ]");
 						}
 
-						result.append("\t");
+						writer.setString("AAC_In_Remainings", result.toString().trim());
 
-						ArrayList<Polymorphism> input = sample.getSample().getPolymorphisms();
+						ArrayList<Polymorphism> inputPolys = sample.getSample().getPolymorphisms();
 
-						Collections.sort(input);
+						Collections.sort(inputPolys);
 
-						for (Polymorphism currentPoly : input) {
-							result.append(" " + currentPoly);
+						result = new StringBuffer();
+						for (Polymorphism input : inputPolys) {
+							result.append(" " + input);
 						}
+
+						writer.setString("Input_Sample", result.toString().trim());
+
 					}
-					result.append("\n");
+					
+					writer.next();
 
 				}
 			}
 		}
 
-		FileWriter fileWriter = new FileWriter(outFilename);
-		fileWriter.write(result.toString().replace("\t ", "\t"));
-
-		fileWriter.close();
+		writer.close();
 
 	}
 
