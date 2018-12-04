@@ -1,9 +1,7 @@
 package genepi.haplogrep.main;
 
 import genepi.base.Tool;
-import genepi.haplogrep.Session;
 import genepi.haplogrep.util.HgClassifier;
-import genepi.haplogrep.util.ExportTools;
 import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
@@ -15,9 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import contamination.objects.Sample;
-import contamination.util.Utils;
 import phylotree.Annotation;
+import util.ExportUtils;
 import core.SampleFile;
+import core.TestSample;
 
 public class Haplogrep extends Tool {
 
@@ -29,7 +28,6 @@ public class Haplogrep extends Tool {
 
 	@Override
 	public void createParameters() {
-
 		addParameter("in", "input VCF, fasta or hsd file");
 		addParameter("out", "haplogroup output file");
 		addParameter("format", "vcf, fasta, hsd");
@@ -116,8 +114,6 @@ public class Haplogrep extends Tool {
 		System.out.println("Lineage: " + lineage);
 		System.out.println("");
 
-		Annotation.setAnnotationPath("annotation/aminoacidchange.txt");
-
 		long start = System.currentTimeMillis();
 
 		System.out.println("Start Classification...");
@@ -125,10 +121,6 @@ public class Haplogrep extends Tool {
 		try {
 
 			if (input.isFile()) {
-
-				String uniqueID = UUID.randomUUID().toString();
-
-				Session session = new Session(uniqueID);
 
 				ArrayList<String> lines = new ArrayList<String>();
 
@@ -142,7 +134,7 @@ public class Haplogrep extends Tool {
 				else if (format.equals("vcf")) {
 					VcfImporter importerVcf = new VcfImporter();
 					HashMap<String, Sample> samples = importerVcf.load(input, chip);
-					lines = ExportTools.vcfToHsd(samples);
+					lines = ExportUtils.samplesMapToHsd(samples);
 
 				}
 
@@ -161,14 +153,14 @@ public class Haplogrep extends Tool {
 
 					SampleFile newSampleFile = new SampleFile(lines);
 
-					session.setCurrentSampleFile(newSampleFile);
+					HgClassifier.run(newSampleFile, phylotree, fluctrates, metric);
+					
+					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
 
-					HgClassifier.run(session, phylotree, fluctrates, metric);
-
-					ExportTools.createReport(session, out, extended);
+					ExportUtils.createReport(samples, out, extended);
 
 					if (lineage) {
-						ExportTools.calcLineage(session, out);
+						ExportUtils.calcLineage(samples, out);
 					}
 				}
 
@@ -193,8 +185,8 @@ public class Haplogrep extends Tool {
 		Haplogrep haplogrep = new Haplogrep(args);
 
 		//haplogrep = new Haplogrep(
-		//		new String[] { "--in", "/home/seb/Desktop/ALL.chrMT.phase3_callmom-v0_4.20130502.genotypes.vcf.gz",
-		//				"--out", "test-data/h100-haplogrep.txt", "--format", "vcf", });
+		//		new String[] { "--in", "/home/seb/Desktop/1000G_BAQ.vcf.gz",
+		//				"--out", "/home/seb/Desktop/test.txt", "--format", "vcf", "--extend-report" });
 
 		haplogrep.start();
 

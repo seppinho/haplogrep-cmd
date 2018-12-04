@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.jdom.JDOMException;
 
+import core.SampleFile;
 import exceptions.parse.sample.InvalidRangeException;
-import genepi.haplogrep.Session;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
 import search.ranking.HammingRanking;
@@ -15,7 +15,7 @@ import search.ranking.RankingMethod;
 
 public class HgClassifier {
 	
-	public static void run(Session session, String phyloTree, String fluctrates, String metric)
+	public static void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric)
 			throws JDOMException, IOException, InvalidRangeException {
 
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
@@ -41,7 +41,7 @@ public class HgClassifier {
 
 		}
 
-		session.getCurrentSampleFile().updateClassificationResults(phylotree, newRanker);
+		newSampleFile.updateClassificationResults(phylotree, newRanker);
 
 	}
 
