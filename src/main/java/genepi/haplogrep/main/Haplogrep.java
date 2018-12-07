@@ -11,16 +11,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 import contamination.objects.Sample;
-import phylotree.Annotation;
 import util.ExportUtils;
 import core.SampleFile;
 import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.16";
+	public static String VERSION = "v2.1.17";
 
 	public Haplogrep(String[] args) {
 		super(args);
