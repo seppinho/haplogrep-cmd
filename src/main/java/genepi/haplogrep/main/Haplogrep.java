@@ -33,8 +33,9 @@ public class Haplogrep extends Tool {
 		addFlag("rsrs", "use RSRS Version");
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
-		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard)", Tool.STRING);
+		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
 		addFlag("lineage", "export lineage information");
+		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class Haplogrep extends Tool {
 		String tree = (String) getValue("phylotree");
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
+		String hits = (String) getValue("hits");
 
 		boolean extended = isFlagSet("extend-report");
 
@@ -76,6 +78,10 @@ public class Haplogrep extends Tool {
 
 		if (tree == null) {
 			tree = "17";
+		}
+
+		if (hits == null) {
+			hits = "1";
 		}
 
 		File input = new File(in);
@@ -151,8 +157,10 @@ public class Haplogrep extends Tool {
 
 					SampleFile newSampleFile = new SampleFile(lines);
 
-					HgClassifier.run(newSampleFile, phylotree, fluctrates, metric);
-					
+					HgClassifier classifier = new HgClassifier();
+
+					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits));
+
 					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
 
 					ExportUtils.createReport(samples, out, extended);
@@ -160,6 +168,7 @@ public class Haplogrep extends Tool {
 					if (lineage) {
 						ExportUtils.calcLineage(samples, out);
 					}
+
 				}
 
 			} else {
@@ -182,9 +191,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		//haplogrep = new Haplogrep(
-		//		new String[] { "--in", "/home/seb/Desktop/1000G_BAQ.vcf.gz",
-		//				"--out", "/home/seb/Desktop/test.txt", "--format", "vcf", "--extend-report" });
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/vcf/HG00097.vcf", "--out",
+		//		"test-data/test.txt", "--format", "vcf","--hits", "5"});
 
 		haplogrep.start();
 

@@ -14,9 +14,13 @@ import search.ranking.KulczynskiRanking;
 import search.ranking.RankingMethod;
 
 public class HgClassifier {
-	
-	public static void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric)
-			throws JDOMException, IOException, InvalidRangeException {
+
+	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric) throws InvalidRangeException, JDOMException, IOException {
+		run(newSampleFile, phyloTree, fluctrates, metric,1);
+	}
+
+	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric,
+			int amountResults) throws JDOMException, IOException, InvalidRangeException {
 
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
 
@@ -25,19 +29,19 @@ public class HgClassifier {
 		switch (metric) {
 
 		case "kulczynski":
-			newRanker = new KulczynskiRanking(1);
+			newRanker = new KulczynskiRanking(amountResults);
 			break;
 
 		case "hamming":
-			newRanker = new HammingRanking(1);
+			newRanker = new HammingRanking(amountResults);
 			break;
 
 		case "jaccard":
-			newRanker = new JaccardRanking(1);
+			newRanker = new JaccardRanking(amountResults);
 			break;
 
 		default:
-			newRanker = new KulczynskiRanking(1);
+			newRanker = new KulczynskiRanking(amountResults);
 
 		}
 
