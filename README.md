@@ -24,6 +24,7 @@ You can also specify your profiles in hsd format, which is a simple tab-delimite
 * The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
 * If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
+* To export best n hits for each sample add the `--hits` parameter. By default only the tophit is exported. 
 * Create a graph of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).
 
 ## mtDNA reference sequences
