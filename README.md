@@ -18,14 +18,14 @@ The recommended input format is [**VCF**](http://www.internationalgenome.org/wik
 You can also specify your profiles in hsd format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns > 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
  
 ## Additional Parameters      
-* By default HaploGrep expects that your data is aligned against rCRS (which is included in the human references hg19 and hg38). If your data is aligned against RSRS, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.
-* To change the metric to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).
+* By default HaploGrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.
+* To **change the metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).
 * For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
-* The used Phylotree version can be changed using the `--phylotree` parameter (Default: 17).
-* If your using genotyping arrays, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
+* The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: 17).
+* If your using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
 To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
-* To export best n hits for each sample add the `--hits` parameter. By default only the tophit is exported. 
-* Create a graph of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).
+* To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported. 
+* Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
@@ -34,7 +34,7 @@ Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkou
 If you are using HaploGrep for genotyping array data, please have a look at the `--chip` parameter above. 
 
 ## Heteroplasmies (VCF only)
-Heteroplasmies are often stored as heterozygous genotypes (0/1). If a AF tag (= Allele Frequency) is specified in the VCF file, we add variants with a AF > 0.90 to the input profile. [Mutation Server](https://github.com/seppinho/mutation-server) is able to create a valid VCF including heteroplasmies starting from BAM or CRAM. 
+Heteroplasmies are often stored as heterozygous genotypes (0/1). If a **AF tag** (= Allele Frequency) is specified in the VCF file, we add variants with a AF > 0.90 to the input profile. [Mutation Server](https://github.com/seppinho/mutation-server) is able to create a valid VCF including heteroplasmies starting from **BAM or CRAM**. 
 
 Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.
 
