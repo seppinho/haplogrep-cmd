@@ -5,9 +5,9 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.17/haplogrep-2.1.17.jar) (v2.1.17). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.18/haplogrep-2.1.18.jar) (v2.1.18). 
  
-      java -jar haplogrep-2.1.17.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.18.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
@@ -34,7 +34,7 @@ Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkou
 If you are using HaploGrep for genotyping array data, please have a look at the `--chip` parameter above. 
 
 ## Heteroplasmies (VCF only)
-Heteroplasmies are often stored as heterozygous genotypes (0/1). If a HF field (= Heteroplasmy Frequency of variant allele; introduced by MToolBox) is specified in the VCF header, we add variants with a HF > 0.96 to the input profile.
+Heteroplasmies are often stored as heterozygous genotypes (0/1). If a AF tag (= Allele Frequency) is specified in the VCF file, we add variants with a AF > 0.90 to the input profile. [Mutation Server](https://github.com/seppinho/mutation-server) is able to create a valid VCF including heteroplasmies starting from BAM or CRAM. 
 
 Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.
 
