@@ -18,7 +18,7 @@ import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.17";
+	public static String VERSION = "v2.1.18";
 
 	public Haplogrep(String[] args) {
 		super(args);
