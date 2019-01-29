@@ -5,9 +5,9 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.18/haplogrep-2.1.18.jar) (v2.1.18). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.19/haplogrep-2.1.19.jar) (v2.1.19). 
  
-      java -jar haplogrep-2.1.18.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
+      java -jar haplogrep-2.1.19.jar --in <input> --format vcf/fasta/hsd --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
