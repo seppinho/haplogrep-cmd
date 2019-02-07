@@ -11,8 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import contamination.objects.Sample;
 import util.ExportUtils;
+import vcf.Sample;
 import core.SampleFile;
 import core.TestSample;
 

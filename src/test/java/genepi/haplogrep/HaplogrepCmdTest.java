@@ -8,13 +8,13 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import contamination.objects.Sample;
 import core.SampleFile;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.io.FileUtil;
 import genepi.io.table.reader.CsvTableReader;
 import importer.VcfImporter;
 import util.ExportUtils;
+import vcf.Sample;
 
 public class HaplogrepCmdTest {
 

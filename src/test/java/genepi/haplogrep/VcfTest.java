@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import contamination.objects.Sample;
-import contamination.objects.Variant;
 import importer.VcfImporter;
 import util.ExportUtils;
+import vcf.Sample;
+import vcf.Variant;
 
 public class VcfTest {
 
