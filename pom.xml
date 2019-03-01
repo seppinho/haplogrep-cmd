@@ -163,7 +163,7 @@
 
 		<dependency>
 			<groupId>genepi</groupId>
-			<artifactId>haplogrep-core</artifactId>
+			<artifactId>haplogrep</artifactId>
 			<version>2.0.10</version>
 		</dependency>
 
