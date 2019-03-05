@@ -17,7 +17,7 @@
 	</properties>
 
 	<repositories>
-		<repository>
+		<repository> 
 			<id>genepi</id>
 			<url>https://raw.github.com/genepi/maven-repository/mvn-repo/</url>
 			<snapshots>
@@ -30,22 +30,16 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>phylotree</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
+				<directory>data/phylotree</directory>
+				<targetPath>phylotree</targetPath>
 			</resource>
 			<resource>
-				<directory>weights</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
+				<directory>data/weights</directory>
+				<targetPath>weights</targetPath>
 			</resource>
 			<resource>
-				<directory>annotation</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
+				<directory>data/annotation</directory>
+				<targetPath>annotation</targetPath>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
