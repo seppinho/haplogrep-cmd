@@ -85,7 +85,7 @@
 								<includes>
 									<include>commons-cli:commons-cli:*:*</include>
 									<include>org.jdom:jdom:*:*</include>
-									<include>net.sf.json-lib:json-lib*:*</include>
+									<include>net.sf.json-lib:json-lib:*:*</include>
 									<include>genepi:genepi-io:*:*</include>
 									<include>org.json:json:*:*</include>
 									<include>commons-logging:commons-logging:*:*</include>
@@ -93,7 +93,8 @@
 									<include>com.github.samtools:htsjdk:*:*</include>
 									<include>genepi:haplogrep-core:*:*</include>
 									<include>commons-cli:commons-cli:*:*</include>
-									<include>au.com.bytecode:opencsv*:*</include>
+									<include>au.com.bytecode:opencsv:*:*</include>
+									<include>commons-lang:commons-lang:*:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -146,7 +147,7 @@
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
-			<version>2.0.11</version>
+			<version>2.0.13</version>
 		</dependency>
 
 		<dependency>

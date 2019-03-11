@@ -28,7 +28,7 @@ public class HaplogrepCmdTest {
 		VcfImporter impvcf = new VcfImporter();
 
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
-		ArrayList<String> lines = ExportUtils.samplesMapToHsd(samples);
+		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
 		SampleFile newSampleFile = new SampleFile(lines);
 
 		HgClassifier classifier = new HgClassifier();

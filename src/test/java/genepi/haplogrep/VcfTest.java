@@ -21,7 +21,7 @@ public class VcfTest {
 		VcfImporter impvcf = new VcfImporter();
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 
-		ArrayList<String> lines = ExportUtils.samplesMapToHsd(samples);
+		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
 
 		assertEquals(
 				"TL064	1-16569	?	8281d	8282d	8283d	8284d	8285d	8286d	8287d	8288d	8289d	8307d	8860G	15940C	15941d",
@@ -35,7 +35,7 @@ public class VcfTest {
 		VcfImporter impvcf = new VcfImporter();
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 
-		ArrayList<String> lines = ExportUtils.samplesMapToHsd(samples);
+		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
 
 		// currently excluded: 309.1CC complex INSERTION
 		assertEquals(
