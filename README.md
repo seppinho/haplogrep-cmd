@@ -5,20 +5,20 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.19/haplogrep-2.1.19.jar) (v2.1.19). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.20.jar) (v2.1.20). 
  
 ## Run HaploGrep 
       mkdir haplogrep
       cd haplogrep
-      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.19/haplogrep-2.1.19.jar
+      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.20.jar
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
-      java -jar haplogrep-2.1.19.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
+      java -jar haplogrep-2.1.20.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
 
 ## Input File Formats
-The recommended input format is **VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, bwa version 0.7.17 is used. 
+The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, bwa version 0.7.17 is used. 
 
 You can also specify your profiles in **HSD** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns >= 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
  
