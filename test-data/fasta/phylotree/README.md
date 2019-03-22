@@ -1,1 +1,1 @@
-1. Download fasta from GenBank - based on Accession.txt - https://www.ncbi.nlm.nih.gov/sites/batchentrez
+1. Download fasta from GenBank - based on Accessions.txt - https://www.ncbi.nlm.nih.gov/sites/batchentrez
