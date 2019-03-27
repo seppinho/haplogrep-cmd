@@ -2,28 +2,13 @@ package genepi.haplogrep;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 import org.junit.Test;
 
-import core.TestSample;
 import importer.FastaImporter;
 import importer.FastaImporter.References;
-import phylotree.Phylotree;
-import phylotree.PhylotreeManager;
-import search.ranking.HammingRanking;
-import search.ranking.results.RankedResult;
 
 public class FastaTest {
 
@@ -88,7 +73,7 @@ public class FastaTest {
 		boolean deletion = false;
 
 		for (int i = 3; i < splits.length; i++) {
-			if (splits[i].equals("523d")) {
+			if (splits[i].equals("523-524d")) {
 				deletion = true;
 			}
 			actual.append(splits[i] + ",");
@@ -112,18 +97,9 @@ public class FastaTest {
 		}
 
 		assertEquals(true, set.contains("16182.1C"));
-		assertEquals(true, set.contains("309.1C"));
-		assertEquals(true, set.contains("309.2C"));
-		assertEquals(true, set.contains("309.3T"));
-		assertEquals(true, set.contains("3106d"));
-		assertEquals(true, set.contains("8270d"));
-		assertEquals(true, set.contains("8271d"));
-		assertEquals(true, set.contains("8272d"));
-		assertEquals(true, set.contains("8273d"));
-		assertEquals(true, set.contains("8274d"));
-		assertEquals(true, set.contains("8275d"));
-		assertEquals(true, set.contains("8276d"));
-		assertEquals(true, set.contains("8277d"));
+		assertEquals(true, set.contains("309.1CCT"));
+		assertEquals(true, set.contains("3106-3106d"));
+		assertEquals(true, set.contains("8270-8277d"));
 
 	}
 
@@ -142,18 +118,9 @@ public class FastaTest {
 		}
 
 		assertEquals(true, set.contains("16182.1C"));
-		assertEquals(true, set.contains("309.1C"));
-		assertEquals(true, set.contains("309.2C"));
-		assertEquals(true, set.contains("309.3T"));
-		assertEquals(true, set.contains("3106d"));
-		assertEquals(true, set.contains("8270d"));
-		assertEquals(true, set.contains("8271d"));
-		assertEquals(true, set.contains("8272d"));
-		assertEquals(true, set.contains("8273d"));
-		assertEquals(true, set.contains("8274d"));
-		assertEquals(true, set.contains("8275d"));
-		assertEquals(true, set.contains("8276d"));
-		assertEquals(true, set.contains("8277d"));
+		assertEquals(true, set.contains("309.1CCT"));
+		assertEquals(true, set.contains("3106-3106d"));
+		assertEquals(true, set.contains("8270-8277d"));
 
 	}
 
@@ -172,19 +139,9 @@ public class FastaTest {
 		}
 
 		assertEquals(true, set.contains("16182.1C"));
-		assertEquals(true, set.contains("309.1C"));
-		assertEquals(true, set.contains("309.2C"));
-		assertEquals(true, set.contains("309.3T"));
-		assertEquals(true, set.contains("3106d"));
-		assertEquals(true, set.contains("8270d"));
-		assertEquals(true, set.contains("8271d"));
-		assertEquals(true, set.contains("8272d"));
-		assertEquals(true, set.contains("8273d"));
-		assertEquals(true, set.contains("8274d"));
-		assertEquals(true, set.contains("8275d"));
-		assertEquals(true, set.contains("8276d"));
-		assertEquals(true, set.contains("8277d"));
-
+		assertEquals(true, set.contains("309.1CCT"));
+		assertEquals(true, set.contains("3106-3106d"));
+		assertEquals(true, set.contains("8270-8277d"));
 	}
 
 /*	@Test

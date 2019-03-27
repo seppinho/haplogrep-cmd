@@ -50,7 +50,7 @@ public class HgClassifier {
 
 		}
 
-		newSampleFile.runMappingRules(phylotree);
+		newSampleFile.applyMappingRules(phylotree);
 
 		newSampleFile.updateClassificationResults(phylotree, newRanker);
 
