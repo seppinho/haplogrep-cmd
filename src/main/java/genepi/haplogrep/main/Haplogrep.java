@@ -31,6 +31,7 @@ public class Haplogrep extends Tool {
 		addParameter("format", "vcf, fasta, hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
 		addFlag("rsrs", "use RSRS Version");
+		addFlag("fixNomenclature", "Fix mtDNA nomenclature conventions based on rules");
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
@@ -42,8 +43,8 @@ public class Haplogrep extends Tool {
 	public void init() {
 
 		System.out.println("Welcome to HaploGrep " + VERSION);
-		System.out.println("(c) Division of Genetic Epidemiology, Medical University of Innsbruck");
-		System.out.println("Hansi Weissensteiner, Lukas Forer, Dominic Pacher and Sebastian Schoenherr");
+		System.out.println("Instiute of Genetic Epidemiology, Medical University of Innsbruck");
+		System.out.println("Hansi Weissensteiner, Sebastian Schönherr, Lukas Forer, Dominic Pacher");
 		System.out.println("");
 
 	}
@@ -65,6 +66,8 @@ public class Haplogrep extends Tool {
 		boolean lineage = isFlagSet("lineage");
 
 		boolean rsrs = isFlagSet("rsrs");
+		
+		boolean fixNomenclature = isFlagSet("fixNomenclature");
 
 		if (chip && !format.equals("vcf")) {
 			System.out.println(
@@ -113,6 +116,7 @@ public class Haplogrep extends Tool {
 		System.out.println("Phylotree Version: " + tree);
 		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
 		System.out.println("Extended Report: " + extended);
+		System.out.println("Fix Nomenclature: " + fixNomenclature);
 		System.out.println("Used Metric: " + metric);
 		System.out.println("Chip array data: " + chip);
 		System.out.println("Lineage: " + lineage);
@@ -139,12 +143,13 @@ public class Haplogrep extends Tool {
 					VcfImporter importerVcf = new VcfImporter();
 					HashMap<String, Sample> samples = importerVcf.load(input, chip);
 					lines = ExportUtils.vcfTohsd(samples);
-
 				}
 
 				else if (format.equals("fasta")) {
 
 					FastaImporter importer = new FastaImporter();
+					
+				
 					if (rsrs) {
 						lines = importer.load(input, References.RSRS);
 					} else {
@@ -159,14 +164,14 @@ public class Haplogrep extends Tool {
 
 					HgClassifier classifier = new HgClassifier();
 
-					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits));
-
+					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits), fixNomenclature);
+					
 					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
-
+					
 					ExportUtils.createReport(samples, out, extended);
 
 					if (lineage) {
-						ExportUtils.calcLineage(samples, out);
+						ExportUtils.calcLineage(samples, out); 
 					}
 
 				}
@@ -184,15 +189,15 @@ public class Haplogrep extends Tool {
 		System.out.println("HaploGrep file written to " + new File(out).getAbsolutePath() + " (Time: "
 				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
 
-		return 0;
+		return 0; 
 	}
 
 	public static void main(String[] args) throws IOException {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/vcf/HG00097.vcf", "--out",
-		//		"test-data/test.txt", "--format", "vcf","--hits", "5"});
+		haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
+				"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature"});
 
 		haplogrep.start();
 

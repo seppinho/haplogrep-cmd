@@ -33,7 +33,7 @@ public class HaplogrepCmdTest {
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1);
+		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
 
@@ -51,7 +51,7 @@ public class HaplogrepCmdTest {
 		assertEquals(1, count);
 		
 		
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 10);
+		classifier.run(newSampleFile, phylo, weights, "kulczynski", 10, false);
 		
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
 

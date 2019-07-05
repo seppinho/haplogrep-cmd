@@ -1,14 +1,11 @@
 package genepi.haplogrep.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.jdom.JDOMException;
 
-import core.Polymorphism;
 import core.SampleFile;
 import core.TestSample;
-import exceptions.parse.sample.InvalidPolymorphismException;
 import exceptions.parse.sample.InvalidRangeException;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
@@ -21,10 +18,10 @@ public class HgClassifier {
 
 	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric)
 			throws InvalidRangeException, JDOMException, IOException {
-		run(newSampleFile, phyloTree, fluctrates, metric, 1);
+		run(newSampleFile, phyloTree, fluctrates, metric, 1, false);
 	}
 
-	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric, int amountResults)
+	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric, int amountResults, boolean fixNomenclature)
 			throws JDOMException, IOException, InvalidRangeException {
 
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
@@ -50,8 +47,11 @@ public class HgClassifier {
 
 		}
 
-		newSampleFile.applyMappingRules(phylotree);
-
+		if(fixNomenclature) {
+			newSampleFile.applyMappingRules(phylotree);
+		
+		}
+		
 		newSampleFile.updateClassificationResults(phylotree, newRanker);
 
 	}

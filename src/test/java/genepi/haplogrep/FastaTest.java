@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import org.junit.Test;
 
+import core.Polymorphism;
+import core.SampleFile;
+import genepi.haplogrep.util.HgClassifier;
 import importer.FastaImporter;
 import importer.FastaImporter.References;
 
@@ -61,6 +64,48 @@ public class FastaTest {
 
 	}
 
+	@Test
+	public void h100NomenclatureActivatedTest() throws Exception {
+
+		String file = "test-data/h100/H100.fasta";
+		String phylotree = "data/phylotree/phylotree17.xml";
+		String fluctrates = "data/weights/weights17.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+		SampleFile newSampleFile = new SampleFile(samples);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, true);
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+		System.out.println(newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms());
+		
+		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
+
+	}
+	
+	@Test
+	public void h100NomenclatureDeactivatedTest() throws Exception {
+
+		String file = "test-data/h100/H100.fasta";
+		String phylotree = "data/phylotree/phylotree17.xml";
+		String fluctrates = "data/weights/weights17.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+		SampleFile newSampleFile = new SampleFile(samples);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, false);
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+		System.out.println(newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms());
+		
+		assertEquals(true, polys.contains(new Polymorphism("310.1C")));
+
+	}
+	
 	@Test
 	public void parseSampleWithDeletions() throws Exception {
 		String file = "test-data/fasta/AY195749.fasta";
