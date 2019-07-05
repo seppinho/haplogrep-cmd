@@ -196,8 +196,8 @@ public class Haplogrep extends Tool {
 
 		Haplogrep haplogrep = new Haplogrep(args);
 
-		haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
-				"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature"});
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
+		//		"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature"});
 
 		haplogrep.start();
 

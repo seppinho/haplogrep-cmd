@@ -5,7 +5,7 @@
 
 	<groupId>genepi</groupId>
 	<artifactId>haplogrep</artifactId>
-	<version>2.1.20</version>
+	<version>2.1.21</version>
 	<packaging>jar</packaging>
 
 	<name>HaploGrep Command-line</name>
@@ -147,7 +147,7 @@
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
-			<version>2.0.14</version>
+			<version>2.1.0</version>
 		</dependency>
 
 		<dependency>
