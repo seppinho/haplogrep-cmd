@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import org.junit.Test;
 
+import core.Haplogroup;
 import core.Polymorphism;
 import core.SampleFile;
 import genepi.haplogrep.util.HgClassifier;
@@ -79,9 +80,8 @@ public class FastaTest {
 
 		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, true);
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
-		System.out.println(newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms());
-		
 		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
+		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 
 	}
 	
@@ -100,10 +100,9 @@ public class FastaTest {
 
 		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, false);
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
-		System.out.println(newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms());
 		
 		assertEquals(true, polys.contains(new Polymorphism("310.1C")));
-
+		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 	}
 	
 	@Test
