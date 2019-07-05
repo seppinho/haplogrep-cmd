@@ -55,10 +55,10 @@ If you are using HaploGrep for genotyping array data, please have a look at the 
 
 ## mtDNA Nomenclature
 When using fasta as an input format, HaploGrep uses bwa mem to align data. Since the mitochondrial phylogeny is using a 3′ alignment, indels are often not correctly placed for haplogroup classification, when using standard-aligner designed for nuclear DNA. In some cases, where haplogroup defining indels are expected (e.g. missing 8281d-8289d) this can yield to a lower haplogroup quality. To adjust for that, we provide a set of currently 66 rules that can be applied prior to classification. The rules have been estimated based on 7,848 fasta files in 4 steps:
- * a) downloading Phylotree defining sequences from GenBank
- * b) aligning data with bwa mem, 
- * c) classifying the profiles using HaploGrep and 
- * d) comparing final fasta profiles with the Phylotree input profiles (remaining vs. not found) in a txt format (derived by parsing Phylotree). 
+ a) downloading Phylotree defining sequences from GenBank
+ b) aligning data with bwa mem, 
+ c) classifying the profiles using HaploGrep and 
+ d) comparing final fasta profiles with the Phylotree input profiles (remaining vs. not found) in a txt format (derived by parsing Phylotree). 
 For example, the subsequent rule changes input polymorphisms `309.1CCT 310C` to `309.1C 309.2C 315.1C`. 
 
 ## Heteroplasmies (VCF only)
