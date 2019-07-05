@@ -32,20 +32,20 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 ## Required Parameters   
 |Parameter| Description|
 |---|---|
-|--format | Please provide the input format of your data - valid formats are: hsd, VCF, and fasta files|
-|--out | Please provide an output name|
+|```--format``` | Please provide the input format of your data - valid options are: ```hsd, vcf, or fasta``` files|
+|```--out``` | Please provide an output name|
 
 ## Additional Parameters   
 |Parameter| Description|
 |---|---|
-|--rsrs| By default HaploGrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.|
-|--metric| To **change the classification metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).|
-|--extend-report| For additional information on mtSNPs (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).|
-|--phylotree|  The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: 17 ([latest version](http://phylotree.org/rCRS-oriented_version.htm))).|
-|--chip| If you are using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 16024-16569;1-576;8860). |
-|--fixNomenclature|  To fix the mtDNA nomenclature after alignment of fasta files, set the `--fixNomenclature` parameter. See below for further information.|
-|--hits |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
-|--lineage|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
+|```--rsrs```| By default HaploGrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.|
+|```--metric```| To **change the classification metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).|
+|```--extend-report```| For additional information on mtSNPs (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).|
+|```--phylotree```|  The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: ```17```, allowed numbers from ```10,11,12,..,17``` ([latest version](http://phylotree.org/rCRS-oriented_version.htm))).|
+|```--chip```| If you are using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 16024-16569;1-576;8860). |
+|```--fixNomenclature```|  To fix the mtDNA nomenclature after alignment of fasta files, set the `--fixNomenclature` parameter. See below for further information.|
+|```--hits``` |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
+|```--lineage```|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
@@ -54,7 +54,7 @@ Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkou
 If you are using HaploGrep for genotyping array data, please have a look at the `--chip` parameter above. 
 
 ## mtDNA Nomenclature
-When using fasta as an input format, HaploGrep uses bwa mem to align data. Since Phylotree is using a 3′ alignment, indels are often not correctly placed for haplogroup classification. In some cases (e.g. missing 8281d-8289d) this can yield to a lower haplogroup quality. To adjust for that, we provide a set of currently 66 rules that can be applied prior to classification. The rules have been calculated by (a) downloading Phylotree data in fasta format (b) aligning data with bwa mem, (c) classifying the profiles using HaploGrep and (d) comparing final fasta profiles with the Phylotree input profiles (remaining vs. not found) in a txt format (derived by parsing Phylotree). For example, one rule changes input polymorphisms `309.1CCT 310C` to `309.1C 309.2C 315.1C`. 
+When using fasta as an input format, HaploGrep uses bwa mem to align data. Since the mitochondrial phylogeny is using a 3′ alignment, indels are often not correctly placed for haplogroup classification, when using standard-aligner designed for nuclear DNA. In some cases, where haplogroup defining indels are expected (e.g. missing 8281d-8289d) this can yield to a lower haplogroup quality. To adjust for that, we provide a set of currently 66 rules that can be applied prior to classification. The rules have been extimated by (a) downloading Phylotree data in fasta format (b) aligning data with bwa mem, (c) classifying the profiles using HaploGrep and (d) comparing final fasta profiles with the Phylotree input profiles (remaining vs. not found) in a txt format (derived by parsing Phylotree). For example, the subsequent rule changes input polymorphisms `309.1CCT 310C` to `309.1C 309.2C 315.1C`. 
 
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a **AF tag** (= Allele Frequency) is specified in the VCF file, we add variants with a AF > 0.90 to the input profile. [Mutation Server](https://github.com/seppinho/mutation-server) is able to create a valid VCF including heteroplasmies starting from **BAM or CRAM**. 
