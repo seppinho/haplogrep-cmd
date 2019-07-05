@@ -1,16 +1,16 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Build Status](https://travis-ci.org/seppinho/haplogrep-cmd.svg?branch=master)](https://travis-ci.org/seppinho/haplogrep-cmd)
 
-We provide a fast and free [haplogroup classification web service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **Fasta**, **VCF** and **hsd** input files are supported. So far, HaploGrep and the updated HaploGrep 2 have been cited over 400 times (Google Scholar - June 2018). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
+We provide a fast and free [haplogroup classification web service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **Fasta**, **VCF** and **hsd** input files are supported. So far, HaploGrep and the updated HaploGrep 2 have been cited overover 530 times (Google Scholar - July 5, 2019). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.20.jar) (v2.1.20). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.21.jar) (v2.1.21). 
  
 ## Run HaploGrep 
       mkdir haplogrep
       cd haplogrep
-      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.20.jar
+      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.21/haplogrep-2.1.21.jar
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
       java -jar haplogrep-2.1.20.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
    
@@ -18,20 +18,34 @@ HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
 
 ## Input File Formats
-The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, bwa version 0.7.17 is used. 
+The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) is used. 
 
-You can also specify your profiles in **HSD** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). For readability, the polymorphisms are also tab-delimited (so columns >= 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
- 
-## Additional Parameters      
-* By default HaploGrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.
-* To **change the metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).
-* For adding additional output columns (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).
-* The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: 17).
-* If your using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). 
-To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 1-576; 34).
-* To fix the mtDNA nomenclature set the `--fixNomenclature` parameter. See below for further information.
-* To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported. 
-* Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).
+You can also specify your profiles in **HSD** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). 
+
+|ID| Range| Haplogroup | Polymorphisms (separated by tab (space also allowed)) |
+|---|---|---|---|
+|Sample1|1-16569| H100| 263G 315.1C 750G	1041G	1438G	4769G	8860G	9410G	12358G	13656C	15326G	16189C	16192T	16519C	|
+|Sample2|1-16569|?| 73G	263G	315.1C 750G	1438G	3010A	3107C	4769G	5111T	8860G	10257T	12358G	15326G	16145A	16222T	16519C	|
+
+For readability, the polymorphisms are also tab-delimited (so columns >= 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
+
+## Required Parameters   
+|Parameter| Description|
+|---|---|
+|--format | Please provide the input format of your data - valid formats are: hsd, VCF, and fasta files|
+|--out | Please provide an output name|
+
+## Additional Parameters   
+|Parameter| Description|
+|---|---|
+|--rsrs| By default HaploGrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.|
+|--metric| To **change the classification metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).|
+|--extend-report| For additional information on mtSNPs (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).|
+|--phylotree|  The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: 17 ([latest version](http://phylotree.org/rCRS-oriented_version.htm))).|
+|--chip| If you are using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 16024-16569;1-576;8860). |
+|--fixNomenclature|  To fix the mtDNA nomenclature after alignment of fasta files, set the `--fixNomenclature` parameter. See below for further information.|
+|--hits |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
+|--lineage|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
 
 ## mtDNA reference sequences
 Several mtDNA references exist, HaploGrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
