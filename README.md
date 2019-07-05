@@ -1,18 +1,18 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Build Status](https://travis-ci.org/seppinho/haplogrep-cmd.svg?branch=master)](https://travis-ci.org/seppinho/haplogrep-cmd)
 
-We provide a fast and free [haplogroup classification web service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **Fasta**, **VCF** and **hsd** input files are supported. So far, HaploGrep and the updated HaploGrep 2 have been cited overover 530 times (Google Scholar - July 5, 2019). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
+We provide a fast and free [haplogroup classification web service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **Fasta**, **VCF** and **hsd** input files are supported. So far, HaploGrep and the updated HaploGrep 2 have been cited over 530 times (Google Scholar - July 5, 2019). Please join our [HaploGrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.20/haplogrep-2.1.21.jar) (v2.1.21). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.21/haplogrep-2.1.21.jar) (v2.1.21). 
  
 ## Run HaploGrep 
       mkdir haplogrep
       cd haplogrep
       wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.21/haplogrep-2.1.21.jar
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
-      java -jar haplogrep-2.1.20.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
+      java -jar haplogrep-2.1.21.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
    
 HaploGrep requires Java 8 and works on Windows, Linux and Mac.
 
