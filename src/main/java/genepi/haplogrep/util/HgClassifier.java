@@ -48,7 +48,7 @@ public class HgClassifier {
 		}
 
 		if(fixNomenclature) {
-			newSampleFile.applyMappingRules(phylotree);
+			newSampleFile.applyNomenclatureRules(phylotree);
 		
 		}
 		
