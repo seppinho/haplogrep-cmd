@@ -32,6 +32,7 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 ## Required Parameters   
 |Parameter| Description|
 |---|---|
+|```--in``` | Please provide the input file name|
 |```--format``` | Please provide the input format of your data - valid options are: ```hsd, vcf, or fasta``` files|
 |```--out``` | Please provide an output name|
 
