@@ -147,7 +147,7 @@
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
-			<version>2.1.3</version>
+			<version>2.1.5</version>
 		</dependency>
 
 		<dependency>
