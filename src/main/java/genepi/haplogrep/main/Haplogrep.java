@@ -18,7 +18,7 @@ import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.22";
+	public static String VERSION = "v2.1.23";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -75,7 +75,7 @@ public class Haplogrep extends Tool {
 			return -1;
 		}
 		
-		if (chip && !format.equals("fasta")) {
+		if (chip && !format.equals("vcf")) {
 			System.out.println(
 					"The --chip flag only works for VCF. For hsd, please specify the included variants in the Haplogrep range.");
 			return -1;
