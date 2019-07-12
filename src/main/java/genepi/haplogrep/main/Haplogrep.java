@@ -69,13 +69,13 @@ public class Haplogrep extends Tool {
 		
 		boolean fixNomenclature = isFlagSet("fixNomenclature");
 
-		if (fixNomenclature && !format.equals("fasta")) {
+		if (fixNomenclature && !format.toLowerCase().equals("fasta")) {
 			System.out.println(
 					"The --fixNomenclature flag only works for FASTA.");
 			return -1;
 		}
 		
-		if (chip && !format.equals("vcf")) {
+		if (chip && !format.toLowerCase().equals("vcf")) {
 			System.out.println(
 					"The --chip flag only works for VCF. For hsd, please specify the included variants in the Haplogrep range.");
 			return -1;
