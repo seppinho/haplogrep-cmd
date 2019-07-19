@@ -8,7 +8,7 @@
 	<version>2.1.24</version>
 	<packaging>jar</packaging>
 
-	<name>HaploGrep Command-line</name>
+	<name>HaploGrep</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
