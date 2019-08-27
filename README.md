@@ -5,12 +5,12 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 ## Download HaploGrep
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.25/haplogrep-2.1.25.jar) (v2.1.25). 
+We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/2.1.25/haplogrep-2.1.25.jar) (v2.1.25). 
  
 ## Run HaploGrep 
       mkdir haplogrep
       cd haplogrep
-      wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.1.25/haplogrep-2.1.25.jar
+      wget https://github.com/seppinho/haplogrep-cmd/releases/download/2.1.25/haplogrep-2.1.25.jar
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
       java -jar haplogrep-2.1.25.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
    
