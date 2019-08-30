@@ -74,4 +74,6 @@ Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 If you use HaploGrep, please cite our latest [HaploGrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432). The first HaploGrep paper can be found [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). 
 
 ## Contact
-[Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho)) and [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/whansi)); Division of Genetic Epidemiology, Medical University of Innsbruck;
+[Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho)) / [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/whansi))  
+Institute of Genetic Epidemiology  
+Medical University of Innsbruck
