@@ -18,7 +18,7 @@ public class CommandLineInterface extends Toolbox {
 	}
 
 	public static void main(String[] args) throws Exception {
-		CommandLineInterface toolbox = new CommandLineInterface("cloudgene", args);
+		CommandLineInterface toolbox = new CommandLineInterface("haplogrep", args);
 		toolbox.addTool("distance", DistanceCheck.class);
 		toolbox.addTool("haplogrep", DistanceCheck.class);
 		toolbox.start();
