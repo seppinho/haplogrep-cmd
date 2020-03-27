@@ -1,0 +1,18 @@
+#! /bin/bash
+#  Haplogrep CLI
+
+
+# The path to the folder containing MyDaemon.jar
+FILE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Our classpath including our jar file
+CLASS_PATH="$FILE_PATH/haplogrep-2.1.26.jar:$HADOOP_CLASS_PATH"
+
+# The fully qualified name of the class to execute
+CLASS="genepi.CommandLineInterface"
+
+# change current directory
+cd $FILE_PATH
+
+# execute cloudgene
+java -cp $CLASS_PATH $CLASS "$@"
