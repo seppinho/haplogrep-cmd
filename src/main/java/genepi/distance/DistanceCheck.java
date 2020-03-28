@@ -40,30 +40,32 @@ public class DistanceCheck extends Tool {
 		CsvTableReader reader = new CsvTableReader(in, ';');
 
 		CsvTableWriter writer = new CsvTableWriter(out, ';');
-		
+
 		int count = 0;
+
+		String[] columns = new String[] { "hg1", "hg2", "distance" };
+		writer.setColumns(columns);
+
 		while (reader.next()) {
 
 			count++;
-			
+
 			Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
 
 			Haplogroup hgMajor = new Haplogroup(reader.getString("hg1"));
 
 			Haplogroup hgMinor = new Haplogroup(reader.getString("hg2"));
 
-			String[] columns = new String[] { "hg1", "hg2", "distance" };
-			writer.setColumns(columns);
-
 			writer.setString("hg1", reader.getString("hg1"));
 			writer.setString("hg2", reader.getString("hg2"));
-			
+
 			int distance = 0;
 			try {
 				distance = phylotree.getDistanceBetweenHaplogroups(hgMajor, hgMinor);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.err.println("Line " + count + " includes at least one unknown haplogroup: " +  hgMajor + " / " + hgMinor + ".");
+				System.err.println("Line " + count + " includes at least one unknown haplogroup: " + hgMajor + " / "
+						+ hgMinor + ".");
 				System.exit(-1);
 			}
 			writer.setInteger("distance", distance);
@@ -71,7 +73,7 @@ public class DistanceCheck extends Tool {
 
 		}
 
-		System.out.println("Distance calculation finished. File written to " + out+ " .");
+		System.out.println("Distance calculation finished. File written to " + out + " .");
 		reader.close();
 		writer.close();
 
