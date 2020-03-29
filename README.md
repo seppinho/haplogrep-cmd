@@ -3,19 +3,25 @@
 
 We provide a fast and free [haplogroup classification web service](https://haplogrep.uibk.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **Fasta**, **VCF** and **hsd** input files are supported. So far, Haplogrep and the updated Haplogrep 2 have been cited over 530 times (Google Scholar - July 5, 2019). Please join our [Haplogrep Google User Group](https://groups.google.com/forum/#!forum/haplogrep) for future updates and ongoing discussions. 
 
-## Download Haplogrep
+## Requirements
 
-We also provide a command line version for local usage. Download and execute the [latest release](https://github.com/seppinho/haplogrep-cmd/releases/download/2.1.25/haplogrep-2.1.25.jar) (v2.1.25). 
+You will need the following things properly installed on your computer.
 
-      wget https://github.com/seppinho/haplogrep-cmd/releases/download/2.1.25/haplogrep-2.1.25.jar
+* [Java 8 or higher](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
+## Download and Install
+
+Download and install the latest version from our download page using the following commands:
+
+```
+curl -sL haplogrep.now.sh | bash
+```
  
-## Run Haplogrep with test data
+## Run Haplogrep Classification with test data
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
-      java -jar haplogrep-2.1.25.jar --in HG00097.vcf.gz --format vcf --out haplogroups.txt
-   
-Haplogrep only requires Java 8 and works on Windows, Linux and Mac.
-
-
+      ./haplogrep classify --in HG00097.vcf.gz --format vcf --out haplogroups.txt
+      
+      
 ## Input File Formats
 ### VCF or Fasta
 The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) is used. 
