@@ -73,7 +73,7 @@ public class DistanceCheck extends Tool {
 
 		}
 
-		System.out.println("Distance calculation finished. File written to " + out + " .");
+		System.out.println("Distance calculation finished. File written to " + out + ".");
 		reader.close();
 		writer.close();
 
