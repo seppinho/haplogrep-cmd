@@ -10,7 +10,7 @@ import core.Haplogroup;
 
 public class DistanceCheck extends Tool {
 
-	public static String VERSION = "v0.0.1";
+	public static String VERSION = "v0.0.2";
 
 	public DistanceCheck(String[] args) {
 		super(args);

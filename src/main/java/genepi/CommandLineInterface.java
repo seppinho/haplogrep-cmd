@@ -14,8 +14,9 @@ public class CommandLineInterface extends Toolbox {
 	private void printHeader() {
 		System.out.println();
 		System.out.println("https://haplogrep.i-med.ac.at");
-
-	
+		System.out.println("Sebastian Schoenherr, Hansi Weissensteiner, Lukas Forer and Domininc Pacher");
+		System.out.println("Institute of Genetic Epidemiology, Medical University of Innsbruck");
+		System.out.println("Contact: sebastian.schoenherr@i-med.ac.at");
 	}
 
 	public static void main(String[] args) throws Exception {
