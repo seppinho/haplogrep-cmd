@@ -3,7 +3,7 @@
 set -e
 
 NAME="Haplogrep"
-VERSION="v0.7.0"
+VERSION="v2.2.0"
 GITHUB_USER="seppinho"
 GITHUB_REPO="haplogrep-cmd"
 EXECUTABLE="haplogrep"
