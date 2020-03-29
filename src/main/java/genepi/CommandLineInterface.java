@@ -2,6 +2,7 @@ package genepi;
 
 import genepi.base.Toolbox;
 import genepi.distance.DistanceCheck;
+import genepi.haplogrep.main.Haplogrep;
 
 public class CommandLineInterface extends Toolbox {
 
@@ -20,7 +21,7 @@ public class CommandLineInterface extends Toolbox {
 	public static void main(String[] args) throws Exception {
 		CommandLineInterface toolbox = new CommandLineInterface("haplogrep", args);
 		toolbox.addTool("distance", DistanceCheck.class);
-		toolbox.addTool("haplogrep", DistanceCheck.class);
+		toolbox.addTool("classify", Haplogrep.class);
 		toolbox.start();
 
 	}

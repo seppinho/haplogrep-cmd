@@ -6,7 +6,7 @@
 FILE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # Our classpath including our jar file
-CLASS_PATH="$FILE_PATH/haplogrep-2.1.26.jar:$HADOOP_CLASS_PATH"
+CLASS_PATH="$FILE_PATH/haplogrep.jar"
 
 # The fully qualified name of the class to execute
 CLASS="genepi.CommandLineInterface"
