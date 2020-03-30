@@ -125,14 +125,13 @@
 				</executions>
 			</plugin>
 			
-				<plugin>
+			<plugin>
 				<groupId>com.github.hazendaz.maven</groupId>
 				<artifactId>makeself-maven-plugin</artifactId>
 				<version>1.0.0.beta3</version>
 				<configuration>
 					<archiveDir>haplogrep</archiveDir>
 					<fileName>haplogrep-installer.sh</fileName>
-					<label>Install Haplogrep ${project.version}</label>
 					<notemp>true</notemp>
 					<current>true</current>
 					<nox11>true</nox11>
@@ -147,6 +146,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			
 		</plugins>
 	</build>
