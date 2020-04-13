@@ -54,7 +54,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -65,7 +65,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.3</version>
+				<version>3.2.2</version>
 				<executions>
 
 					<execution>
@@ -106,7 +106,7 @@
 						<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<id>create-assembly</id>
@@ -125,27 +125,25 @@
 				</executions>
 			</plugin>
 			
-			<plugin>
-				<groupId>com.github.hazendaz.maven</groupId>
-				<artifactId>makeself-maven-plugin</artifactId>
-				<version>1.0.0.beta3</version>
-				<configuration>
-					<archiveDir>haplogrep</archiveDir>
-					<fileName>haplogrep-installer.sh</fileName>
-					<notemp>true</notemp>
-					<current>true</current>
-					<nox11>true</nox11>
-					<nowait>true</nowait>
-				</configuration>
-				<executions>
-					<execution>
-						<id>makeself</id>
-						<goals>
-							<goal>makeself</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			   <plugin>
+                <groupId>com.github.hazendaz.maven</groupId>
+                <artifactId>makeself-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <archiveDir>haplogrep</archiveDir>
+                    <fileName>haplogrep-installer.sh</fileName>
+                    <label>Distro Self Extraction</label>
+                    <startupScript>./haplogrep-installer.sh</startupScript>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>makeself</id>
+                        <goals>
+                            <goal>makeself</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
 			
 		</plugins>
@@ -194,7 +192,7 @@
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
-			<version>2.1.9</version>
+			<version>2.1.10</version>
 		</dependency>
 
 		<dependency>
