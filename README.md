@@ -7,7 +7,7 @@ We provide a fast and free [haplogroup classification web service](https://haplo
 
 You will need the following things properly installed on your computer.
 
-* [Java 8 or higher](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* Java 8 or higher
 
 ## Download and Install
 
@@ -20,7 +20,7 @@ curl -sL haplogrep.now.sh | bash
 or
 
 ```
-wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.2/haplogrep.zip
+wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.3/haplogrep.zip
 unzip haplogrep.zip
 ./haplogrep [classify | distance]
 ```
