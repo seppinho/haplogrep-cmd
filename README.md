@@ -17,6 +17,7 @@ Download and install the latest version from our download page using the followi
 curl -sL haplogrep.now.sh | bash
 ./haplogrep [classify | distance]
 ```
+or
 
 ```
 wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.1/haplogrep.zip
