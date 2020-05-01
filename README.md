@@ -20,7 +20,7 @@ curl -sL haplogrep.now.sh | bash
 or
 
 ```
-wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.1/haplogrep.zip
+wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.2/haplogrep.zip
 unzip haplogrep.zip
 ./haplogrep [classify | distance]
 ```
@@ -70,8 +70,8 @@ This tool allows to calculate the distance between two haplogroups.
 ### Required Parameters   
 |Parameter| Description|
 |---|---|
-|```--in``` | 2 columns named "hg1" and "hg2" seperated by ";" |
-|```--out``` | Input file including the distance in a third column |
+|```--in``` | Input file must include 2 columns named "hg1" and "hg2" seperated by ";" |
+|```--out``` | Output location of distance file |
 
 ## mtDNA reference sequences
 Several mtDNA references exist, Haplogrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
