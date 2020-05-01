@@ -28,28 +28,6 @@
 	</repositories>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>data/phylotree</directory>
-				<targetPath>phylotree</targetPath>
-			</resource>
-			<resource>
-				<directory>data/weights</directory>
-				<targetPath>weights</targetPath>
-			</resource>
-			<resource>
-				<directory>data/annotation</directory>
-				<targetPath>annotation</targetPath>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<targetPath>${project.build.directory}</targetPath>
-				<includes>
-					<include>log4j.properties</include>
-				</includes>
-			</resource>
-		</resources>
-		<sourceDirectory>src/main/java</sourceDirectory>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
@@ -94,7 +72,7 @@
 									<include>com.github.samtools:htsjdk:*:*</include>
 									<include>genepi:haplogrep-core:*:*</include>
 									<include>commons-cli:commons-cli:*:*</include>
-									<include>au.com.bytecode:opencsv:*:*</include>
+									<include>net.sf.opencsv:opencsv:*:*</include>
 									<include>commons-lang:commons-lang:*:*</include>
 								</includes>
 							</artifactSet>
@@ -124,26 +102,28 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			   <plugin>
-                <groupId>com.github.hazendaz.maven</groupId>
-                <artifactId>makeself-maven-plugin</artifactId>
-                <version>1.2.0</version>
-                <configuration>
-                    <archiveDir>haplogrep</archiveDir>
-                    <fileName>haplogrep-installer.sh</fileName>
-                    <label>Distro Self Extraction</label>
-                    <startupScript>./haplogrep-installer.sh</startupScript>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>makeself</id>
-                        <goals>
-                            <goal>makeself</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+			 
+				<plugin>
+				<groupId>com.github.hazendaz.maven</groupId>
+				<artifactId>makeself-maven-plugin</artifactId>
+				<version>1.0.0.beta3</version>
+				<configuration>
+					<archiveDir>haplogrep</archiveDir>
+					<fileName>haplogrep-installer.sh</fileName>
+										<notemp>true</notemp>
+					<current>true</current>
+					<nox11>true</nox11>
+					<nowait>true</nowait>
+				</configuration>
+				<executions>
+					<execution>
+						<id>makeself</id>
+						<goals>
+							<goal>makeself</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			
 		</plugins>
@@ -152,55 +132,10 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<version>2.4</version>
-			<classifier>jdk15</classifier>
-		</dependency>
-
-		<dependency>
-			<groupId>com.esotericsoftware.yamlbeans</groupId>
-			<artifactId>yamlbeans</artifactId>
-			<version>1.09</version>
-		</dependency>
-
-		<dependency>
-			<groupId>jaxen</groupId>
-			<artifactId>jaxen</artifactId>
-			<version>1.1.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20180130</version>
-		</dependency>
-
-		<dependency>
-			<groupId>genepi</groupId>
-			<artifactId>genepi-io</artifactId>
-			<version>1.0.10</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
 			<version>2.1.10</version>
 		</dependency>
-
-		<dependency>
-			<groupId>au.com.bytecode</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>2.4</version>
-		</dependency>
-
 
 	</dependencies>
 </project>

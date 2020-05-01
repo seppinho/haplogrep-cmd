@@ -26,7 +26,7 @@ public class HaplogroupRSRSTest {
 	@BeforeClass
 	public static void init() throws NumberFormatException, IOException, JDOMException, InvalidPolymorphismException
 	{	
-		 phylotree = PhylotreeManager.getInstance().getPhylotree("data/phylotree/phylotree17_rsrs.xml","data/weights/weights17_rsrs.txt");
+		 phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17_rsrs.xml","weights17_rsrs.txt");
 		
 	}
 	

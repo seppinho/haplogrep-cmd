@@ -69,8 +69,8 @@ public class FastaTest {
 	public void h100NomenclatureActivatedTest() throws Exception {
 
 		String file = "test-data/h100/H100.fasta";
-		String phylotree = "data/phylotree/phylotree17.xml";
-		String fluctrates = "data/weights/weights17.txt";
+		String phylotree = "phylotree17.xml";
+		String fluctrates = "weights17.txt";
 		
 		FastaImporter impFasta = new FastaImporter();
 		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
@@ -89,8 +89,8 @@ public class FastaTest {
 	public void h100NomenclatureDeactivatedTest() throws Exception {
 
 		String file = "test-data/h100/H100.fasta";
-		String phylotree = "data/phylotree/phylotree17.xml";
-		String fluctrates = "data/weights/weights17.txt";
+		String phylotree = "phylotree17.xml";
+		String fluctrates = "weights17.txt";
 		
 		FastaImporter impFasta = new FastaImporter();
 		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);

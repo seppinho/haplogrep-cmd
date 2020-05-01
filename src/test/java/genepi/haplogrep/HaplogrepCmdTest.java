@@ -22,8 +22,8 @@ public class HaplogrepCmdTest {
 	public void HaplogrepCmdTest() throws Exception {
 
 		String file = "test-data/vcf/HG00097.vcf";
-		String phylo = "data/phylotree/phylotree17.xml";
-		String weights = "data/weights/weights17.txt";
+		String phylo = "phylotree17.xml";
+		String weights = "weights17.txt";
 		String out = "test-data/out.txt";
 		VcfImporter impvcf = new VcfImporter();
 
