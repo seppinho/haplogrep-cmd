@@ -15,18 +15,26 @@ Download and install the latest version from our download page using the followi
 
 ```
 curl -sL haplogrep.now.sh | bash
+./haplogrep [classify | distance]
 ```
- 
-## Run Haplogrep Classification with test data
+
+```
+wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.1/haplogrep.zip
+unzip haplogrep.zip
+./haplogrep [classify | distance]
+```
+
+## Classify 
+### Run Haplogrep Classification with test data
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
       ./haplogrep classify --in HG00097.vcf.gz --format vcf --out haplogroups.txt
       
       
-## Input File Formats
-### VCF or Fasta
+### Input File Formats
+#### VCF or Fasta
 The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) is used. 
 
-### hsd Format 
+#### hsd Format 
 You can also specify your profiles in the original Haplogrep **hsd** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). 
 
 `Sample1 1-16569 H100 263G 315.1C 750G	1041G	1438G	4769G	8860G	9410G	12358G	13656C	15326G	16189C	16192T	16519C`  
@@ -34,14 +42,14 @@ You can also specify your profiles in the original Haplogrep **hsd** format, whi
 
 For readability, the polymorphisms are also tab-delimited (so columns >= 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
 
-## Required Parameters   
+### Required Parameters   
 |Parameter| Description|
 |---|---|
 |```--in``` | Please provide the input file name|
 |```--format``` | Please provide the input format of your data - valid options are: ```hsd, vcf, or fasta``` files|
 |```--out``` | Please provide an output name|
 
-## Additional Parameters   
+### Additional Parameters   
 |Parameter| Description|
 |---|---|
 |```--rsrs```| By default Haplogrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.|
@@ -52,6 +60,15 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 |```--fixNomenclature```|  To fix the mtDNA nomenclature after alignment of fasta files, set the `--fixNomenclature` parameter. See below for further information.|
 |```--hits``` |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
 |```--lineage```|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
+
+## Distance
+This tool allows to calculate the distance between two haplogroups. 
+
+### Required Parameters   
+|Parameter| Description|
+|---|---|
+|```--in``` | 2 columns named "hg1" and "hg2" seperated by ";" |
+|```--out``` | Input file including the distance in a third column |
 
 ## mtDNA reference sequences
 Several mtDNA references exist, Haplogrep supports rCRS and RSRS. Please checkout [our blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) to learn more about this topic.
