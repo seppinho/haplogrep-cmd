@@ -24,8 +24,10 @@ wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.1/haplogre
 unzip haplogrep.zip
 ./haplogrep [classify | distance]
 ```
+## Available Tools
+Currently two subtools are available. `Classify` allows to classify input profiles into haplogroups, `distance` calculates the distance between two haplogroups. 
 
-## Classify 
+## Haplogrep Classify 
 ### Run Haplogrep Classification with test data
       wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
       ./haplogrep classify --in HG00097.vcf.gz --format vcf --out haplogroups.txt
@@ -62,7 +64,7 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 |```--hits``` |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
 |```--lineage```|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: off). As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
 
-## Distance
+## Haplogrep Distance
 This tool allows to calculate the distance between two haplogroups. 
 
 ### Required Parameters   
