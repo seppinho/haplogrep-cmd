@@ -18,7 +18,7 @@ import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.1.25";
+	public static String VERSION = "v2.2.3";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -100,9 +100,9 @@ public class Haplogrep extends Tool {
 			return -1;
 		}
 
-		String phylotree = "phylotree/phylotree$VERSION$RSRS.xml";
+		String phylotree = "phylotree$VERSION$RSRS.xml";
 
-		String fluctrates = "weights/weights$VERSION$RSRS.txt";
+		String fluctrates = "weights$VERSION$RSRS.txt";
 
 		phylotree = phylotree.replace("$VERSION", tree);
 
