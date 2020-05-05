@@ -20,7 +20,7 @@ curl -sL haplogrep.now.sh | bash
 or
 
 ```
-wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.3/haplogrep.zip
+wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.4/haplogrep.zip
 unzip haplogrep.zip
 ./haplogrep 
 ```
