@@ -37,6 +37,7 @@ public class Haplogrep extends Tool {
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
 		addFlag("lineage", "export lineage information");
 		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
+		addOptionalParameter("hetLevel", "add heteroplasmies with a level > X to profile (default: 0.9)", Tool.STRING);
 	}
 
 	@Override
@@ -58,6 +59,7 @@ public class Haplogrep extends Tool {
 		String format = (String) getValue("format");
 		String metric = (String) getValue("metric");
 		String hits = (String) getValue("hits");
+		String hetLevel = (String) getValue("hetLevel");
 
 		boolean extended = isFlagSet("extend-report");
 
@@ -92,6 +94,11 @@ public class Haplogrep extends Tool {
 		if (hits == null) {
 			hits = "1";
 		}
+		
+		if (hetLevel == null) {
+			hetLevel = "0.9";
+		}
+
 
 		File input = new File(in);
 
@@ -148,7 +155,8 @@ public class Haplogrep extends Tool {
 				else if (format.equals("vcf")) {
 					VcfImporter importerVcf = new VcfImporter();
 					HashMap<String, Sample> samples = importerVcf.load(input, chip);
-					lines = ExportUtils.vcfTohsd(samples);
+					lines = ExportUtils.vcfTohsd(samples, Double.valueOf(hetLevel));
+					System.out.println(lines);
 				}
 
 				else if (format.equals("fasta")) {
