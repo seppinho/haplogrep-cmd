@@ -15,14 +15,14 @@ Download and install the latest version from our download page using the followi
 
 ```
 curl -sL haplogrep.now.sh | bash
-./haplogrep [classify | distance]
+./haplogrep 
 ```
 or
 
 ```
 wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.3/haplogrep.zip
 unzip haplogrep.zip
-./haplogrep [classify | distance]
+./haplogrep 
 ```
 ## Available Tools
 Currently two subtools are available. `Classify` allows to classify input profiles into haplogroups, `distance` calculates the distance between two haplogroups. 
