@@ -27,8 +27,8 @@ unzip haplogrep.zip
 ## Available Tools
 Currently two tools are available. 
 
-* [Classify](haplogrep-cmd#haplogrep-classify) allows to classify input profiles into haplogroups. 
-* [Distance](haplogrep-cmd#haplogrep-distance) calculates the distance between two haplogroups. 
+* [Classify](#haplogrep-classify) allows to classify input profiles into haplogroups. 
+* [Distance](#haplogrep-distance) calculates the distance between two haplogroups. 
 
 ## Haplogrep Classify 
 ### Run Haplogrep Classification with test data
