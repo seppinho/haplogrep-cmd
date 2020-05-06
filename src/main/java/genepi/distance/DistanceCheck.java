@@ -26,7 +26,6 @@ public class DistanceCheck extends Tool {
 	public void init() {
 
 		System.out.println("Welcome to Haplogrep Distance Check " + VERSION);
-		System.out.println("Institute of Genetic Epidemiology, Medical University of Innsbruck");
 		System.out.println("");
 
 	}

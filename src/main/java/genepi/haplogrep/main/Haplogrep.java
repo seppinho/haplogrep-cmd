@@ -43,9 +43,7 @@ public class Haplogrep extends Tool {
 	@Override
 	public void init() {
 
-		System.out.println("Welcome to HaploGrep " + VERSION);
-		System.out.println("Instiute of Genetic Epidemiology, Medical University of Innsbruck");
-		System.out.println("Hansi Weissensteiner, Sebastian Schönherr, Lukas Forer, Dominic Pacher");
+		System.out.println("Welcome to Haplogrep Classify " + VERSION);
 		System.out.println("");
 
 	}
@@ -156,7 +154,6 @@ public class Haplogrep extends Tool {
 					VcfImporter importerVcf = new VcfImporter();
 					HashMap<String, Sample> samples = importerVcf.load(input, chip);
 					lines = ExportUtils.vcfTohsd(samples, Double.valueOf(hetLevel));
-					System.out.println(lines);
 				}
 
 				else if (format.equals("fasta")) {
