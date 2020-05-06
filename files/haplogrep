@@ -11,8 +11,5 @@ CLASS_PATH="$FILE_PATH/haplogrep.jar"
 # The fully qualified name of the class to execute
 CLASS="genepi.CommandLineInterface"
 
-# change current directory
-cd $FILE_PATH
-
 # execute cloudgene
 java -cp $CLASS_PATH $CLASS "$@"
