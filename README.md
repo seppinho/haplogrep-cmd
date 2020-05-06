@@ -20,12 +20,15 @@ curl -sL haplogrep.now.sh | bash
 or
 
 ```
-wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.4/haplogrep.zip
+wget https://github.com/seppinho/haplogrep-cmd/releases/download/v2.2.5/haplogrep.zip
 unzip haplogrep.zip
 ./haplogrep 
 ```
 ## Available Tools
-Currently two subtools are available. `Classify` allows to classify input profiles into haplogroups, `distance` calculates the distance between two haplogroups. 
+Currently two tools are available. 
+
+* [Classify](haplogrep-cmd#haplogrep-classify) allows to classify input profiles into haplogroups. 
+* [Distance](haplogrep-cmd#haplogrep-distance) calculates the distance between two haplogroups. 
 
 ## Haplogrep Classify 
 ### Run Haplogrep Classification with test data
