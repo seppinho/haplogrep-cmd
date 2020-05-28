@@ -59,7 +59,7 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 |Parameter| Description|
 |---|---|
 |```--rsrs```| By default Haplogrep expects that your data is aligned against **rCRS** (which is included in the human references hg19 and hg38). If your data is aligned against **RSRS**, add the `--rsrs` parameter (Default: off). Please read [this blog post](http://haplogrep.uibk.ac.at/blog/rcrs-vs-rsrs-vs-hg19/) carefully before adding this option.|
-|```--metric```| To **change the classification metric** to Hamming Distance or Jaccard add the `--metric` parameter (Default: Kulczynski Measure).|
+|```--metric```| To **change the classification metric** to Hamming Distance (```hamming```) or Jaccard (```jaccard```) add the `--metric` parameter (Default: Kulczynski Measure).|
 |```--extend-report```| For additional information on mtSNPs (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).|
 |```--phylotree```|  The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: ```17```, allowed numbers from ```10,11,12,..,17``` ([latest version](http://phylotree.org/rCRS-oriented_version.htm))).|
 |```--chip```| If you are using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 16024-16569;1-576;8860). |
