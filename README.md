@@ -37,8 +37,12 @@ Currently two tools are available.
       
       
 ### Input File Formats
+
 #### VCF or Fasta
-The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf) or **FASTA** (\*.fasta or \*.fa). For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) is used. 
+The recommended input format is a **single-sample/multi-sample VCF** (\*.vcf.gz or \*.vcf).
+
+#### FASTA
+For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7.17) is used. For each input sequence, haplogrep excludes positions from the tested range that are (1) not covered by the input fragment or (2) has marked with a N in the sequence.
 
 #### hsd Format 
 You can also specify your profiles in the original Haplogrep **hsd** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). 
