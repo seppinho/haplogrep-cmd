@@ -7,25 +7,24 @@ VERSION="v2.2.6"
 GITHUB_USER="seppinho"
 GITHUB_REPO="haplogrep-cmd"
 EXECUTABLE="haplogrep"
-INSTALLER_SCRIPT="haplogrep-installer.sh"
+ZIP="haplogrep.zip"
 
-INSTALLER_URL=https://github.com/${GITHUB_USER}/${GITHUB_REPO}/releases/download/${VERSION}/${INSTALLER_SCRIPT}
+INSTALLER_URL=https://github.com/${GITHUB_USER}/${GITHUB_REPO}/releases/download/${VERSION}/${ZIP}
 
 
 echo "Installing ${NAME} ${VERSION}..."
 
 echo "Downloading ${NAME} from ${INSTALLER_URL}..."
-curl -fL ${INSTALLER_URL} -o ${INSTALLER_SCRIPT}
+curl -fL ${INSTALLER_URL} -o ${ZIP}
 
 # execute installer
-chmod +x ./${INSTALLER_SCRIPT}
-./${INSTALLER_SCRIPT}
+unzip ./${ZIP}
 
 # change mod for executables
 chmod +x ./${EXECUTABLE}
 
 # remove installer
-rm ./${INSTALLER_SCRIPT}
+rm ./${ZIP}
 
 echo ""
 GREEN='\033[0;32m'
