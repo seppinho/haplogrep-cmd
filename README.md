@@ -5,9 +5,7 @@ Haplogrep is a command-line tool for mtDNA haplogroup classification. We also pr
 
 ## Requirements
 
-You will need the following things properly installed on your computer.
-
-* Java 8 or higher
+Java 8 or higher
 
 ## Download and Install
 
