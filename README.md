@@ -15,8 +15,8 @@ Download and install the latest version from our download page using the followi
 curl -sL haplogrep.now.sh | bash
 ./haplogrep 
 ```
-## Available Tools
-Currently two tools are available. 
+## Available Subcommands
+Currently two subcommands are available. 
 
 * [Classify](#haplogrep-classify) allows to classify input profiles into haplogroups. 
 * [Distance](#haplogrep-distance) calculates the distance between two haplogroups. 
