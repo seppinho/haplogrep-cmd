@@ -18,7 +18,7 @@ import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.2.6";
+	public static String VERSION = "v2.2.7";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -35,7 +35,7 @@ public class Haplogrep extends Tool {
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
-		addFlag("lineage", "export lineage information");
+		addOptionalParameter("lineage", "export lineage information as dot file, \n0=no tree, 1=with SNPs, 2=only structure, no SNPs" , Tool.STRING);
 		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
 		addOptionalParameter("hetLevel", "add heteroplasmies with a level > X to profile (default: 0.9)", Tool.STRING);
 	}
@@ -58,12 +58,13 @@ public class Haplogrep extends Tool {
 		String metric = (String) getValue("metric");
 		String hits = (String) getValue("hits");
 		String hetLevel = (String) getValue("hetLevel");
-
+		String lineage = (String) getValue("lineage");
+		
 		boolean extended = isFlagSet("extend-report");
 
 		boolean chip = isFlagSet("chip");
 
-		boolean lineage = isFlagSet("lineage");
+
 
 		boolean rsrs = isFlagSet("rsrs");
 		
@@ -95,6 +96,10 @@ public class Haplogrep extends Tool {
 		
 		if (hetLevel == null) {
 			hetLevel = "0.9";
+		}
+		
+		if (lineage == null) {
+			lineage = "0";
 		}
 
 
@@ -181,9 +186,7 @@ public class Haplogrep extends Tool {
 					
 					ExportUtils.createReport(samples, out, extended);
 
-					if (lineage) {
-						ExportUtils.calcLineage(samples, out); 
-					}
+					ExportUtils.calcLineage(samples,Integer.valueOf(lineage), out);
 
 				}
 
@@ -208,7 +211,9 @@ public class Haplogrep extends Tool {
 		Haplogrep haplogrep = new Haplogrep(args);
 
 		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
-		//		"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature"});
+			//	"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature", "--lineage", "1"});
+		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/B5a1_8281fix.hsd", "--out",
+			//	"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "2"});
 
 		haplogrep.start();
 

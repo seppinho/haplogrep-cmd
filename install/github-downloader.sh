@@ -3,7 +3,7 @@
 set -e
 
 NAME="Haplogrep"
-VERSION="v2.2.6"
+VERSION="v2.2.7"
 GITHUB_USER="seppinho"
 GITHUB_REPO="haplogrep-cmd"
 EXECUTABLE="haplogrep"
@@ -31,4 +31,3 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 echo -e "${GREEN}${NAME} ${VERSION} installation completed. Have fun!${NC}"
 echo ""
-
