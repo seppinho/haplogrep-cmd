@@ -5,7 +5,7 @@
 
 	<groupId>genepi</groupId>
 	<artifactId>haplogrep</artifactId>
-	<version>2.2.7</version>
+	<version>2.2.9</version>
 	<packaging>jar</packaging>
 
 	<name>Haplogrep</name>
@@ -59,7 +59,8 @@
 									<mainClass>genepi.CommandLineInterface</mainClass>
 								</transformer>
 							</transformers>
-
+							
+							<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
 							<artifactSet>
 								<includes>
 									<include>commons-cli:commons-cli:*:*</include>
@@ -74,6 +75,7 @@
 									<include>commons-cli:commons-cli:*:*</include>
 									<include>net.sf.opencsv:opencsv:*:*</include>
 									<include>commons-lang:commons-lang:*:*</include>
+									<include>commons-collections:commons-collections:*:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
