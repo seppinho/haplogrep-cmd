@@ -4,15 +4,18 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import org.junit.Test;
 
 import core.Haplogroup;
 import core.Polymorphism;
 import core.SampleFile;
+import core.TestSample;
 import genepi.haplogrep.util.HgClassifier;
 import importer.FastaImporter;
 import importer.FastaImporter.References;
+import util.ExportUtils;
 
 public class FastaTest {
 
@@ -187,6 +190,73 @@ public class FastaTest {
 		assertEquals(true, set.contains("3106-3106d"));
 		assertEquals(true, set.contains("8270-8277d"));
 	}
+	
+	
+	@Test
+	public void writeFasta() throws Exception {
+		String file = "test-data/fasta/B6.fasta";
+		FastaImporter impFasta = new FastaImporter();
+		String out = "test-data/fasta/B6_";
+		String phylo = "phylotree17.xml";
+		String weights = "weights17.txt";
+		
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+
+		SampleFile newSampleFile = new SampleFile(samples);
+		
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
+		
+		ExportUtils.generateFasta(newSampleFile.getTestSamples(), out);
+		
+		String[] splits = samples.get(0).split("\t");
+		HashSet<String> set = new HashSet<String>();
+
+		for (int i = 3; i < splits.length; i++) {
+			set.add(splits[i]);
+		}
+
+		assertEquals(true, set.contains("16182.1C"));
+	}
+	
+	
+	@Test
+	public void writeFastaMSA() throws Exception {
+		String file = "test-data/fasta/B5a1.fasta";
+		FastaImporter impFasta = new FastaImporter();
+		String out = "test-data/fasta/B5a1";
+		String phylo = "phylotree17.xml";
+		String weights = "weights17.txt";
+		
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+
+		SampleFile newSampleFile = new SampleFile(samples);
+		
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
+		
+		ExportUtils.generateFastaMSA(newSampleFile.getTestSamples(), out);
+		
+		String readIn = "test-data/fasta/B5a1_haplogrep2_MSA.fasta";
+		impFasta = new FastaImporter();
+		ArrayList<String> samples2 = impFasta.load(new File(readIn), References.RCRS);
+
+		String[] splits = samples.get(0).split("\t");
+		HashSet<String> set = new HashSet<String>();
+
+		for (int i = 3; i < splits.length; i++) {
+			set.add(splits[i]);
+			System.out.println(splits[i]);
+		}
+
+		assertEquals(true, set.contains("16182.1C"));
+		assertEquals(true, set.contains("309.1CCT"));
+		assertEquals(true, set.contains("3106-3106d"));
+		assertEquals(true, set.contains("8270-8277d"));
+	}
+	
 
 /*	@Test
 	public void parsePhylotree17() throws Exception {

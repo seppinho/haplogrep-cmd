@@ -34,6 +34,8 @@ public class Haplogrep extends Tool {
 		addFlag("fixNomenclature", "Fix mtDNA nomenclature conventions based on rules");
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
+		addFlag("msa", "write multiple sequence alignment (_MSA.fasta) ");
+		addFlag("fasta", "write FASTA  (.fasta) ");
 		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
 		addOptionalParameter("lineage", "export lineage information as dot file, \n0=no tree, 1=with SNPs, 2=only structure, no SNPs" , Tool.STRING);
 		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
@@ -64,7 +66,9 @@ public class Haplogrep extends Tool {
 
 		boolean chip = isFlagSet("chip");
 
-
+		boolean msa = isFlagSet("msa");
+		
+		boolean fasta = isFlagSet("fasta");
 
 		boolean rsrs = isFlagSet("rsrs");
 		
@@ -102,7 +106,6 @@ public class Haplogrep extends Tool {
 			lineage = "0";
 		}
 
-
 		File input = new File(in);
 
 		if (!input.exists()) {
@@ -117,13 +120,17 @@ public class Haplogrep extends Tool {
 		phylotree = phylotree.replace("$VERSION", tree);
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
-
+		
+		References ref =null;
+		
 		if (rsrs) {
 			phylotree = phylotree.replace("$RSRS", "_rsrs");
 			fluctrates = fluctrates.replace("$RSRS", "_rsrs");
+			ref=References.RSRS;
 		} else {
 			phylotree = phylotree.replace("$RSRS", "");
 			fluctrates = fluctrates.replace("$RSRS", "");
+			ref=References.RCRS;
 		}
 
 		System.out.println(phylotree);
@@ -187,6 +194,16 @@ public class Haplogrep extends Tool {
 					ExportUtils.createReport(samples, out, extended);
 
 					ExportUtils.calcLineage(samples,Integer.valueOf(lineage), out);
+					
+					if (fasta)
+						{
+							ExportUtils.generateFasta(samples, out);
+						}
+					
+					if (msa)
+					{
+						ExportUtils.generateFastaMSA(samples, out);
+					}
 
 				}
 
@@ -214,6 +231,8 @@ public class Haplogrep extends Tool {
 			//	"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature", "--lineage", "1"});
 		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/B5a1_8281fix.hsd", "--out",
 			//	"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "2"});
+		haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/haplogroups_hsd.hsd", "--out",
+				"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "3"});
 
 		haplogrep.start();
 
