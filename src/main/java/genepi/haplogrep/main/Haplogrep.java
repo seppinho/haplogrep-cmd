@@ -6,11 +6,13 @@ import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
 import importer.FastaImporter.References;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.apache.log4j.BasicConfigurator;
+
 import util.ExportUtils;
 import vcf.Sample;
 import core.SampleFile;
@@ -18,7 +20,7 @@ import core.TestSample;
 
 public class Haplogrep extends Tool {
 
-	public static String VERSION = "v2.2.8";
+	public static String VERSION = "v2.3.0";
 
 	public Haplogrep(String[] args) {
 		super(args);
@@ -226,6 +228,7 @@ public class Haplogrep extends Tool {
 	public static void main(String[] args) throws IOException {
 
 		Haplogrep haplogrep = new Haplogrep(args);
+		BasicConfigurator.configure();  
 
 		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
 			//	"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature", "--lineage", "1"});
