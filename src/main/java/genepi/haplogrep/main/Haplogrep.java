@@ -15,6 +15,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import util.ExportUtils;
 import vcf.Sample;
+import core.Reference;
 import core.SampleFile;
 import core.TestSample;
 
@@ -32,16 +33,19 @@ public class Haplogrep extends Tool {
 		addParameter("out", "haplogroup output file");
 		addParameter("format", "vcf, fasta, hsd");
 		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
-		addFlag("rsrs", "use RSRS Version");
 		addFlag("fixNomenclature", "Fix mtDNA nomenclature conventions based on rules");
 		addFlag("extend-report", "add flag for a extended final output");
 		addFlag("chip", "VCF data from a genotype chip");
 		addFlag("msa", "write multiple sequence alignment (_MSA.fasta) ");
 		addFlag("fasta", "write FASTA  (.fasta) ");
-		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
-		addOptionalParameter("lineage", "export lineage information as dot file, \n0=no tree, 1=with SNPs, 2=only structure, no SNPs" , Tool.STRING);
+		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)",
+				Tool.STRING);
+		addOptionalParameter("lineage",
+				"export lineage information as dot file, \n0=no tree, 1=with SNPs, 2=only structure, no SNPs",
+				Tool.STRING);
 		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
 		addOptionalParameter("hetLevel", "add heteroplasmies with a level > X to profile (default: 0.9)", Tool.STRING);
+		addOptionalParameter("reference", "specifiy reference sequence (RCRS, RSRS, SARSCOV2)", Tool.STRING);
 	}
 
 	@Override
@@ -63,6 +67,7 @@ public class Haplogrep extends Tool {
 		String hits = (String) getValue("hits");
 		String hetLevel = (String) getValue("hetLevel");
 		String lineage = (String) getValue("lineage");
+		String reference = (String) getValue("reference");
 		
 		boolean extended = isFlagSet("extend-report");
 
@@ -72,8 +77,6 @@ public class Haplogrep extends Tool {
 		
 		boolean fasta = isFlagSet("fasta");
 
-		boolean rsrs = isFlagSet("rsrs");
-		
 		boolean fixNomenclature = isFlagSet("fixNomenclature");
 
 		if (fixNomenclature && !format.toLowerCase().equals("fasta")) {
@@ -123,23 +126,44 @@ public class Haplogrep extends Tool {
 
 		fluctrates = fluctrates.replace("$VERSION", tree);
 		
-		References ref =null;
+		FastaImporter fastaImp = new FastaImporter();
+
 		
-		if (rsrs) {
+		if (reference.toUpperCase().equals("RSRS")) {
 			phylotree = phylotree.replace("$RSRS", "_rsrs");
 			fluctrates = fluctrates.replace("$RSRS", "_rsrs");
-			ref=References.RSRS;
-		} else {
+			try {
+				fastaImp.loadRSRS();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (reference.toUpperCase().equals("SARSCOV2")) {
+				phylotree = phylotree.replace("$RSRS", "_rsrs");
+				fluctrates = fluctrates.replace("$RSRS", "_rsrs");
+				try {
+					fastaImp.loadSARSCOV2();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		} else { //default
 			phylotree = phylotree.replace("$RSRS", "");
 			fluctrates = fluctrates.replace("$RSRS", "");
-			ref=References.RCRS;
+			try {
+				fastaImp.loadrCRS();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		System.out.println(phylotree);
 		System.out.println("Parameters:");
 		System.out.println("Input Format: " + format);
 		System.out.println("Phylotree Version: " + tree);
-		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
+		System.out.println("Reference: " + reference);
 		System.out.println("Extended Report: " + extended);
 		System.out.println("Fix Nomenclature: " + fixNomenclature);
 		System.out.println("Used Metric: " + metric);
@@ -150,18 +174,22 @@ public class Haplogrep extends Tool {
 		long start = System.currentTimeMillis();
 
 		System.out.println("Start Classification...");
-
+		
+		Reference refObject = new Reference();
+		FastaImporter importerF = new FastaImporter();
+		
 		try {
 
 			if (input.isFile()) {
 
 				ArrayList<String> lines = new ArrayList<String>();
 
+				//set rCRS as default for hsd or vcf
+				refObject = importerF.loadrCRS();
+				
 				if (format.equals("hsd")) {
-
-					HsdImporter importer = new HsdImporter();
-					lines = importer.load(input);
-
+					HsdImporter importerH = new HsdImporter();
+					lines = importerH.load(input);
 				}
 
 				else if (format.equals("vcf")) {
@@ -171,25 +199,28 @@ public class Haplogrep extends Tool {
 				}
 
 				else if (format.equals("fasta")) {
-
-					FastaImporter importer = new FastaImporter();
 					
-				
-					if (rsrs) {
-						lines = importer.load(input, References.RSRS);
-					} else {
-						lines = importer.load(input, References.RCRS);
+					if (reference.toUpperCase().equals("RSRS")) {
+						refObject = importerF.loadRSRS();
+						lines = importerF.load(input, refObject);
+					} 
+					else if (reference.toUpperCase().equals("SARSCOV2")) {
+							refObject = importerF.loadSARSCOV2();
+							lines = importerF.load(input, refObject);
 					}
-
+					else {
+						refObject = importerF.loadrCRS();
+						lines = importerF.load(input, refObject);
+					}
 				}
-
+				
 				if (lines != null) {
 
-					SampleFile newSampleFile = new SampleFile(lines);
+					SampleFile newSampleFile = new SampleFile(lines, refObject);
 
 					HgClassifier classifier = new HgClassifier();
 
-					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits), fixNomenclature);
+					classifier.run(newSampleFile, phylotree, refObject, fluctrates, metric, Integer.valueOf(hits), fixNomenclature);
 					
 					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
 					
@@ -199,12 +230,12 @@ public class Haplogrep extends Tool {
 					
 					if (fasta)
 						{
-							ExportUtils.generateFasta(samples, out);
+							ExportUtils.generateFasta(samples, out, refObject);
 						}
 					
 					if (msa)
 					{
-						ExportUtils.generateFastaMSA(samples, out);
+						ExportUtils.generateFastaMSA(samples, out, refObject);
 					}
 
 				}
@@ -228,14 +259,17 @@ public class Haplogrep extends Tool {
 	public static void main(String[] args) throws IOException {
 
 		Haplogrep haplogrep = new Haplogrep(args);
-		BasicConfigurator.configure();  
+		BasicConfigurator.configure();
 
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
-			//	"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature", "--lineage", "1"});
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/B5a1_8281fix.hsd", "--out",
-			//	"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "2"});
+		// haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta",
+		// "--out",
+		// "test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature",
+		// "--lineage", "1"});
+		// haplogrep = new Haplogrep(new String[] { "--in",
+		// "test-data/cambodia/B5a1_8281fix.hsd", "--out",
+		// "test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "2"});
 		haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/haplogroups_hsd.hsd", "--out",
-				"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "3"});
+				"test-data/test.txt", "--format", "hsd", "--hits", "1", "--lineage", "3" });
 
 		haplogrep.start();
 
