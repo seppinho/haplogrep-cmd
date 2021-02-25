@@ -3,15 +3,18 @@ package genepi.distance;
 import genepi.base.Tool;
 import genepi.io.table.reader.CsvTableReader;
 import genepi.io.table.writer.CsvTableWriter;
+import importer.FastaImporter;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
 import java.io.IOException;
 import core.Haplogroup;
+import core.Reference;
 
 public class DistanceCheck extends Tool {
 
 	public static String VERSION = "v0.0.3";
-
+	Reference reference;
+	
 	public DistanceCheck(String[] args) {
 		super(args);
 	}
@@ -40,7 +43,7 @@ public class DistanceCheck extends Tool {
 
 		CsvTableWriter writer = new CsvTableWriter(out, ';');
 
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt", reference);
 
 		int count = 0;
 
@@ -87,7 +90,8 @@ public class DistanceCheck extends Tool {
 	public static void main(String[] args) throws IOException {
 
 		DistanceCheck haplogrep = new DistanceCheck(args);
-
+		FastaImporter importFasta = new FastaImporter();
+		haplogrep.reference = importFasta.loadrCRS(); //currently for RCRS - could be adapted to other references as well
 		haplogrep = new DistanceCheck(
 				new String[] { "--in", "/home/seb/Desktop/test.txt", "--out", "/home/seb/Desktop/out.txt" });
 

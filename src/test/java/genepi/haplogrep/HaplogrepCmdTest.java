@@ -8,10 +8,12 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import core.Reference;
 import core.SampleFile;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.io.FileUtil;
 import genepi.io.table.reader.CsvTableReader;
+import importer.FastaImporter;
 import importer.VcfImporter;
 import util.ExportUtils;
 import vcf.Sample;
@@ -26,14 +28,15 @@ public class HaplogrepCmdTest {
 		String weights = "weights17.txt";
 		String out = "test-data/out.txt";
 		VcfImporter impvcf = new VcfImporter();
-
+		FastaImporter importFasta = new FastaImporter();
+		Reference ref = importFasta.loadrCRS();
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
-		SampleFile newSampleFile = new SampleFile(lines);
+		SampleFile newSampleFile = new SampleFile(lines, ref);
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
+		classifier.run(newSampleFile, phylo,ref, weights, "kulczynski", 1, false);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
 
@@ -51,7 +54,7 @@ public class HaplogrepCmdTest {
 		assertEquals(1, count);
 		
 		
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 10, false);
+		classifier.run(newSampleFile, phylo, ref,weights, "kulczynski", 10, false);
 		
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
 

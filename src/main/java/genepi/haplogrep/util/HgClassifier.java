@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.jdom.JDOMException;
 
+import core.Reference;
 import core.SampleFile;
 import core.TestSample;
 import exceptions.parse.sample.InvalidRangeException;
@@ -16,15 +17,15 @@ import search.ranking.RankingMethod;
 
 public class HgClassifier {
 
-	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric)
+	public void run(SampleFile newSampleFile, String phyloTree, Reference ref, String fluctrates, String metric)
 			throws InvalidRangeException, JDOMException, IOException {
-		run(newSampleFile, phyloTree, fluctrates, metric, 1, false);
+		run(newSampleFile, phyloTree, ref, fluctrates, metric, 1, false);
 	}
 
-	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric, int amountResults, boolean fixNomenclature)
+	public void run(SampleFile newSampleFile, String phyloTree, Reference ref, String fluctrates, String metric, int amountResults, boolean fixNomenclature)
 			throws JDOMException, IOException, InvalidRangeException {
 
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates, ref);
 
 		RankingMethod newRanker = null;
 
