@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phylotree>
+  <haplogroup name="19A">
+    <details accessionNr="" reference="">
+    </details>
+      <haplogroup name="19B">
+        <details accessionNr="" reference="">
+          <poly>8782T</poly>
+          <poly>28144C</poly>
+        </details>
+       </haplogroup>
+      <haplogroup name="20A">
+        <details accessionNr="" reference="">
+          <poly>14408T</poly>
+          <poly>23403G</poly>
+        </details>
+          <haplogroup name="20E(EU1)">
+            <details accessionNr="" reference="">
+              <poly>23403G</poly>
+              <poly>22227T</poly>
+              <poly>28932T</poly>
+              <poly>29645T</poly>
+            </details>
+           </haplogroup>
+          <haplogroup name="20B">
+            <details accessionNr="" reference="">
+              <poly>23403G</poly>
+              <poly>28881A</poly>
+              <poly>28882A</poly>
+            </details>
+              <haplogroup name="20F">
+                <details accessionNr="" reference="">
+                  <poly>1163T</poly>
+                  <poly>7540C</poly>
+                  <poly>16647T</poly>
+                  <poly>18555T</poly>
+                  <poly>22992A</poly>
+                  <poly>23401A</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20D">
+                <details accessionNr="" reference="">
+                  <poly>4002T</poly>
+                  <poly>10097A</poly>
+                  <poly>13536T</poly>
+                  <poly>23731T</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20I/501Y.V1">
+                <details accessionNr="" reference="">
+                  <poly>8782C</poly>
+                  <poly>14408T</poly>
+                  <poly>23403G</poly>
+                  <poly>28881A</poly>
+                  <poly>28882A</poly>
+                  <poly>23063T</poly>
+                  <poly>14676T</poly>
+                </details>
+           </haplogroup>
+         </haplogroup>
+      <haplogroup name="20C">
+        <details accessionNr="" reference="">
+          <poly>23403G</poly>
+          <poly>25563T</poly>
+          <poly>1059T</poly>
+        </details>
+              <haplogroup name="20G">
+                <details accessionNr="" reference="">
+                  <poly>10319T</poly>
+                  <poly>18424G</poly>
+                  <poly>21304T</poly>
+                  <poly>25907T</poly>
+                  <poly>27964T</poly>
+                  <poly>28472T</poly>
+                  <poly>28869T</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20H/501Y.V2">
+                <details accessionNr="" reference="">
+                  <poly>1059T</poly>
+                  <poly>8782C</poly>
+                  <poly>14408T</poly>
+                  <poly>23403G</poly>
+                  <poly>25563T</poly>
+                  <poly>23063T</poly>
+                  <poly>23012A</poly>
+                </details>
+                </haplogroup>
+            </haplogroup>
+        </haplogroup>
+    </haplogroup>
+</phylotree>
