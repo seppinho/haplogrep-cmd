@@ -14,15 +14,22 @@
           <poly>14408T</poly>
           <poly>23403G</poly>
         </details>
-          <haplogroup name="20E">
+          <haplogroup name="20E(EU1)">
             <details accessionNr="" reference="">
               <poly>22227T</poly>
               <poly>28932T</poly>
               <poly>29645T</poly>
             </details>
            </haplogroup>
+          <haplogroup name="20A(EU2)">
+            <details accessionNr="" reference="">
+              <poly>18877T</poly>
+              <poly>22992A</poly>
+            </details>
+           </haplogroup>
           <haplogroup name="20B">
             <details accessionNr="" reference="">
+              <poly>14408T</poly>
               <poly>28881A</poly>
               <poly>28882A</poly>
             </details>
@@ -61,12 +68,6 @@
                   <poly>14676T</poly>
                 </details>
                </haplogroup>
-              <haplogroup name="20A.EU2">
-                <details accessionNr="" reference="">
-                  <poly>18877T</poly>
-                  <poly>22992A</poly>
-                </details>
-               </haplogroup>
               <haplogroup name="20A/N.194L">
                 <details accessionNr="" reference="">
                   <poly>18877T</poly>
@@ -77,6 +78,7 @@
          </haplogroup>
       <haplogroup name="20C">
         <details accessionNr="" reference="">
+          <poly>14408T</poly>
           <poly>25563T</poly>
           <poly>1059T</poly>
         </details>
