@@ -30,7 +30,7 @@ public class HaplogroupSARSCOV2Test {
 	public static void init() throws NumberFormatException, IOException, JDOMException, InvalidPolymorphismException
 	{	
 		reference = new FastaImporter().loadSARSCOV2();		
-		phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree02_SARSCOV2.xml","weights02_SARSCOV2.txt", reference);
+		phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree01_SARSCOV2.xml","weights01_SARSCOV2.txt", reference);
 	}
 	
 	@Test
