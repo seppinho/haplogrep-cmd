@@ -96,7 +96,7 @@ public class FastaTest {
 		HgClassifier classifier = new HgClassifier();
 
 		classifier.run(newSampleFile, phylotree,ref, fluctrates, "kulczynski", 1, true);
-		System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
+		//System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
 		assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
 		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
@@ -166,7 +166,6 @@ public class FastaTest {
 		ArrayList<Polymorphism> polies = s1.getTestSamples().get(0).getSample().getPolymorphisms();
 		
 		for (Polymorphism poly : polies) { 		      
-	           System.out.println(poly); 
 	           if (poly.getPosition()==523 && poly.getMutation()==poly.getMutation().DEL) {
 					deletion = true;
 				}
@@ -302,8 +301,8 @@ public class FastaTest {
 		sb.append(line + "\n");      
 		}  
 		fr.close();    
-		System.out.println("Contents of File: ");  
-		System.out.println(sb.toString());   //returns a string that textually represents the object  
+		//System.out.println("Contents of File: ");  
+		//System.out.println(sb.toString());   //returns a string that textually represents the object  
 		}  
 		catch(IOException e)  
 		{  
@@ -311,12 +310,12 @@ public class FastaTest {
 		} 		
 	}
 	
-/*	@Test
-	public void nextStrain44Test() throws Exception {
+	@Test
+	public void SARSCOV2_nextStrain44Test() throws Exception {
 
 		String file = "test-data/sarscov2/sarscov2_example_sequences_nextstrain_44.fasta";
-		String phylotree = "phylotree01_sarscov2.xml";
-		String fluctrates = "weights01_sarscov2.txt";
+		String phylotree = "phylotree01_SARSCOV2.xml";
+		String fluctrates = "weights01_SARSCOV2.txt";
 		
 		FastaImporter impFasta = new FastaImporter();
 		Reference ref = impFasta.loadSARSCOV2();
@@ -326,17 +325,75 @@ public class FastaTest {
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylotree, ref, fluctrates, "kimura", 1, true);
+		classifier.run(newSampleFile, phylotree, ref, fluctrates, "kulcinsky", 1, true);
 		
 		for (int i=0; i < newSampleFile.getTestSamples().size(); i++) {
-			System.out.println(newSampleFile.getTestSamples().get(i).getSampleID() + "\t " + newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			System.out.println(newSampleFile.getTestSamples().get(i).getSampleID() + "\t" + newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			//System.out.println( newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			
 		}
 	//	System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
-		assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
-		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
-	}*/
+	//	assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
+	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
+	}
 	
+	
+	@Test
+	public void SARSCOV2_david_partial_Test() throws Exception {
+
+		String file = "test-data/sarscov2/sarscov2_david_partial_sequences.fasta";
+		String phylotree = "phylotree01_SARSCOV2.xml";
+		String fluctrates = "weights01_SARSCOV2.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		Reference ref = impFasta.loadSARSCOV2();
+		ArrayList<String> samples = impFasta.load(new File(file), ref);
+		
+		SampleFile newSampleFile = new SampleFile(samples, ref);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, ref, fluctrates, "kulcinsky", 1, true);
+		
+		for (int i=0; i < newSampleFile.getTestSamples().size(); i++) {
+			System.out.println(newSampleFile.getTestSamples().get(i).getSampleID() + "\t" + newSampleFile.getTestSamples().get(i).getSample().getSampleRanges() + "\t" + newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			//System.out.println( newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			
+		}
+	//	System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+	//	assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
+	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
+	}
+	
+	@Test
+	public void GenBank_() throws Exception {
+
+		String file = "test-data/sarscov2/sarscov2_example_sequences_nextstrain_44.fasta";
+		String phylotree = "phylotree01_SARSCOV2.xml";
+		String fluctrates = "weights01_SARSCOV2.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		Reference ref = impFasta.loadSARSCOV2();
+		ArrayList<String> samples = impFasta.load(new File(file), ref);
+		
+		SampleFile newSampleFile = new SampleFile(samples, ref);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, ref, fluctrates, "kulcinsky", 1, true);
+		
+		for (int i=0; i < newSampleFile.getTestSamples().size(); i++) {
+			System.out.println(newSampleFile.getTestSamples().get(i).getSampleID() + "\t" + newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			//System.out.println( newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			
+		}
+	//	System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+	//	assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
+	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
+	}
 
 /*	@Test
 	public void parsePhylotree17() throws Exception {
