@@ -11,21 +11,60 @@
        </haplogroup>
       <haplogroup name="20A">
         <details accessionNr="" reference="">
-          <poly>8782T!</poly>
           <poly>14408T</poly>
           <poly>23403G</poly>
         </details>
-          <haplogroup name="20E">
+          <haplogroup name="20A.EU1">
             <details accessionNr="" reference="">
-              <poly>8782T!</poly>
               <poly>22227T</poly>
-              <poly>28932T</poly>
-              <poly>29645T</poly>
+            </details>
+              <haplogroup name="20E(EU1)">
+                <details accessionNr="" reference="">
+                  <poly>28932T</poly>
+                  <poly>29645T</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20A.EU1.1">
+                <details accessionNr="" reference="">
+                  <poly>445C</poly>
+                </details>
+           </haplogroup>
+         </haplogroup>
+      <haplogroup name="20A(EU2)">
+        <details accessionNr="" reference="">
+          <poly>18877T</poly>
+          <poly>22992A</poly>
+        </details>
+           </haplogroup>
+          <haplogroup name="20A.EU3">
+            <details accessionNr="" reference="">
+              <poly>21885T</poly>
+              <poly>6941T</poly>
+            </details>
+           </haplogroup>
+          <haplogroup name="S.S98F">
+            <details accessionNr="" reference="">
+              <poly>21855T</poly>
+              <poly>25505G</poly>
+              <poly>25996T</poly>
+            </details>
+           </haplogroup>
+          <haplogroup name="S.D80Y">
+            <details accessionNr="" reference="">
+              <poly>3099T</poly>
+              <poly>21800T</poly>
+              <poly>27632T</poly>
+            </details>
+           </haplogroup>
+          <haplogroup name="S.N439K">
+            <details accessionNr="" reference="">
+              <poly>7767C</poly>
+              <poly>8047T</poly>
+              <poly>22879A</poly>
             </details>
            </haplogroup>
           <haplogroup name="20B">
             <details accessionNr="" reference="">
-              <poly>8782T!</poly>
               <poly>28881A</poly>
               <poly>28882A</poly>
             </details>
@@ -55,20 +94,11 @@
                   <poly>23731T</poly>
                 </details>
                </haplogroup>
-              <haplogroup name="20I/501Y.V1">
+              <haplogroup name="20B/20I/501Y.V1">
                 <details accessionNr="" reference="">
-                  <poly>8782C</poly>
-                  <poly>23403G</poly>
-                  <poly>28881A</poly>
-                  <poly>28882A</poly>
                   <poly>23063T</poly>
                   <poly>14676T</poly>
-                </details>
-               </haplogroup>
-              <haplogroup name="20A.EU2">
-                <details accessionNr="" reference="">
-                  <poly>18877T</poly>
-                  <poly>22992A</poly>
+                  <poly>15279T</poly>
                 </details>
                </haplogroup>
               <haplogroup name="20A/N.194L">
@@ -77,13 +107,30 @@
                   <poly>26735T</poly>
                   <poly>28854T</poly>
                 </details>
+               </haplogroup>
+              <haplogroup name="S.A626S">
+                <details accessionNr="" reference="">
+                  <poly>772C</poly>
+                  <poly>23438T</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20B/22992A">
+                <details accessionNr="" reference="">
+                  <poly>22992A</poly>
+                  <poly>16647T</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20B/15867G">
+                <details accessionNr="" reference="">
+                  <poly>13536T</poly>
+                  <poly>15867G</poly>
+                </details>
            </haplogroup>
          </haplogroup>
       <haplogroup name="20C">
         <details accessionNr="" reference="">
-          <poly>8782T!</poly>
-          <poly>25563T</poly>
           <poly>1059T</poly>
+          <poly>25563T</poly>
         </details>
               <haplogroup name="20G">
                 <details accessionNr="" reference="">
@@ -98,7 +145,6 @@
                </haplogroup>
               <haplogroup name="20H/501Y.V2">
                 <details accessionNr="" reference="">
-                  <poly>8782T!</poly>
                   <poly>23063T</poly>
                   <poly>23012A</poly>
                 </details>
@@ -109,6 +155,19 @@
                   <poly>12850G</poly>
                   <poly>21364T</poly>
                   <poly>23064C</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20C/501Y.V2">
+                <details accessionNr="" reference="">
+                  <poly>23063T</poly>
+                  <poly>23012A</poly>
+                </details>
+               </haplogroup>
+              <haplogroup name="20C/S.501T">
+                <details accessionNr="" reference="">
+                  <poly>8703C</poly>
+                  <poly>23064C</poly>
+                  <poly>27145T</poly>
                 </details>
                 </haplogroup>
             </haplogroup>
