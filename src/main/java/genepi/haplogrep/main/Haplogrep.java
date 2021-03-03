@@ -140,8 +140,8 @@ public class Haplogrep extends Tool {
 			}
 		}
 		else if (reference.toUpperCase().equals("SARSCOV2")) {
-				phylotree = "phylotree01_SARSCOV2.xml";
-				fluctrates = "weights01_SARSCOV2.txt";
+				phylotree = phylotree.replace("$RSRS", "_SARSCOV2");
+				fluctrates = fluctrates.replace("$RSRS", "__SARSCOV2");
 				try {
 					fastaImp.loadSARSCOV2();
 				} catch (IOException e) {
