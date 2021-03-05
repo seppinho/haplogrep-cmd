@@ -38,10 +38,10 @@ public class FastaTest {
 
 		String[] splits = samples.get(0).split("\t");
 		for (int i = 3; i < splits.length; i++) {
-			actual.append(splits[i] + ",");
+			actual.append(splits[i]);
 		}
-
-		assertEquals(0, actual.length());
+		//rCRS contains N on 3107N
+		assertEquals("3107N", actual.toString());
 	}
 
 	@Test
@@ -56,8 +56,7 @@ public class FastaTest {
 		for (int i = 3; i < splits.length; i++) {
 			actual.append(splits[i] + ",");
 		}
-
-		assertEquals(0, actual.length());
+		assertEquals("523N,524N,3107N,", actual.toString());
 
 	}
 
@@ -72,11 +71,12 @@ public class FastaTest {
 		String[] splits = samples.get(0).split("\t");
 
 		for (int i = 3; i < splits.length; i++) {
+			System.out.println(splits[i]);
 			actual.append(splits[i] + ",");
 		}
 
-		// exactly 52 differences between rsrs and rCRS
-		assertEquals(52, (splits.length) - 3);
+		// exactly 52 differences between rsrs and rCRS + 3107N - see http://phylotree.org/resources/RSRS_vs_rCRS.htm
+		assertEquals(53, (splits.length) - 3);
 
 	}
 
@@ -367,12 +367,12 @@ public class FastaTest {
 	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 	}
 	
-	@Test
-	public void GenBank_() throws Exception {
+	/*		@Test
+	public void GenBank_Helix_727() throws Exception {
 
-		String file = "test-data/sarscov2/sarscov2_example_sequences_nextstrain_44.fasta";
-		String phylotree = "phylotree01_SARSCOV2.xml";
-		String fluctrates = "weights01_SARSCOV2.txt";
+		String file = "test-data/sarscov2/genbank_sarscov2_helix.fasta";
+		String phylotree = "phylotree02_SARSCOV2.xml";
+		String fluctrates = "weights02_SARSCOV2.txt";
 		
 		FastaImporter impFasta = new FastaImporter();
 		Reference ref = impFasta.loadSARSCOV2();
@@ -393,8 +393,38 @@ public class FastaTest {
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
 	//	assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
 	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
-	}
+	}*/
 
+	
+	@Test
+	public void GenBank_Helix_35() throws Exception {
+
+		String file = "test-data/sarscov2/genbank_sarscov2_helix_issues.fasta";
+		String phylotree = "phylotree02_SARSCOV2.xml";
+		String fluctrates = "weights02_SARSCOV2.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		Reference ref = impFasta.loadSARSCOV2();
+		ArrayList<String> samples = impFasta.load(new File(file), ref);
+		
+		SampleFile newSampleFile = new SampleFile(samples, ref);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, ref, fluctrates, "kimura", 1, true);
+		
+		for (int i=0; i < newSampleFile.getTestSamples().size(); i++) {
+			System.out.println(newSampleFile.getTestSamples().get(i).getSampleID() +"\t" + newSampleFile.getTestSamples().get(i).getSample().getSampleRanges() + "\t" + newSampleFile.getTestSamples().get(i).getDetectedHaplogroup()+ "\t" + newSampleFile.getTestSamples().get(i).getSample().getPolymorphisms());
+			//System.out.println( newSampleFile.getTestSamples().get(i).getDetectedHaplogroup());
+			
+		}
+	//	System.out.println(newSampleFile.getTestSamples().get(0).getResults().get(0).getHaplogroup());
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+	//	assertEquals(true, polys.contains(new Polymorphism("315.1C", ref)));
+	//	assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
+	}
+	
+	
 /*	@Test
 	public void parsePhylotree17() throws Exception {
 		String file = "test-data/fasta/Phylotree17hgs.zip";

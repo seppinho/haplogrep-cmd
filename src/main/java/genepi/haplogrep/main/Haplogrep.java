@@ -141,7 +141,7 @@ public class Haplogrep extends Tool {
 		}
 		else if (reference.toUpperCase().equals("SARSCOV2")) {
 				phylotree = phylotree.replace("$RSRS", "_SARSCOV2");
-				fluctrates = fluctrates.replace("$RSRS", "__SARSCOV2");
+				fluctrates = fluctrates.replace("$RSRS", "_SARSCOV2");
 				try {
 					fastaImp.loadSARSCOV2();
 				} catch (IOException e) {
@@ -226,7 +226,7 @@ public class Haplogrep extends Tool {
 					
 					ExportUtils.createReport(samples, out, extended);
 
-					ExportUtils.calcLineage(samples,Integer.valueOf(lineage), out);
+					ExportUtils.calcLineage(samples,Integer.valueOf(lineage), out, refObject);
 					
 					if (fasta)
 						{
