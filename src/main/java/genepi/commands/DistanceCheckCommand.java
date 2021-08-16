@@ -1,40 +1,25 @@
-package genepi.distance;
+package genepi.commands;
 
-import genepi.base.Tool;
 import genepi.io.table.reader.CsvTableReader;
 import genepi.io.table.writer.CsvTableWriter;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
-import java.io.IOException;
+import picocli.CommandLine.Option;
+
+import java.util.concurrent.Callable;
+
 import core.Haplogroup;
 
-public class DistanceCheck extends Tool {
+public class DistanceCheckCommand implements Callable<Integer> {
 
-	public static String VERSION = "v0.0.3";
+	@Option(names = { "--in", "--input" }, description = "input haplogroups", required = true)
+	String in;
 
-	public DistanceCheck(String[] args) {
-		super(args);
-	}
-
-	@Override
-	public void createParameters() {
-		addParameter("in", "input haplogroups");
-		addParameter("out", "output haplogroups including distance");
-	}
+	@Option(names = { "--out", "--output" }, description = "output haplogroups including distance", required = true)
+	String out;
 
 	@Override
-	public void init() {
-
-		System.out.println("Welcome to Haplogrep Distance Check " + VERSION);
-		System.out.println("");
-
-	}
-
-	@Override
-	public int run() {
-
-		String in = (String) getValue("in");
-		String out = (String) getValue("out");
+	public Integer call() {
 
 		CsvTableReader reader = new CsvTableReader(in, ';');
 
@@ -53,7 +38,7 @@ public class DistanceCheck extends Tool {
 			if (reader.getRow().length < 2) {
 				continue;
 			}
-			
+
 			String hg1 = reader.getString("hg1");
 			String hg2 = reader.getString("hg2");
 
@@ -82,17 +67,6 @@ public class DistanceCheck extends Tool {
 		writer.close();
 
 		return 0;
-	}
-
-	public static void main(String[] args) throws IOException {
-
-		DistanceCheck haplogrep = new DistanceCheck(args);
-
-		haplogrep = new DistanceCheck(
-				new String[] { "--in", "/home/seb/Desktop/test.txt", "--out", "/home/seb/Desktop/out.txt" });
-
-		haplogrep.start();
-
 	}
 
 }

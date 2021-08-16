@@ -54,7 +54,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>genepi.CommandLineInterface</mainClass>
+									<mainClass>genepi.App</mainClass>
 								</transformer>
 							</transformers>
 							
@@ -74,6 +74,7 @@
 									<include>net.sf.opencsv:opencsv:*:*</include>
 									<include>commons-lang:commons-lang:*:*</include>
 									<include>commons-collections:commons-collections:*:*</include>
+									<include>info.picocli:picocli:*:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -113,6 +114,12 @@
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
 			<version>2.6.0</version>
+		</dependency>
+		
+				<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.6.1</version>
 		</dependency>
 
 	</dependencies>

@@ -1,81 +1,78 @@
-package genepi.haplogrep.main;
+package genepi.commands;
 
-import genepi.base.Tool;
 import genepi.haplogrep.util.HgClassifier;
 import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
 import importer.FastaImporter.References;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Help.Visibility;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
+
 import util.ExportUtils;
 import vcf.Sample;
 import core.SampleFile;
 import core.TestSample;
 
-public class Haplogrep extends Tool {
+public class HaplogrepCommand implements Callable<Integer> {
 
 	public static String VERSION = "v2.3.0";
 
-	public Haplogrep(String[] args) {
-		super(args);
-	}
+	@Option(names = { "--in", "--input" }, description = "Input VCF, fasta or hsd file", required = true)
+	String in;
+
+	@Option(names = { "--out", "--output" }, description = "Haplogrep output file", required = true)
+	String out;
+
+	@Option(names = { "--format" }, description = "vcf, fasta, hsd", required = true)
+	String format;
+
+	@Option(names = { "--phylotree" }, description = "Specifiy phylotree version", required = false)
+	String tree;
+
+	@Option(names = {
+			"--rsrs" }, description = "Use RSRS Version", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean rsrs = false;
+
+	@Option(names = {
+			"--fixNomenclature" }, description = "Fix mtDNA nomenclature conventions based on rules", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean fixNomenclature = false;
+
+	@Option(names = {
+			"--extend-report" }, description = "Add flag for a extended final output", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean extendedReport = false;
+
+	@Option(names = {
+			"--chip" }, description = "VCF data from a genotype chip", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean chip = false;
+
+	@Option(names = {
+			"--metric" }, description = "specifiy other metric (hamming or jaccard) than default (kulczynski)", required = false)
+	String metric;
+
+	@Option(names = {
+			"--lineage" }, description = "export lineage information as dot file, \\n0=no tree, 1=with SNPs, 2=only structure, no SNPs", required = false)
+	String lineage;
+
+	@Option(names = { "--hits" }, description = "Calculate best n hits", required = false)
+	String hits;
+
+	@Option(names = {
+			"--hetLevel" }, description = "Add heteroplasmies with a level > X to profile (default: 0.9)", required = false)
+	String hetLevel;
 
 	@Override
-	public void createParameters() {
-		addParameter("in", "input VCF, fasta or hsd file");
-		addParameter("out", "haplogroup output file");
-		addParameter("format", "vcf, fasta, hsd");
-		addOptionalParameter("phylotree", "specifiy phylotree version", Tool.STRING);
-		addFlag("rsrs", "use RSRS Version");
-		addFlag("fixNomenclature", "Fix mtDNA nomenclature conventions based on rules");
-		addFlag("extend-report", "add flag for a extended final output");
-		addFlag("chip", "VCF data from a genotype chip");
-		addOptionalParameter("metric", "specifiy other metric (hamming or jaccard) than default (kulczynski)", Tool.STRING);
-		addOptionalParameter("lineage", "export lineage information as dot file, \n0=no tree, 1=with SNPs, 2=only structure, no SNPs" , Tool.STRING);
-		addOptionalParameter("hits", "calculate best n hits", Tool.STRING);
-		addOptionalParameter("hetLevel", "add heteroplasmies with a level > X to profile (default: 0.9)", Tool.STRING);
-	}
-
-	@Override
-	public void init() {
-
-		System.out.println("Welcome to Haplogrep Classify " + VERSION);
-		System.out.println("");
-
-	}
-
-	@Override
-	public int run() {
-
-		String in = (String) getValue("in");
-		String out = (String) getValue("out");
-		String tree = (String) getValue("phylotree");
-		String format = (String) getValue("format");
-		String metric = (String) getValue("metric");
-		String hits = (String) getValue("hits");
-		String hetLevel = (String) getValue("hetLevel");
-		String lineage = (String) getValue("lineage");
-		
-		boolean extended = isFlagSet("extend-report");
-
-		boolean chip = isFlagSet("chip");
-
-
-
-		boolean rsrs = isFlagSet("rsrs");
-		
-		boolean fixNomenclature = isFlagSet("fixNomenclature");
+	public Integer call() {
 
 		if (fixNomenclature && !format.toLowerCase().equals("fasta")) {
-			System.out.println(
-					"The --fixNomenclature flag only works for FASTA.");
+			System.out.println("The --fixNomenclature flag only works for FASTA.");
 			return -1;
 		}
-		
+
 		if (chip && !format.toLowerCase().equals("vcf")) {
 			System.out.println(
 					"The --chip flag only works for VCF. For hsd, please specify the included variants in the Haplogrep range.");
@@ -93,15 +90,14 @@ public class Haplogrep extends Tool {
 		if (hits == null) {
 			hits = "1";
 		}
-		
+
 		if (hetLevel == null) {
 			hetLevel = "0.9";
 		}
-		
+
 		if (lineage == null) {
 			lineage = "0";
 		}
-
 
 		File input = new File(in);
 
@@ -131,7 +127,7 @@ public class Haplogrep extends Tool {
 		System.out.println("Input Format: " + format);
 		System.out.println("Phylotree Version: " + tree);
 		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
-		System.out.println("Extended Report: " + extended);
+		System.out.println("Extended Report: " + extendedReport);
 		System.out.println("Fix Nomenclature: " + fixNomenclature);
 		System.out.println("Used Metric: " + metric);
 		System.out.println("Chip array data: " + chip);
@@ -164,8 +160,7 @@ public class Haplogrep extends Tool {
 				else if (format.equals("fasta")) {
 
 					FastaImporter importer = new FastaImporter();
-					
-				
+
 					if (rsrs) {
 						lines = importer.load(input, References.RSRS);
 					} else {
@@ -180,13 +175,14 @@ public class Haplogrep extends Tool {
 
 					HgClassifier classifier = new HgClassifier();
 
-					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits), fixNomenclature);
-					
-					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
-					
-					ExportUtils.createReport(samples, out, extended);
+					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits),
+							fixNomenclature);
 
-					ExportUtils.calcLineage(samples,Integer.valueOf(lineage), out);
+					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
+
+					ExportUtils.createReport(samples, out, extendedReport);
+
+					ExportUtils.calcLineage(samples, Integer.valueOf(lineage), out);
 
 				}
 
@@ -203,20 +199,7 @@ public class Haplogrep extends Tool {
 		System.out.println("HaploGrep file written to " + new File(out).getAbsolutePath() + " (Time: "
 				+ ((System.currentTimeMillis() - start) / 1000) + " sec)");
 
-		return 0; 
-	}
-
-	public static void main(String[] args) throws IOException {
-
-		Haplogrep haplogrep = new Haplogrep(args);
-
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/h100/H100.fasta", "--out",
-			//	"test-data/test.txt", "--format", "fasta","--hits", "1","--fixNomenclature", "--lineage", "1"});
-		//haplogrep = new Haplogrep(new String[] { "--in", "test-data/cambodia/B5a1_8281fix.hsd", "--out",
-			//	"test-data/test.txt", "--format", "hsd","--hits", "1", "--lineage", "2"});
-
-		haplogrep.start();
-
+		return 0;
 	}
 
 }
