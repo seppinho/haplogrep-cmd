@@ -9,7 +9,7 @@ FILE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 CLASS_PATH="$FILE_PATH/haplogrep.jar"
 
 # The fully qualified name of the class to execute
-CLASS="genepi.CommandLineInterface"
+CLASS="genepi.App"
 
 # execute cloudgene
 java -cp $CLASS_PATH $CLASS "$@"
