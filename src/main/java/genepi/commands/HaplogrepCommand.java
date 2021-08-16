@@ -25,10 +25,10 @@ public class HaplogrepCommand implements Callable<Integer> {
 	@Option(names = { "--in", "--input" }, description = "Input VCF, fasta or hsd file", required = true)
 	String in;
 
-	@Option(names = { "--out", "--output" }, description = "Haplogrep output file", required = true)
+	@Option(names = { "--out", "--output" }, description = "Output file location", required = true)
 	String out;
 
-	@Option(names = { "--format" }, description = "vcf, fasta, hsd", required = true)
+	@Option(names = { "--format" }, description = "vcf, fasta or hsd", required = true)
 	String format;
 
 	@Option(names = { "--phylotree" }, description = "Specifiy phylotree version", required = false)
@@ -47,15 +47,23 @@ public class HaplogrepCommand implements Callable<Integer> {
 	boolean extendedReport = false;
 
 	@Option(names = {
+			"--write-fasta" }, description = "Write results in fasta format", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean writeFasta = false;
+	
+	@Option(names = {
+	"--write-fasta-msa" }, description = "Write multiple sequence alignment (_MSA.fasta) ", required = false, showDefaultValue = Visibility.ALWAYS)
+boolean writeFastaMSA = false;
+
+	@Option(names = {
 			"--chip" }, description = "VCF data from a genotype chip", required = false, showDefaultValue = Visibility.ALWAYS)
 	boolean chip = false;
 
 	@Option(names = {
-			"--metric" }, description = "specifiy other metric (hamming or jaccard) than default (kulczynski)", required = false)
+			"--metric" }, description = "Specifiy other metric (hamming or jaccard) than default (kulczynski)", required = false)
 	String metric;
 
 	@Option(names = {
-			"--lineage" }, description = "export lineage information as dot file, \\n0=no tree, 1=with SNPs, 2=only structure, no SNPs", required = false)
+			"--lineage" }, description = "Export lineage information as dot file, \\n0=no tree, 1=with SNPs, 2=only structure, no SNPs", required = false)
 	String lineage;
 
 	@Option(names = { "--hits" }, description = "Calculate best n hits", required = false)
@@ -183,6 +191,15 @@ public class HaplogrepCommand implements Callable<Integer> {
 					ExportUtils.createReport(samples, out, extendedReport);
 
 					ExportUtils.calcLineage(samples, Integer.valueOf(lineage), out);
+
+					if (writeFasta) {
+						ExportUtils.generateFasta(samples, out);
+					}
+					
+					if (writeFastaMSA)
+					{
+						ExportUtils.generateFastaMSA(samples, out);
+					}
 
 				}
 
