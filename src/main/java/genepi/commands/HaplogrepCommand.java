@@ -1,22 +1,21 @@
 package genepi.commands;
 
-import genepi.haplogrep.util.HgClassifier;
-import importer.FastaImporter;
-import importer.HsdImporter;
-import importer.VcfImporter;
-import importer.FastaImporter.References;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Help.Visibility;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
-import util.ExportUtils;
-import vcf.Sample;
 import core.SampleFile;
 import core.TestSample;
+import genepi.haplogrep.util.HgClassifier;
+import importer.FastaImporter;
+import importer.FastaImporter.References;
+import importer.HsdImporter;
+import importer.VcfImporter;
+import picocli.CommandLine.Help.Visibility;
+import picocli.CommandLine.Option;
+import util.ExportUtils;
+import vcf.Sample;
 
 public class HaplogrepCommand implements Callable<Integer> {
 
