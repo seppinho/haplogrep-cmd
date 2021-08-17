@@ -16,7 +16,7 @@ public class App implements Runnable {
 
 	public static final String APP = "mtDNA Haplogroup Classifiction";
 
-	public static final String VERSION = "v2.4.0-rc1";
+	public static final String VERSION = "v2.4.0-rc2";
 
 	public static final String COPYRIGHT = "(c) Sebastian Schönherr, Hansi Weissensteiner, Lukas Forer, Dominic Pacher";
 	
