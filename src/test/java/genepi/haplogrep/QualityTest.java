@@ -1,23 +1,22 @@
 package genepi.haplogrep;
 
-import phylotree.Phylotree;
-import phylotree.PhylotreeManager;
-import org.junit.Assert;
 import java.io.IOException;
 import java.util.List;
 
 import org.jdom.JDOMException;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import search.SearchResult;
-import search.ranking.HammingRanking;
-import search.ranking.KulczynskiRanking;
-import search.ranking.results.RankedResult;
 import core.TestSample;
 import exceptions.parse.HsdFileException;
 import exceptions.parse.sample.InvalidPolymorphismException;
 import exceptions.parse.samplefile.InvalidColumnCountException;
+import phylotree.Phylotree;
+import phylotree.PhylotreeManager;
+import search.SearchResult;
+import search.ranking.KulczynskiRanking;
+import search.ranking.results.RankedResult;
 
 public class QualityTest {
 

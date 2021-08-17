@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.jdom.JDOMException;
 
 import core.SampleFile;
-import core.TestSample;
 import exceptions.parse.sample.InvalidRangeException;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;

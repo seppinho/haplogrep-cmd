@@ -1,14 +1,13 @@
 package genepi.commands;
 
+import java.util.concurrent.Callable;
+
+import core.Haplogroup;
 import genepi.io.table.reader.CsvTableReader;
 import genepi.io.table.writer.CsvTableWriter;
 import phylotree.Phylotree;
 import phylotree.PhylotreeManager;
 import picocli.CommandLine.Option;
-
-import java.util.concurrent.Callable;
-
-import core.Haplogroup;
 
 public class DistanceCheckCommand implements Callable<Integer> {
 
