@@ -110,8 +110,8 @@ public class HaplogrepCmdTest {
 	public void HaplogrepCmdTest_FineTuning_all_6401() throws Exception {
 
 		String file = "test-data/hsd/Finetuning_TableS2.hsd";
-		String phylo = "phylotree17_FU.xml";
-		String weights = "weights17_FU.txt";
+		String phylo = "phylotree17_revised.xml";
+		String weights = "weights17_revised.txt";
 		String out = "test-data/hsd/Finetuning_TableS2_out.txt";
 		HsdImporter importHsd = new HsdImporter();
 
