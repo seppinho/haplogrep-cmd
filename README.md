@@ -1,19 +1,26 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Java CI with Maven](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml/badge.svg)](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml)
 
-Haplogrep is a command-line tool for mtDNA haplogroup classification. We also provide haplogrep as a fast and free [haplogroup classification web service](https://haplogrep.i-med.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **FASTA**, **VCF** and **hsd** input files are supported. So far, Haplogrep and the updated Haplogrep 2 have been cited over 700 times (Google Scholar - August 13, 2020). 
+Haplogrep is a command-line tool for mtDNA haplogroup classification. We also provide haplogrep as a fast and free [haplogroup classification web service](https://haplogrep.i-med.ac.at/). You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **FASTA**, **VCF** and **hsd** input files are supported. As of today (August 18, 2021), Haplogrep and the updated Haplogrep2 have been cited over 920 times (Google Scholar - August 18, 2021). 
+
+
+## Cite us
+If you use Haplogrep, please cite our latest [Haplogrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) or the initial [Haplogrep paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). 
+
 ## Requirements
 
 Java 8 or higher
 
 ## Download and Install
 
-Download and install the latest version from our download page using the following commands:
+Download and install the latest commandline version using the following commands:
 
 ```
 curl -sL haplogrep.now.sh | bash
 ./haplogrep 
 ```
+If you want to use our web service, please click [here](https://haplogrep.i-med.ac.at/app/index.html).
+
 ## Available Tools
 Currently two tools are available. 
 
@@ -92,11 +99,7 @@ Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check fo
 ## Blog
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
 
-## Cite us
-If you use Haplogrep, please cite our latest [Haplogrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) in combination with [Phylotree 17](https://www.sciencedirect.com/science/article/pii/S1875176815302432). The first Haplogrep paper can be found [here](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). 
-
 ## Contact
 [Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho))  
 [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/whansi))  
-Institute of Genetic Epidemiology  
-Medical University of Innsbruck
+Institute of Genetic Epidemiology, Medical University of Innsbruck
