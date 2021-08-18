@@ -5,38 +5,43 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import core.SampleFile;
+import exceptions.parse.HsdFileException;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.io.FileUtil;
 import genepi.io.table.reader.CsvTableReader;
+import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
+import importer.FastaImporter.References;
+import phylotree.Phylotree;
+import phylotree.PhylotreeManager;
+import search.ranking.KulczynskiRanking;
 import util.ExportUtils;
 import vcf.Sample;
 
 public class HaplogrepCmdTest {
 
 	@Test
-	public void HaplogrepCmdTest() throws Exception {
+	public void testHaplogrepCmd() throws Exception {
 
 		String file = "test-data/vcf/HG00097.vcf";
-		String phylo = "phylotree17.xml";
-		String weights = "weights17.txt";
 		String out = "test-data/out.txt";
 		VcfImporter impvcf = new VcfImporter();
 
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
-		SampleFile newSampleFile = new SampleFile(lines);
+		SampleFile samples1 = new SampleFile(lines);
 
-		HgClassifier classifier = new HgClassifier();
+		//classify
+		runClassification(samples1,1);
 
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
-
-		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
+		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
 		CsvTableReader reader = new CsvTableReader(out, '\t');
 
@@ -50,10 +55,10 @@ public class HaplogrepCmdTest {
 		}
 
 		assertEquals(1, count);
-
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 10, false);
-
-		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
+		
+		//classify
+		runClassification(samples1, 10);
+		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
 		reader = new CsvTableReader(out, '\t');
 
@@ -64,7 +69,7 @@ public class HaplogrepCmdTest {
 
 		assertEquals(10, count);
 
-		FileUtil.deleteFile(out);
+		FileUtils.delete(new File(out));
 
 	}
 
@@ -104,6 +109,7 @@ public class HaplogrepCmdTest {
 		}
 		//TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
 		assertEquals( count, 5435-1);
+		FileUtils.delete(new File(out));
 	}
 
 	@Test
@@ -142,7 +148,59 @@ public class HaplogrepCmdTest {
 		}
 		//TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
 		assertEquals(count, 6401-1);
+		FileUtils.delete(new File(out));
 	}
+	
+	@Test
+	public void testFastaExportImportInterface() throws Exception {
+		HashSet<String> set1 = new HashSet<String>();
+		HashSet<String> set2 = new HashSet<String>();
+		FastaImporter impFasta = new FastaImporter();
+		
+		String tempFile = "test-data/tmp.fasta";
+		
+		// read in file
+		String file = "test-data/h100/H100.fasta";
+		ArrayList<String> lines = impFasta.load(new File(file), References.RCRS);
+		
+		SampleFile samples = new SampleFile(lines);
+		
+		//classify
+		runClassification(samples, 1);
+ 
+		String[] splits = lines.get(0).split("\t");
+
+		for (int i = 3; i < splits.length; i++) {
+			set1.add(splits[i]);
+		}
+
+		ExportUtils.generateFasta(samples.getTestSamples(), tempFile);
+		
+		// read in export file
+		lines = impFasta.load(new File(tempFile), References.RCRS);
+		samples = new SampleFile(lines);
+		splits = lines.get(0).split("\t");
+		
+		for (int i = 3; i < splits.length; i++) {
+			set2.add(splits[i]);
+		}
+
+		runClassification(samples, 1);
+		ExportUtils.generateFasta(samples.getTestSamples(), "test-data/tmp2.fasta");
+
+		assertEquals(set1, set2);
+
+		FileUtils.delete(new File("test-data/tmp.fasta"));
+		FileUtils.delete(new File("test-data/tmp2.fasta"));
+
+	}
+	
+	public static void runClassification(SampleFile newSampleFile, int results) throws HsdFileException {
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
+		KulczynskiRanking newRanker = new KulczynskiRanking(results);
+		newSampleFile.updateClassificationResults(phylotree, newRanker);
+	}
+
 
 //	@Test
 //	public void HaplogrepCmdTest_FineTuning_issues() throws Exception {
