@@ -24,7 +24,7 @@ public class DistanceCheckCommand implements Callable<Integer> {
 
 		CsvTableWriter writer = new CsvTableWriter(out, ';');
 
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17_revised.xml", "weights17_revised.txt");
 
 		int count = 0;
 
