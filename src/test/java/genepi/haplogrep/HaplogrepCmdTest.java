@@ -101,7 +101,6 @@ public class HaplogrepCmdTest {
 				count++;
 			else {
 				if (!sampleId.contains("M4")) {
-					System.out.println(sampleId + " " + hg);
 				} else {
 					count++;
 				}
@@ -140,7 +139,6 @@ public class HaplogrepCmdTest {
 				count++;
 			else {
 				if (!sampleId.contains("M4'")) {
-					System.out.println(sampleId + " " + hg);
 				} else {
 					count++;
 				}
