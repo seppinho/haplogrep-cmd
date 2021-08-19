@@ -29,9 +29,14 @@ Currently two tools are available.
 
 ## Haplogrep Classify 
 ### Run Haplogrep Classification with test data
-      wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
-      ./haplogrep classify --in HG00097.vcf.gz --format vcf --out haplogroups.txt
-      
+
+```bash
+# Download test data
+wget https://github.com/seppinho/haplogrep-cmd/raw/master/test-data/vcf/HG00097.vcf.gz
+
+# Run Haplogrep Classification
+./haplogrep classify --in HG00097.vcf.gz --format vcf --out haplogroups.txt
+```      
       
 ### Input File Formats
 
@@ -44,16 +49,17 @@ For alignment, [bwa version 0.7.17](https://github.com/lh3/bwa/releases/tag/v0.7
 #### hsd Format 
 You can also specify your profiles in the original Haplogrep **hsd** format, which is a simple tab-delimited file format consisting of 4 columns (ID, Range, Haplogroup and Polymorphisms). 
 
-`Sample1 1-16569 H100 263G 315.1C 750G	1041G	1438G	4769G	8860G	9410G	12358G	13656C	15326G	16189C	16192T	16519C`  
-`Sample2 1-16569 ? 73G	263G	315.1C 750G	1438G	3010A	3107C	4769G	5111T	8860G	10257T	12358G	15326G	16145A	16222T	16519C`
-
+```
+Sample1 1-16569 H100 263G 315.1C 750G	1041G	1438G	4769G	8860G	9410G	12358G	13656C	15326G	16189C	16192T	16519C
+Sample2 1-16569 ? 73G	263G	315.1C 750G	1438G	3010A	3107C	4769G	5111T	8860G	10257T	12358G	15326G	16145A	16222T	16519C
+```
 For readability, the polymorphisms are also tab-delimited (so columns >= 4). A hsd example can be found [here](https://raw.githubusercontent.com/seppinho/haplogrep-cmd/master/test-data/h100.hsd.txt). 
 
 ### Required Parameters   
 |Parameter| Description|
 |---|---|
 |```--in``` | Please provide the input file name|
-|```--format``` | Please provide the input format of your data - valid options are: ```hsd, vcf, or fasta``` files|
+|```--format``` | Please provide the input format of your data - valid options are: `hsd`, `vcf`, or `fasta` files|
 |```--out``` | Please provide an output name|
 
 ### Additional Parameters   
