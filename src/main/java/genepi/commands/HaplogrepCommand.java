@@ -91,7 +91,7 @@ boolean writeFastaMSA = false;
 		}
 
 		if (tree == null) {
-			tree = "17_revised";
+			tree = "17_FU1";
 		}
 
 		if (hits == null) {
