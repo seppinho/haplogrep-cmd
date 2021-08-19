@@ -77,17 +77,14 @@ public class HaplogrepCmdTest {
 	public void HaplogrepCmdTest_Phylotree17_all_5435() throws Exception {
 
 		String file = "test-data/hsd/Phylotree17.hsd";
-		String phylo = "phylotree17.xml";
-		String weights = "weights17.txt";
 		String out = "test-data/hsd/Phylotree17_out.txt";
 		HsdImporter importHsd = new HsdImporter();
 
 		ArrayList<String> samples = importHsd.load(new File(file));
 		SampleFile newSampleFile = new SampleFile(samples);
 
-		HgClassifier classifier = new HgClassifier();
-
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
+		//classify
+		runClassification(newSampleFile, 1);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, true);
 
@@ -115,17 +112,14 @@ public class HaplogrepCmdTest {
 	public void HaplogrepCmdTest_FineTuning_all_6401() throws Exception {
 
 		String file = "test-data/hsd/Finetuning_TableS2.hsd";
-		String phylo = "phylotree17_FU1.xml";
-		String weights = "weights17_FU1.txt";
 		String out = "test-data/hsd/Finetuning_TableS2_out.txt";
 		HsdImporter importHsd = new HsdImporter();
 
 		ArrayList<String> samples = importHsd.load(new File(file));
 		SampleFile newSampleFile = new SampleFile(samples);
 
-		HgClassifier classifier = new HgClassifier();
-
-		classifier.run(newSampleFile, phylo, weights, "kulczynski", 1, false);
+		//classify
+		runClassification(newSampleFile, 1);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
 
@@ -194,7 +188,7 @@ public class HaplogrepCmdTest {
 	}
 	
 	public static void runClassification(SampleFile newSampleFile, int results) throws HsdFileException {
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17_FU1.xml", "weights17_FU1.txt");
 		KulczynskiRanking newRanker = new KulczynskiRanking(results);
 		newSampleFile.updateClassificationResults(phylotree, newRanker);
 	}
