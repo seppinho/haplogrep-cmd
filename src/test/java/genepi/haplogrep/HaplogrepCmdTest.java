@@ -39,7 +39,7 @@ public class HaplogrepCmdTest {
 		SampleFile samples1 = new SampleFile(lines);
 
 		//classify
-		runClassification(samples1,1);
+		runClassificationPT17(samples1,1);
 
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
@@ -57,7 +57,7 @@ public class HaplogrepCmdTest {
 		assertEquals(1, count);
 		
 		//classify
-		runClassification(samples1, 10);
+		runClassificationPT17(samples1, 10);
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
 		reader = new CsvTableReader(out, '\t');
@@ -84,7 +84,7 @@ public class HaplogrepCmdTest {
 		SampleFile newSampleFile = new SampleFile(samples);
 
 		//classify
-		runClassification(newSampleFile, 1);
+		runClassificationPT17(newSampleFile, 1);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, true);
 
@@ -111,17 +111,21 @@ public class HaplogrepCmdTest {
 	@Test
 	public void HaplogrepCmdTest_FineTuning_all_6401() throws Exception {
 
-		String file = "test-data/hsd/Finetuning_TableS2.hsd";
+		String file = "test-data/hsd/Finetuning_TableS2_updateHeteroplasmy.hsd";
 		String out = "test-data/hsd/Finetuning_TableS2_out.txt";
+		String outfasta = "test-data/hsd/Finetuning_TableS2_out.fasta";
+		String out2 = "test-data/hsd/Finetuning_TableS2_out_fasta.txt";
 		HsdImporter importHsd = new HsdImporter();
 
 		ArrayList<String> samples = importHsd.load(new File(file));
 		SampleFile newSampleFile = new SampleFile(samples);
 
 		//classify
-		runClassification(newSampleFile, 1);
+		runClassificationPT17_FU1(newSampleFile, 1, false);
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
+		
+		ExportUtils.generateFasta(newSampleFile.getTestSamples(), outfasta );
 
 		CsvTableReader reader = new CsvTableReader(out, '\t');
 
@@ -139,8 +143,35 @@ public class HaplogrepCmdTest {
 			}
 		}
 		//TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
-		assertEquals(count, 6401-1);
+		assertEquals(6401, count);
 		FileUtils.delete(new File(out));
+		
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> lines = impFasta.load(new File(outfasta), References.RCRS);
+		SampleFile samplesFasta = new SampleFile(lines);
+		
+		runClassificationPT17_FU1(samplesFasta, 1, true);
+
+		ExportUtils.createReport(samplesFasta.getTestSamples(), out2, true);
+		
+		reader = new CsvTableReader(out2, '\t');
+
+		int countFasta = 0;
+		while (reader.next()) {
+			String sampleId = reader.getString("SampleID");
+			String hg = reader.getString("Haplogroup");
+			if (sampleId.equals(hg))
+				countFasta++;
+			else {
+				if (!sampleId.contains("M4'")) {
+				} else {
+					countFasta++;
+				}
+			}
+		}
+		assertEquals(6401, countFasta);
+		
+		FileUtils.delete(new File(out2));
 	}
 	
 	@Test
@@ -158,7 +189,7 @@ public class HaplogrepCmdTest {
 		SampleFile samples = new SampleFile(lines);
 		
 		//classify
-		runClassification(samples, 1);
+		runClassificationPT17_FU1(samples, 1, false);
  
 		String[] splits = lines.get(0).split("\t");
 
@@ -177,7 +208,8 @@ public class HaplogrepCmdTest {
 			set2.add(splits[i]);
 		}
 
-		runClassification(samples, 1);
+		runClassificationPT17_FU1(samples, 1, true);
+		
 		ExportUtils.generateFasta(samples.getTestSamples(), "test-data/tmp2.fasta");
 
 		assertEquals(set1, set2);
@@ -186,9 +218,17 @@ public class HaplogrepCmdTest {
 		FileUtils.delete(new File("test-data/tmp2.fasta"));
 
 	}
+	public static void runClassificationPT17(SampleFile newSampleFile, int results) throws HsdFileException {
+		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
+		KulczynskiRanking newRanker = new KulczynskiRanking(results);
+		newSampleFile.updateClassificationResults(phylotree, newRanker);
+	}
 	
-	public static void runClassification(SampleFile newSampleFile, int results) throws HsdFileException {
+	
+	public static void runClassificationPT17_FU1(SampleFile newSampleFile, int results, boolean fixNomenclature) throws HsdFileException {
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17_FU1.xml", "weights17_FU1.txt");
+		if (fixNomenclature)
+			newSampleFile.applyNomenclatureRules(phylotree, "rules.csv");
 		KulczynskiRanking newRanker = new KulczynskiRanking(results);
 		newSampleFile.updateClassificationResults(phylotree, newRanker);
 	}
