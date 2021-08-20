@@ -5,8 +5,6 @@ HaploGrep is a tool for mtDNA haplogroup classification. We provide HaploGrep as
 
 ## Download and Install
 
-Download and install the latest commandline version using the following commands:
-
 ```
 curl -sL haplogrep.now.sh | bash
 ./haplogrep 
