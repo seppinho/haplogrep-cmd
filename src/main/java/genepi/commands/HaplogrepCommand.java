@@ -19,7 +19,7 @@ import vcf.Sample;
 
 public class HaplogrepCommand implements Callable<Integer> {
 
-	public static String VERSION = "v2.3.0";
+	public static String VERSION = "v2.4.0-rc3";
 
 	@Option(names = { "--in", "--input" }, description = "Input VCF, fasta or hsd file", required = true)
 	String in;
@@ -27,10 +27,10 @@ public class HaplogrepCommand implements Callable<Integer> {
 	@Option(names = { "--out", "--output" }, description = "Output file location", required = true)
 	String out;
 
-	@Option(names = { "--format" }, description = "vcf, fasta or hsd", required = true)
+	@Option(names = { "--format" }, description = "Specify input file format: vcf, fasta or hsd", required = true)
 	String format;
 
-	@Option(names = { "--phylotree" }, description = "Specifiy phylotree version", required = false)
+	@Option(names = { "--phylotree" }, description = "Specify phylotree version", required = false)
 	String tree;
 
 	@Option(names = {
@@ -38,8 +38,8 @@ public class HaplogrepCommand implements Callable<Integer> {
 	boolean rsrs = false;
 
 	@Option(names = {
-			"--fixNomenclature" }, description = "Fix mtDNA nomenclature conventions based on rules", required = false, showDefaultValue = Visibility.ALWAYS)
-	boolean fixNomenclature = false;
+			"--skip-alignment-rules" }, description = "Skip mtDNA nomenclature fixes based on rules for FASTA import", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean skipRules = false;
 
 	@Option(names = {
 			"--extend-report" }, description = "Add flag for a extended final output", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -48,17 +48,17 @@ public class HaplogrepCommand implements Callable<Integer> {
 	@Option(names = {
 			"--write-fasta" }, description = "Write results in fasta format", required = false, showDefaultValue = Visibility.ALWAYS)
 	boolean writeFasta = false;
-	
+
 	@Option(names = {
-	"--write-fasta-msa" }, description = "Write multiple sequence alignment (_MSA.fasta) ", required = false, showDefaultValue = Visibility.ALWAYS)
-boolean writeFastaMSA = false;
+			"--write-fasta-msa" }, description = "Write multiple sequence alignment (_MSA.fasta) ", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean writeFastaMSA = false;
 
 	@Option(names = {
 			"--chip" }, description = "VCF data from a genotype chip", required = false, showDefaultValue = Visibility.ALWAYS)
 	boolean chip = false;
 
 	@Option(names = {
-			"--metric" }, description = "Specifiy other metric (hamming or jaccard) than default (kulczynski)", required = false)
+			"--metric" }, description = "Specifiy other metrics (hamming or jaccard) than default (kulczynski)", required = false)
 	String metric;
 
 	@Option(names = {
@@ -69,20 +69,15 @@ boolean writeFastaMSA = false;
 	String hits;
 
 	@Option(names = {
-			"--hetLevel" }, description = "Add heteroplasmies with a level > X to profile (default: 0.9)", required = false)
+			"--hetLevel" }, description = "Add heteroplasmies with a level > X from the VCF file to the profile (default: 0.9)", required = false)
 	String hetLevel;
 
 	@Override
 	public Integer call() {
 
-		if (fixNomenclature && !format.toLowerCase().equals("fasta")) {
-			System.out.println("The --fixNomenclature flag only works for FASTA.");
-			return -1;
-		}
-
 		if (chip && !format.toLowerCase().equals("vcf")) {
 			System.out.println(
-					"The --chip flag only works for VCF. For hsd, please specify the included variants in the Haplogrep range.");
+					"The --chip flag only works for files in VCF format. For hsd, please specify the included variants in the Haplogrep range.");
 			return -1;
 		}
 
@@ -135,7 +130,7 @@ boolean writeFastaMSA = false;
 		System.out.println("Phylotree Version: " + tree);
 		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
 		System.out.println("Extended Report: " + extendedReport);
-		System.out.println("Fix Nomenclature: " + fixNomenclature);
+		System.out.println("Skip Nomenclature Rules: " + skipRules);
 		System.out.println("Used Metric: " + metric);
 		System.out.println("Chip array data: " + chip);
 		System.out.println("Lineage: " + lineage);
@@ -182,8 +177,8 @@ boolean writeFastaMSA = false;
 
 					HgClassifier classifier = new HgClassifier();
 
-					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits),
-							fixNomenclature);
+					classifier.run(newSampleFile, phylotree, fluctrates, metric, Integer.valueOf(hits), skipRules,
+							format);
 
 					ArrayList<TestSample> samples = newSampleFile.getTestSamples();
 
@@ -194,9 +189,8 @@ boolean writeFastaMSA = false;
 					if (writeFasta) {
 						ExportUtils.generateFasta(samples, out);
 					}
-					
-					if (writeFastaMSA)
-					{
+
+					if (writeFastaMSA) {
 						ExportUtils.generateFastaMSA(samples, out);
 					}
 
