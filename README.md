@@ -13,11 +13,11 @@ curl -sL haplogrep.now.sh | bash
 If you want to use our web service, please click [here](https://haplogrep.i-med.ac.at/app/index.html).
 
 ## Phylogenetic Trees
-The haplogroup classifications in Haplogrep are based on the revised tree by [Dür et al, 2021](https://www.mdpi.com/1422-0067/22/11/5747/htm), which is an update of the latest [PhyloTree](http://phylotree.org/) version 17 by [van Oven, 2016](https://www.sciencedirect.com/science/article/pii/S1875176815302432) based on the work of [van Oven & Kaiser, 2009](https://onlinelibrary.wiley.com/doi/10.1002/humu.20921). 
+The haplogroup classifications in Haplogrep are based on the revised tree by [Dür et al, 2021](https://www.mdpi.com/1422-0067/22/11/5747/htm), which is an update of the latest [PhyloTree](http://phylotree.org/) version 17 by [van Oven, 2016](https://www.sciencedirect.com/science/article/pii/S1875176815302432) based on the work of [van Oven & Kayser, 2009](https://onlinelibrary.wiley.com/doi/10.1002/humu.20921). 
 
 
 ## Cite us
-If you use HaploGrep, please cite our latest [Haplogrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) or the initial [Haplogrep paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). 
+If you use HaploGrep, please cite our latest [Haplogrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) or the initial [Haplogrep paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). Additionally please cite [Dür et al, 2021](https://www.mdpi.com/1422-0067/22/11/5747/htm) if you use the latest Phylotree17_FU1 tree, [van Oven, 2016](https://www.sciencedirect.com/science/article/pii/S1875176815302432) if you use PhyloTree 17 or [van Oven & Kayser, 2009](https://onlinelibrary.wiley.com/doi/10.1002/humu.20921) if you use an older PhyloTree version.
       
 ## Available Tools
 Currently two tools are available. 
