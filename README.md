@@ -103,11 +103,12 @@ For example, the subsequent rule changes input polymorphisms `309.1CCT 310C` **t
 ## Heteroplasmies (VCF only)
 Heteroplasmies are often stored as heterozygous genotypes (0/1). If a **AF tag** (= Allele Frequency) is specified in the VCF file, we add variants with a AF > 0.90 to the input profile. [Mutation Server](https://github.com/seppinho/mutation-server) is able to create a valid VCF including heteroplasmies starting from **BAM or CRAM**. 
 
-Please have a look at [mtDNA-Server](http://mtdna-server.uibk.ac.at) to check for heteroplasmies and contamination in your NGS data.
+## Related work 
+Please have a look at [mitoverse](https://mitoverse.i-med.ac.at) to check for heteroplasmies and contamination in your NGS data.
 
 ## Blog
 Check out our [blog](http://haplogrep.uibk.ac.at/blog/) regarding mtDNA topics.
-
+      
 ## Contact
 [Sebastian Schoenherr](mailto:sebastian.schoenherr@i-med.ac.at) ([@seppinho](https://twitter.com/seppinho))  
 [Hansi Weissensteiner](mailto:hansi.weissensteiner@i-med.ac.at) ([@haansi](https://twitter.com/whansi))  
