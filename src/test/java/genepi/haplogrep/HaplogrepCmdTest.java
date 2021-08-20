@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+
+import core.Haplogroup;
+import core.Polymorphism;
 import core.SampleFile;
 import genepi.haplogrep.util.HgClassifier;
 import genepi.io.table.reader.CsvTableReader;
@@ -227,6 +230,47 @@ public class HaplogrepCmdTest {
 		FileUtils.delete(new File("test-data/tmp.fasta"));
 		FileUtils.delete(new File("test-data/tmp2.fasta"));
 
+	}
+	
+	@Test
+	public void h100NomenclatureActivatedTest() throws Exception {
+
+		String file = "test-data/h100/H100.fasta";
+		String phylotree = "phylotree17.xml";
+		String fluctrates = "weights17.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+		SampleFile newSampleFile = new SampleFile(samples);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, fluctrates, "fasta");
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
+		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
+
+	}
+	
+	@Test
+	public void h100NomenclatureDeactivatedTest() throws Exception {
+
+		String file = "test-data/h100/H100.fasta";
+		String phylotree = "phylotree17.xml";
+		String fluctrates = "weights17.txt";
+		
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
+		SampleFile newSampleFile = new SampleFile(samples);
+
+		HgClassifier classifier = new HgClassifier();
+
+		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, true, "fasta");
+		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
+		
+		System.out.println(polys);
+		assertEquals(true, polys.contains(new Polymorphism("310.1C")));
+		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 	}
 
 
