@@ -18,6 +18,7 @@ The haplogroup classifications in Haplogrep are based on the revised tree by [DÃ
 
 ## Cite us
 If you use HaploGrep, please cite our latest [Haplogrep2 paper](http://nar.oxfordjournals.org/content/early/2016/04/15/nar.gkw233) or the initial [Haplogrep paper](https://onlinelibrary.wiley.com/doi/abs/10.1002/humu.21382). 
+      
 Additionally please cite (1) [DÃ¼r et al, 2021](https://www.mdpi.com/1422-0067/22/11/5747/htm) if you use the latest Phylotree17_FU1 tree, (2) [van Oven, 2016](https://www.sciencedirect.com/science/article/pii/S1875176815302432) for PhyloTree 17 or [van Oven & Kayser, 2009](https://onlinelibrary.wiley.com/doi/10.1002/humu.20921) in case an older PhyloTree version has been used.
       
 ## Available Tools
