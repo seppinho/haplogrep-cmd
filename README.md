@@ -3,10 +3,6 @@
 
 HaploGrep is a tool for mtDNA haplogroup classification. We provide HaploGrep as a fast and free [haplogroup classification web service](https://haplogrep.i-med.ac.at/) or as a commandline tool. You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **FASTA**, **VCF** and **hsd** input files are supported. As of today (August 18, 2021), HaploGrep and the updated HaploGrep2 have been cited over 920 times (Google Scholar - August 18, 2021). <p>
 
-## Requirements
-
-Java 8 or higher
-
 ## Download and Install
 
 Download and install the latest commandline version using the following commands:
@@ -15,6 +11,7 @@ Download and install the latest commandline version using the following commands
 curl -sL haplogrep.now.sh | bash
 ./haplogrep 
 ```
+      
 If you want to use our web service, please click [here](https://haplogrep.i-med.ac.at/app/index.html).
 
 ## Available Tools
