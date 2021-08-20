@@ -2,6 +2,8 @@
 [![Java CI with Maven](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml/badge.svg)](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml)
 
 HaploGrep is a tool for mtDNA haplogroup classification. We provide HaploGrep as a fast and free [haplogroup classification web service](https://haplogrep.i-med.ac.at/) or as a commandline tool. You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **FASTA**, **VCF** and **hsd** input files are supported. As of today (August 18, 2021), HaploGrep and the updated HaploGrep2 have been cited over 920 times (Google Scholar - August 18, 2021). <p>
+
+## Used Phylogenetic Trees
 The haplogroup classifications are based on the revised tree by [Dür et al, 2021](https://www.mdpi.com/1422-0067/22/11/5747/htm) - which is an update of the latest [PhyloTree](http://phylotree.org/) version 17 by [van Oven, 2016](https://www.sciencedirect.com/science/article/pii/S1875176815302432) based on the work of [van Oven & Kaiser, 2009](https://onlinelibrary.wiley.com/doi/10.1002/humu.20921).
 
 
@@ -25,7 +27,7 @@ If you want to use our web service, please click [here](https://haplogrep.i-med.
 ## Available Tools
 Currently two tools are available. 
 
-* [Classify](#haplogrep-classify) allows to classify input profiles into haplogroups. 
+* [Classify](#haplogrep-classify) allows to classify input profiles (hsd, fasta, VCF) into haplogroups. 
 * [Distance](#haplogrep-distance) calculates the distance between two haplogroups. 
 
 ## HaploGrep Classify 
@@ -71,7 +73,7 @@ For readability, the polymorphisms are also tab-delimited (so columns >= 4). A h
 |```--extend-report```| For additional information on mtSNPs (e.g. found or remaining polymorphisms) please add the `--extend-report` flag (Default: off).|
 |```--phylotree```|  The used **Phylotree version** can be changed using the `--phylotree` parameter (Default: ```17_FU1```, allowed numbers from ```10,11,12,..,17``` ([latest version](http://phylotree.org/rCRS-oriented_version.htm))).|
 |```--chip```| If you are using **genotyping arrays**, please add the `--chip` parameter to limit the range to array SNPs only (Default: off, VCF only). To get the same behaviour for hsd files, please add **only** the variants to the range, which are included on the array or in the range you have sequenced (e.g. control region). Range can be sepearted by a semicolon `;`, both ranges and single positions are allowed (e.g. 16024-16569;1-576;8860). |
-|```--fixNomenclature```|  To fix the mtDNA nomenclature after alignment of fasta files, set the `--fixNomenclature` parameter. See below for further information.|
+|```--skip-alignment-rules```|  Add this option to skip our rules that fixes the mtDNA nomenclature for fasta import. Click [here]#mtdna-nomenclature) for further information. Applying the rules is the default option since v2.4.0|
 |```--hits``` |  To export the **best n hits** for each sample add the `--hits` parameter. By default only the tophit is exported.|
 |```--lineage```|  Create a **graph** of all input samples by using the `--lineage` parameter. (Default: 0). 0=no tree, 1=tree with genotypes, 2=only structure, no genotypes. As an output we provide a [Graphviz](http://www.graphviz.org/documentation/) DOT file. You can then use graphviz (`sudo apt-get install graphviz`) to convert the dot file to a e.g. pdf (`dot <dot-file> -Tpdf > graph.pdf`).|
 
