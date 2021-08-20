@@ -236,8 +236,6 @@ public class HaplogrepCmdTest {
 	public void h100NomenclatureActivatedTest() throws Exception {
 
 		String file = "test-data/h100/H100.fasta";
-		String phylotree = "phylotree17.xml";
-		String fluctrates = "weights17.txt";
 		
 		FastaImporter impFasta = new FastaImporter();
 		ArrayList<String> samples = impFasta.load(new File(file), References.RCRS);
@@ -245,7 +243,7 @@ public class HaplogrepCmdTest {
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylotree, fluctrates, "fasta");
+		classifier.run(newSampleFile, phylotree17, weights17, "fasta");
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
 		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
 		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());

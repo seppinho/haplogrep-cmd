@@ -19,8 +19,6 @@ import vcf.Sample;
 
 public class HaplogrepCommand implements Callable<Integer> {
 
-	public static String VERSION = "v2.4.0-rc3";
-
 	@Option(names = { "--in", "--input" }, description = "Input VCF, fasta or hsd file", required = true)
 	String in;
 
@@ -126,12 +124,12 @@ public class HaplogrepCommand implements Callable<Integer> {
 
 		System.out.println(phylotree);
 		System.out.println("Parameters:");
-		System.out.println("Input Format: " + format);
-		System.out.println("Phylotree Version: " + tree);
+		System.out.println("Input format: " + format);
+		System.out.println("Phylotree version: " + tree);
 		System.out.println("Reference: " + (rsrs ? "RSRS" : "rCRS"));
-		System.out.println("Extended Report: " + extendedReport);
-		System.out.println("Skip Nomenclature Rules: " + skipRules);
-		System.out.println("Used Metric: " + metric);
+		System.out.println("Extended report: " + extendedReport);
+		System.out.println("Skip alignment rules: " + skipRules);
+		System.out.println("Used metric: " + metric);
 		System.out.println("Chip array data: " + chip);
 		System.out.println("Lineage: " + lineage);
 		System.out.println("");
