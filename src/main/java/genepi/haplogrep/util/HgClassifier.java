@@ -14,14 +14,13 @@ import search.ranking.KulczynskiRanking;
 import search.ranking.RankingMethod;
 
 public class HgClassifier {
-
-	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric)
+	
+	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String format)
 			throws InvalidRangeException, JDOMException, IOException {
-		run(newSampleFile, phyloTree, fluctrates, metric, 1, false);
+		run(newSampleFile, phyloTree, fluctrates, "kulczynski", 1, false, format);
 	}
 
-	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric, int amountResults, boolean fixNomenclature)
-			throws JDOMException, IOException, InvalidRangeException {
+	public void run(SampleFile newSampleFile, String phyloTree, String fluctrates, String metric, int amountResults, boolean skipRules, String format) throws JDOMException, IOException, InvalidRangeException {
 
 		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree(phyloTree, fluctrates);
 
@@ -46,14 +45,13 @@ public class HgClassifier {
 
 		}
 
-		if(fixNomenclature) {
+		if (format.equals("fasta") && !skipRules) {
 			newSampleFile.applyNomenclatureRules(phylotree, "rules.csv");
-		
+
 		}
-		
+
 		newSampleFile.updateClassificationResults(phylotree, newRanker);
 
 	}
-	
 
 }

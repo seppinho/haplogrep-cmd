@@ -79,7 +79,7 @@ public class FastaTest {
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, true);
+		classifier.run(newSampleFile, phylotree, fluctrates, "fasta");
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
 		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
 		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
@@ -99,10 +99,11 @@ public class FastaTest {
 
 		HgClassifier classifier = new HgClassifier();
 
-		classifier.run(newSampleFile, phylotree, fluctrates, "kulczynski", 1, false);
+		classifier.run(newSampleFile, phylotree, fluctrates, "fasta");
 		ArrayList<Polymorphism> polys = newSampleFile.getTestSamples().get(0).getSample().getPolymorphisms();
 		
-		assertEquals(true, polys.contains(new Polymorphism("310.1C")));
+		System.out.println(polys);
+		assertEquals(true, polys.contains(new Polymorphism("315.1C")));
 		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 	}
 	

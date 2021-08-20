@@ -6,30 +6,30 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-
 import core.SampleFile;
-import exceptions.parse.HsdFileException;
 import genepi.haplogrep.util.HgClassifier;
-import genepi.io.FileUtil;
 import genepi.io.table.reader.CsvTableReader;
 import importer.FastaImporter;
 import importer.HsdImporter;
 import importer.VcfImporter;
 import importer.FastaImporter.References;
-import phylotree.Phylotree;
-import phylotree.PhylotreeManager;
-import search.ranking.KulczynskiRanking;
 import util.ExportUtils;
 import vcf.Sample;
 
 public class HaplogrepCmdTest {
+	
+	static String phylotree17 = "phylotree17.xml";
+	static String weights17 = "weights17.txt";
+	static String phylotree17FU1 = "phylotree17_FU1.xml";
+	static String weights17FU1 = "weights17_FU1.txt";
 
 	@Test
 	public void testHaplogrepCmd() throws Exception {
 
+	
+		
 		String file = "test-data/vcf/HG00097.vcf";
 		String out = "test-data/out.txt";
 		VcfImporter impvcf = new VcfImporter();
@@ -38,8 +38,9 @@ public class HaplogrepCmdTest {
 		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
 		SampleFile samples1 = new SampleFile(lines);
 
-		//classify
-		runClassificationPT17(samples1,1);
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(samples1, phylotree17, weights17FU1,"vcf");
 
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
@@ -55,9 +56,11 @@ public class HaplogrepCmdTest {
 		}
 
 		assertEquals(1, count);
-		
-		//classify
-		runClassificationPT17(samples1, 10);
+
+		// classify
+		classifier = new HgClassifier();
+		classifier.run(samples1, phylotree17FU1, weights17, "kulczynski", 10, false, "vcf");
+				
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
 		reader = new CsvTableReader(out, '\t');
@@ -83,8 +86,9 @@ public class HaplogrepCmdTest {
 		ArrayList<String> samples = importHsd.load(new File(file));
 		SampleFile newSampleFile = new SampleFile(samples);
 
-		//classify
-		runClassificationPT17(newSampleFile, 1);
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(newSampleFile, phylotree17, weights17, "hsd");
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, true);
 
@@ -94,7 +98,7 @@ public class HaplogrepCmdTest {
 		while (reader.next()) {
 			String sampleId = reader.getString("SampleID");
 			String hg = reader.getString("Haplogroup");
-			if (sampleId.equals(hg) || sampleId.contains("__")) //e.g. Q3a+61__62 as spaces not allowed
+			if (sampleId.equals(hg) || sampleId.contains("__")) // e.g. Q3a+61__62 as spaces not allowed
 				count++;
 			else {
 				if (!sampleId.contains("M4")) {
@@ -103,8 +107,8 @@ public class HaplogrepCmdTest {
 				}
 			}
 		}
-		//TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
-		assertEquals( count, 5435-1);
+		// TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
+		assertEquals(count, 5435 - 1);
 		FileUtils.delete(new File(out));
 	}
 
@@ -120,12 +124,13 @@ public class HaplogrepCmdTest {
 		ArrayList<String> samples = importHsd.load(new File(file));
 		SampleFile newSampleFile = new SampleFile(samples);
 
-		//classify
-		runClassificationPT17_FU1(newSampleFile, 1, false);
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(newSampleFile, phylotree17FU1, weights17FU1, "hsd");
 
 		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
-		
-		ExportUtils.generateFasta(newSampleFile.getTestSamples(), outfasta );
+
+		ExportUtils.generateFasta(newSampleFile.getTestSamples(), outfasta);
 
 		CsvTableReader reader = new CsvTableReader(out, '\t');
 
@@ -142,18 +147,19 @@ public class HaplogrepCmdTest {
 				}
 			}
 		}
-		//TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
+		// TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
 		assertEquals(6401, count);
-		FileUtils.delete(new File(out));
-		
+
 		FastaImporter impFasta = new FastaImporter();
 		ArrayList<String> lines = impFasta.load(new File(outfasta), References.RCRS);
 		SampleFile samplesFasta = new SampleFile(lines);
-		
-		runClassificationPT17_FU1(samplesFasta, 1, true);
+
+		// classify
+		classifier = new HgClassifier();
+		classifier.run(samplesFasta, phylotree17FU1, weights17FU1, "fasta");
 
 		ExportUtils.createReport(samplesFasta.getTestSamples(), out2, true);
-		
+
 		reader = new CsvTableReader(out2, '\t');
 
 		int countFasta = 0;
@@ -170,27 +176,29 @@ public class HaplogrepCmdTest {
 			}
 		}
 		assertEquals(6401, countFasta);
-		
+
+		FileUtils.delete(new File(out));
 		FileUtils.delete(new File(out2));
 	}
-	
+
 	@Test
 	public void testFastaExportImportInterface() throws Exception {
 		HashSet<String> set1 = new HashSet<String>();
 		HashSet<String> set2 = new HashSet<String>();
 		FastaImporter impFasta = new FastaImporter();
-		
+
 		String tempFile = "test-data/tmp.fasta";
-		
+
 		// read in file
 		String file = "test-data/h100/H100.fasta";
 		ArrayList<String> lines = impFasta.load(new File(file), References.RCRS);
-		
+
 		SampleFile samples = new SampleFile(lines);
-		
-		//classify
-		runClassificationPT17_FU1(samples, 1, false);
- 
+
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(samples, phylotree17FU1, weights17FU1, "fasta");
+
 		String[] splits = lines.get(0).split("\t");
 
 		for (int i = 3; i < splits.length; i++) {
@@ -198,18 +206,20 @@ public class HaplogrepCmdTest {
 		}
 
 		ExportUtils.generateFasta(samples.getTestSamples(), tempFile);
-		
+
 		// read in export file
 		lines = impFasta.load(new File(tempFile), References.RCRS);
 		samples = new SampleFile(lines);
 		splits = lines.get(0).split("\t");
-		
+
 		for (int i = 3; i < splits.length; i++) {
 			set2.add(splits[i]);
 		}
 
-		runClassificationPT17_FU1(samples, 1, true);
-		
+		// classify
+		classifier = new HgClassifier();
+		classifier.run(samples, phylotree17FU1, weights17FU1, "fasta");
+
 		ExportUtils.generateFasta(samples.getTestSamples(), "test-data/tmp2.fasta");
 
 		assertEquals(set1, set2);
@@ -217,20 +227,6 @@ public class HaplogrepCmdTest {
 		FileUtils.delete(new File("test-data/tmp.fasta"));
 		FileUtils.delete(new File("test-data/tmp2.fasta"));
 
-	}
-	public static void runClassificationPT17(SampleFile newSampleFile, int results) throws HsdFileException {
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17.xml", "weights17.txt");
-		KulczynskiRanking newRanker = new KulczynskiRanking(results);
-		newSampleFile.updateClassificationResults(phylotree, newRanker);
-	}
-	
-	
-	public static void runClassificationPT17_FU1(SampleFile newSampleFile, int results, boolean fixNomenclature) throws HsdFileException {
-		Phylotree phylotree = PhylotreeManager.getInstance().getPhylotree("phylotree17_FU1.xml", "weights17_FU1.txt");
-		if (fixNomenclature)
-			newSampleFile.applyNomenclatureRules(phylotree, "rules.csv");
-		KulczynskiRanking newRanker = new KulczynskiRanking(results);
-		newSampleFile.updateClassificationResults(phylotree, newRanker);
 	}
 
 
