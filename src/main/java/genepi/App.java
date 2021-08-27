@@ -56,7 +56,8 @@ public class App implements Runnable {
 		commandLine.addSubcommand("distance", new DistanceCheckCommand());
 
 		commandLine.setExecutionStrategy(new CommandLine.RunLast());
-		commandLine.execute(args);
+		int result = commandLine.execute(args);
+		System.exit(result);
 		
 	}
 
