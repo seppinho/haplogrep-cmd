@@ -27,7 +27,10 @@ public class HaplogrepCmdTest {
 	static String weights17 = "weights17.txt";
 	static String phylotree17FU1 = "phylotree17_FU1.xml";
 	static String weights17FU1 = "weights17_FU1.txt";
-
+	static String phylotree17FU1a = "phylotree17_FU1a.xml";
+	static String weights17FU1a = "weights17_FU1a.txt";
+	
+	
 	@Test
 	public void testHaplogrepCmd() throws Exception {
 
@@ -183,6 +186,79 @@ public class HaplogrepCmdTest {
 		FileUtils.delete(new File(out));
 		FileUtils.delete(new File(out2));
 	}
+	
+	
+	@Test //updated data from 27.08.2021
+	public void HaplogrepCmdTest_FineTuning_all_6380() throws Exception {
+
+		String file = "test-data/hsd/Finetuning_TableS2_updateHeteroplasmy_1a.hsd";
+		String out = "test-data/hsd/Finetuning_TableS2_out_1a.txt";
+		String outfasta = "test-data/hsd/Finetuning_TableS2_out_1a.fasta";
+		String out2 = "test-data/hsd/Finetuning_TableS2_out_fasta_1a.txt";
+		HsdImporter importHsd = new HsdImporter();
+
+		ArrayList<String> samples = importHsd.load(new File(file));
+		SampleFile newSampleFile = new SampleFile(samples);
+
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(newSampleFile, phylotree17FU1a, weights17FU1a, "hsd");
+
+		ExportUtils.createReport(newSampleFile.getTestSamples(), out, false);
+
+		ExportUtils.generateFasta(newSampleFile.getTestSamples(), outfasta);
+
+		CsvTableReader reader = new CsvTableReader(out, '\t');
+
+		int count = 0;
+		while (reader.next()) {
+			String sampleId = reader.getString("SampleID");
+			String hg = reader.getString("Haplogroup");
+			if (sampleId.equals(hg))
+				count++;
+			else {
+				if (!sampleId.contains("M4'")) {
+					System.out.println(sampleId + " " + hg);
+				} else {
+					count++;
+				}
+			}
+		}
+		// TODO - fix issues in C4a1a vs C4a1a1 (due to 2232.1A 2232.2A)
+		assertEquals(6380, count);
+
+		FastaImporter impFasta = new FastaImporter();
+		ArrayList<String> lines = impFasta.load(new File(outfasta), References.RCRS);
+		SampleFile samplesFasta = new SampleFile(lines);
+
+		// classify
+		classifier = new HgClassifier();
+		classifier.run(samplesFasta, phylotree17FU1a, weights17FU1a, "fasta");
+
+		ExportUtils.createReport(samplesFasta.getTestSamples(), out2, true);
+
+		reader = new CsvTableReader(out2, '\t');
+
+		int countFasta = 0;
+		while (reader.next()) {
+			String sampleId = reader.getString("SampleID");
+			String hg = reader.getString("Haplogroup");
+			if (sampleId.equals(hg))
+				countFasta++;
+			else {
+				if (!sampleId.contains("M4'")) {
+					System.out.println(sampleId + " " + hg);
+				} else {
+					countFasta++;
+				}
+			}
+		}
+		assertEquals(6380, countFasta);
+
+		FileUtils.delete(new File(out));
+		FileUtils.delete(new File(out2));
+	}
+	
 
 	@Test
 	public void testFastaExportImportInterface() throws Exception {
