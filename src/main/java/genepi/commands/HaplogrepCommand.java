@@ -50,6 +50,11 @@ public class HaplogrepCommand implements Callable<Integer> {
 	@Option(names = {
 			"--write-fasta-msa" }, description = "Write multiple sequence alignment (_MSA.fasta) ", required = false, showDefaultValue = Visibility.ALWAYS)
 	boolean writeFastaMSA = false;
+	
+	@Option(names = {
+	"--write-vcf" }, description = "Write multiple sequence alignment (_MSA.fasta) ", required = false, showDefaultValue = Visibility.ALWAYS)
+	boolean writeVCF = false;
+	
 
 	@Option(names = {
 			"--chip" }, description = "VCF data from a genotype chip", required = false, showDefaultValue = Visibility.ALWAYS)
@@ -190,6 +195,10 @@ public class HaplogrepCommand implements Callable<Integer> {
 
 					if (writeFastaMSA) {
 						ExportUtils.generateFastaMSA(samples, out);
+					}
+					
+					if (writeVCF) {
+						ExportUtils.generateVCF(samples, out);
 					}
 
 				}
