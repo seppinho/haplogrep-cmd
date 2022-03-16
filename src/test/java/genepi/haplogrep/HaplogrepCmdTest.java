@@ -3,6 +3,7 @@ package genepi.haplogrep;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -422,13 +423,73 @@ public class HaplogrepCmdTest {
 		assertEquals(new Haplogroup("H100"),newSampleFile.getTestSamples().get(0).getTopResult().getHaplogroup());
 	}
 
+	@Test
+	public void test_write_VCF_HG01080() throws Exception {
+
+		String file = "test-data/vcf/HG01080.infinium.vcf";
+		String out = "test-data/vcf/HG01080.infinium_out.txt";
+
+		VcfImporter impvcf = new VcfImporter();
+		
+
+		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
+		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
+		SampleFile samplesIn = new SampleFile(lines);
+
+		// classify
+		HgClassifier classifier = new HgClassifier();
+		classifier.run(samplesIn, phylotree17, weights17,"vcf");
+
+		ExportUtils.generateVCF(samplesIn.getTestSamples(), out);
+		ExportUtils.createReport(samplesIn.getTestSamples(), out, false);
+
+		CsvTableReader reader = new CsvTableReader(out, '\t');
+		
+		reader.next();
+		String hg = reader.getString("Haplogroup");
+		assertEquals("L1c3b1a", hg);
+
+		impvcf = new VcfImporter();
+		
+
+		HashMap<String, Sample> sampleNew = impvcf.load(new File(out+".vcf"), false);
+		ArrayList<String> linesNew = ExportUtils.vcfTohsd(sampleNew);
+		SampleFile samplesOut = new SampleFile(linesNew);
+
+		// classify
+		classifier.run(samplesOut, phylotree17FU1a, weights17FU1a,"vcf");
+		DecimalFormat df = new DecimalFormat("0.0000");
+		
+		double quality = samplesOut.getTestSamples().get(0).getResults().get(0).getDistance();
+		
+		//currently deletion not exported in VCF - here 2395d missing, therefore lower score than 1
+		assertEquals(0.9924, quality, 0.0001);
+
+
+	}
 	
+	
+	/*
 	@Test
 	public void test_write_VCF() throws Exception {
 
-		String file = "test-data/vcf/phylotree17_axiom.filtered.40samples.vcf";
-		String out = "test-data/vcf/phylotree17_axiom.filtered.40samples_out.txt";
+		String file = "test-data/vcf/infinium-omni25.vcf.gz";
+		String out = "test-data/vcf/infinium-omni25.txt";
+		
+		//	String file = "test-data/vcf/Imputed_example.vcf";
+	//	String out = "test-data/vcf/Imputed_example_out.txt";
+		
+	//	String file = "test-data/vcf/example_MitoImpute.vcf";
+	//	String out = "test-data/vcf/example_MitoImpute_out.txt";
+		
+		
+		//String file = "test-data/vcf/phylotree17_axiom.recode.vcf";
+		//String out = "test-data/vcf/phylotree17_axiom.recode_out.txt";
+		
+		//String file = "test-data/vcf/phylotree17_axiom.filtered.40samples.vcf";
+		//String out = "test-data/vcf/phylotree17_axiom.filtered.40samples_out.txt";
 		VcfImporter impvcf = new VcfImporter();
+		
 
 		HashMap<String, Sample> samples = impvcf.load(new File(file), false);
 		ArrayList<String> lines = ExportUtils.vcfTohsd(samples);
@@ -436,7 +497,7 @@ public class HaplogrepCmdTest {
 
 		// classify
 		HgClassifier classifier = new HgClassifier();
-		classifier.run(samples1, phylotree17, weights17FU1,"vcf");
+		classifier.run(samples1, phylotree17FU1a, weights17FU1a,"vcf");
 
 		ExportUtils.generateVCF(samples1.getTestSamples(), out);
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
@@ -448,8 +509,8 @@ public class HaplogrepCmdTest {
 			count++;
 			String hg = reader.getString("Haplogroup");
 			double quality = reader.getDouble("Quality");
-			assertEquals("A", hg);
-			assertEquals(quality, quality, 0.0);
+			assertEquals("H", hg);
+			//assertEquals(quality, quality, 0.0);
 			break;
 			
 		}
@@ -457,7 +518,7 @@ public class HaplogrepCmdTest {
 		assertEquals(1, count);
 
 	}
-	
+	*/
 
 //	@Test
 //	public void HaplogrepCmdTest_FineTuning_issues() throws Exception {
