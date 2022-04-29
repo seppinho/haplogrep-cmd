@@ -469,7 +469,7 @@ public class HaplogrepCmdTest {
 	}
 	
 	
-	/*
+	
 	@Test
 	public void test_write_VCF() throws Exception {
 
@@ -499,7 +499,7 @@ public class HaplogrepCmdTest {
 		HgClassifier classifier = new HgClassifier();
 		classifier.run(samples1, phylotree17FU1a, weights17FU1a,"vcf");
 
-		ExportUtils.generateVCF(samples1.getTestSamples(), out);
+		//ExportUtils.generateVCF(samples1.getTestSamples(), out);
 		ExportUtils.createReport(samples1.getTestSamples(), out, false);
 
 		CsvTableReader reader = new CsvTableReader(out, '\t');
@@ -518,7 +518,7 @@ public class HaplogrepCmdTest {
 		assertEquals(1, count);
 
 	}
-	*/
+	
 
 //	@Test
 //	public void HaplogrepCmdTest_FineTuning_issues() throws Exception {
