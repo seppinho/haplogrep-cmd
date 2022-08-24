@@ -44,10 +44,9 @@ public class HgClassifier {
 			newRanker = new KulczynskiRanking(amountResults);
 
 		}
-
+		
 		if (format.equals("fasta") && !skipRules) {
 			newSampleFile.applyNomenclatureRules(phylotree, "rules.csv");
-
 		}
 
 		newSampleFile.updateClassificationResults(phylotree, newRanker);

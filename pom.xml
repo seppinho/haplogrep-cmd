@@ -107,14 +107,17 @@
 			</plugin>
 			 
 		</plugins>
+	
 	</build>
+	
+	
 
 	<dependencies>
 
 		<dependency>
 			<groupId>genepi</groupId>
 			<artifactId>haplogrep-core</artifactId>
-			<version>2.7.7</version>
+			<version>2.7.8</version>
 		</dependency>
 		
 				<dependency>
