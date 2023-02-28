@@ -1,7 +1,10 @@
 [![GitHub Downloads](https://img.shields.io/github/downloads/seppinho/haplogrep-cmd/total.svg?style=flat)](https://github.com/seppinho/haplogrep-cmd/releases)
 [![Java CI with Maven](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml/badge.svg)](https://github.com/seppinho/haplogrep-cmd/actions/workflows/maven.yml)
 
-HaploGrep is a tool for mtDNA haplogroup classification. We provide HaploGrep as a fast and free [haplogroup classification web service](https://haplogrep.i-med.ac.at/) or as a commandline tool. You can upload your mtDNA profiles aligned to **rCRS** or **RSRS** (beta) and receive mitochondrial haplogroups in return. **FASTA**, **VCF** and **hsd** input files are supported. As of today (August 18, 2021), HaploGrep and the updated HaploGrep2 have been cited over 920 times (Google Scholar - August 18, 2021). <p>
+# Important: Switch to Haplogrep 3
+
+Please have a look at [Haplogrep 3](https://github.com/genepi/haplogrep3) which also includes a command-line version and uses the same core functionality as this version! This repository is not maintained anymore. 
+
 
 ## Download and Install
 
